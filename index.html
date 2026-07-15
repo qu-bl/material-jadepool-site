@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>RiveLab - 官方网站</title>
+  <meta name="description" content="RiveLab 官方网站。面向设计师与开发者的 Rive 交付伴侣，提供调试、数据驱动和资源管理能力。">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121a33;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.12);
+      --text: #eef2ff;
+      --muted: rgba(238, 242, 255, 0.72);
+      --accent: #8ab4ff;
+      --accent-2: #7ee0c3;
+      --warn: #ffbe5c;
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --content: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Noto Sans SC", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(138, 180, 255, 0.18), transparent 35%),
+        radial-gradient(circle at top right, rgba(126, 224, 195, 0.14), transparent 30%),
+        linear-gradient(180deg, #090d1a 0%, var(--bg) 42%, #070a14 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 90%);
+      pointer-events: none;
+    }
+
+    a { color: inherit; }
+
+    .wrap { width: min(100%, var(--content)); margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+    .hero { padding: 88px 0 48px; }
+    .topline {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 0 20px rgba(138, 180, 255, 0.55); }
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(42px, 8vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 10ch;
+    }
+    .lead {
+      max-width: 720px;
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.8;
+      color: var(--muted);
+      margin: 0;
+    }
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); background: var(--surface-strong); border-color: rgba(255,255,255,0.22); }
+    .btn.primary { background: linear-gradient(135deg, rgba(138,180,255,0.28), rgba(126,224,195,0.18)); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      padding: 28px 0 64px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel { padding: 24px; }
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: 1 / -1; }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+    }
+    .section-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .feature-list, .step-list {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+    .feature-item, .step-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(138,180,255,0.16);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .item-title { margin: 0 0 4px; font-weight: 700; }
+    .item-text { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .metric {
+      padding: 18px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .metric strong { display: block; font-size: 24px; margin-bottom: 6px; }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .warning {
+      border-left: 4px solid var(--warn);
+      background: rgba(255, 190, 92, 0.08);
+    }
+    .footer {
+      padding: 24px 0 44px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .span-7, .span-5, .span-4, .span-8 { grid-column: 1 / -1; }
+      .hero { padding-top: 52px; }
+      .hero-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="topline"><span class="dot"></span>RiveLab 官方网站</div>
+      <h1>面向设计师与开发者的 Rive 交付伴侣</h1>
+      <p class="lead">
+        RiveLab 提供 Rive 动画调试、数据驱动、脚本宿主和资源管理能力，
+        用于把 `.riv` 文件从设计稿快速推进到可验证、可交付的真实运行环境。
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#features">查看核心能力</a>
+        <a class="btn" href="mailto:156405968@qq.com">联系维护者</a>
+      </div>
+      <div class="hero-metrics" aria-label="项目概览">
+        <div class="metric">
+          <strong>Rive</strong>
+          <span>围绕最新运行时能力构建</span>
+        </div>
+        <div class="metric">
+          <strong>Android</strong>
+          <span>应用内调试与宿主预览</span>
+        </div>
+        <div class="metric">
+          <strong>Web</strong>
+          <span>GitHub Pages 官方站点</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" id="features">
+      <article class="card panel span-7">
+        <h2 class="section-title">核心能力</h2>
+        <p class="section-copy">官方网站聚焦四件事：看得见、调得动、接得上、管得住。</p>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="badge">1</span>
+            <div>
+              <p class="item-title">RiveStudio 调试台</p>
+              <p class="item-text">加载 `.riv` 文件，观察状态机、变量和实时渲染结果。</p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="badge">2</span>
+            <div>
+              <p class="item-title">DataHub 数据中控</p>
+              <p class="item-text">统一查看输入、脚本输出、设备状态和数据绑定结果。</p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="badge">3</span>
+            <div>
+              <p class="item-title">脚本宿主</p>
+              <p class="item-text">用 JavaScript 驱动交互逻辑、业务数据与系统能力。</p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="badge">4</span>
+            <div>
+              <p class="item-title">资源管理</p>
+              <p class="item-text">支持资源导入、组织和切换，适配多宿主交付场景。</p>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card panel span-5 warning">
+        <h2 class="section-title">兼容性提示</h2>
+        <p class="section-copy">
+          本项目基于较新的 Rive 运行时能力开发，不保证兼容已废弃的旧接口。
+          如果某些 `.riv` 文件在这里无法正常工作，通常意味着资源本身依赖旧规范，而不是网站故障。
+        </p>
+      </article>
+
+      <article class="card panel span-8">
+        <h2 class="section-title">快速上手</h2>
+        <p class="section-copy">从网站入口到项目使用，只需要三个动作。</p>
+        <ul class="step-list">
+          <li class="step-item">
+            <span class="badge">A</span>
+            <div>
+              <p class="item-title">导入资源</p>
+              <p class="item-text">把 `.riv` 文件放入应用或资源管理流程中。</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="badge">B</span>
+            <div>
+              <p class="item-title">调试绑定</p>
+              <p class="item-text">在调试台里验证状态机、输入和脚本输出。</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <span class="badge">C</span>
+            <div>
+              <p class="item-title">交付发布</p>
+              <p class="item-text">完成验证后，把资源切换到目标宿主进行演示或交付。</p>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card panel span-4">
+        <h2 class="section-title">联系</h2>
+        <p class="section-copy">
+          反馈问题或合作建议，请通过邮箱联系。
+        </p>
+        <ul class="feature-list" style="margin-top:16px;">
+          <li class="feature-item">
+            <span class="badge">@</span>
+            <div>
+              <p class="item-title">邮箱</p>
+              <p class="item-text"><a href="mailto:156405968@qq.com">156405968@qq.com</a></p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="badge">Q</span>
+            <div>
+              <p class="item-title">隐私政策</p>
+              <p class="item-text"><a href="https://qu-bl.github.io/privacy/" target="_blank" rel="noreferrer">查看外部站点</a></p>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card panel span-12">
+        <h2 class="section-title">发布说明</h2>
+        <p class="section-copy">
+          这个目录已经是 GitHub Pages 友好的静态入口。把仓库 Pages 源设置为 `main /docs` 后，
+          该页面即可作为官方网站首页对外访问。
+        </p>
+      </article>
+    </section>
+
+    <footer class="footer">
+      RiveLab 官方网站 · Hosted on GitHub Pages
+    </footer>
+  </main>
+</body>
+</html>
