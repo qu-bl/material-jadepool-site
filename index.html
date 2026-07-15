@@ -3,36 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f7f4ee">
+  <meta name="theme-color" content="#faf7f1">
   <title>千机百变 - 官方网站</title>
-  <meta name="description" content="千机百变是一款以 Rive 和 JS 实现的三方资源包，旨在用一个轻便 App 替代所有趣味工具。">
+  <meta name="description" content="千机百变是一款以 Rive 和 JS 实现的三方资源包，用一个轻便 App 替代所有趣味工具。">
   <style>
     :root {
-      --bg: #f7f4ee;
-      --panel: rgba(255, 255, 255, 0.72);
-      --panel-strong: rgba(255, 255, 255, 0.9);
-      --text: #1f2430;
-      --muted: #636a79;
-      --line: rgba(31, 36, 48, 0.08);
-      --accent: #7f9cf5;
-      --accent-2: #f7a6c6;
-      --accent-3: #8fd6c9;
-      --shadow: 0 18px 60px rgba(47, 52, 64, 0.08);
-      --max: 1120px;
+      --bg: #faf7f1;
+      --panel: rgba(255, 255, 255, 0.78);
+      --text: #202532;
+      --muted: #666d7d;
+      --line: rgba(32, 37, 50, 0.08);
+      --accent: #8aa5ff;
+      --accent-2: #f5a3c2;
+      --accent-3: #9adfcf;
+      --shadow: 0 18px 48px rgba(43, 48, 60, 0.08);
+      --max: 1024px;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      min-height: 100vh;
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "SF Pro Text", "Noto Sans SC", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(127, 156, 245, 0.14), transparent 28%),
-        radial-gradient(circle at top right, rgba(247, 166, 198, 0.16), transparent 26%),
-        radial-gradient(circle at 70% 18%, rgba(143, 214, 201, 0.16), transparent 22%),
-        linear-gradient(180deg, #fffdf8 0%, var(--bg) 56%, #f1ede5 100%);
+        radial-gradient(circle at top left, rgba(138,165,255,0.12), transparent 26%),
+        radial-gradient(circle at top right, rgba(245,163,194,0.12), transparent 24%),
+        radial-gradient(circle at 65% 18%, rgba(154,223,207,0.12), transparent 22%),
+        linear-gradient(180deg, #fffdf9 0%, var(--bg) 100%);
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
@@ -40,11 +39,10 @@
       content: "";
       position: fixed;
       inset: 0;
-      background-image:
-        radial-gradient(rgba(31,36,48,0.04) 1px, transparent 1px);
-      background-size: 20px 20px;
-      mask-image: linear-gradient(180deg, rgba(0,0,0,0.4), transparent 90%);
       pointer-events: none;
+      background-image: radial-gradient(rgba(32,37,50,0.04) 1px, transparent 1px);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.45), transparent 90%);
     }
 
     a { color: inherit; }
@@ -57,329 +55,294 @@
     }
 
     .hero {
-      padding: 88px 0 28px;
+      padding: 82px 0 26px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 24px;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 22px;
       align-items: center;
     }
-
-    .pill {
+    .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 9px 14px;
+      padding: 8px 12px;
       border-radius: 999px;
       background: var(--panel);
       border: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-      color: var(--muted);
-      font-size: 14px;
       box-shadow: var(--shadow);
+      font-size: 13px;
+      color: var(--muted);
     }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    }
-
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
     h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(42px, 7.4vw, 78px);
-      line-height: 0.95;
+      margin: 16px 0 12px;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 0.98;
       letter-spacing: -0.06em;
-      max-width: 10ch;
+      max-width: 9ch;
     }
     .lead {
       margin: 0;
-      max-width: 680px;
       color: var(--muted);
-      font-size: clamp(17px, 1.9vw, 20px);
       line-height: 1.9;
+      font-size: clamp(16px, 1.9vw, 19px);
+      max-width: 36em;
     }
-
     .actions {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
-      margin-top: 26px;
+      gap: 12px;
+      margin-top: 22px;
     }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 16px;
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 14px;
       border: 1px solid var(--line);
       background: var(--panel);
       text-decoration: none;
       font-weight: 700;
       box-shadow: var(--shadow);
-      transition: transform 0.2s ease, background 0.2s ease;
     }
-    .btn:hover { transform: translateY(-2px); background: var(--panel-strong); }
-    .btn.primary { background: linear-gradient(135deg, rgba(127,156,245,0.18), rgba(247,166,198,0.14)); }
+    .btn.primary { background: linear-gradient(135deg, rgba(138,165,255,0.16), rgba(245,163,194,0.12)); }
 
-    .hero-card {
-      position: relative;
+    .hero-art {
+      min-height: 320px;
       border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.62));
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.66)),
+        var(--panel);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
-      padding: 28px;
-      min-height: 340px;
+      padding: 20px;
+      position: relative;
       overflow: hidden;
     }
     .blob {
       position: absolute;
       border-radius: 50%;
       filter: blur(10px);
-      opacity: 0.9;
       pointer-events: none;
+      opacity: 0.9;
     }
-    .blob.one { width: 170px; height: 170px; right: -36px; top: -46px; background: radial-gradient(circle, rgba(127,156,245,0.55), rgba(127,156,245,0.06) 66%, transparent 70%); }
-    .blob.two { width: 160px; height: 160px; left: -56px; bottom: -50px; background: radial-gradient(circle, rgba(143,214,201,0.52), rgba(143,214,201,0.06) 66%, transparent 70%); }
-    .blob.three { width: 120px; height: 120px; right: 54px; bottom: 34px; background: radial-gradient(circle, rgba(247,166,198,0.5), rgba(247,166,198,0.05) 68%, transparent 72%); }
-    .hero-card-inner {
+    .blob.one { width: 150px; height: 150px; right: -28px; top: -38px; background: radial-gradient(circle, rgba(138,165,255,0.44), transparent 66%); }
+    .blob.two { width: 140px; height: 140px; left: -42px; bottom: -44px; background: radial-gradient(circle, rgba(154,223,207,0.42), transparent 66%); }
+    .blob.three { width: 110px; height: 110px; right: 60px; bottom: 30px; background: radial-gradient(circle, rgba(245,163,194,0.38), transparent 68%); }
+
+    .art-grid {
       position: relative;
       z-index: 1;
       height: 100%;
       display: grid;
-      align-content: start;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 14px;
+      align-items: stretch;
     }
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .badge {
-      width: fit-content;
-      padding: 7px 11px;
-      border-radius: 999px;
-      background: rgba(31,36,48,0.04);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .brand h2 {
-      margin: 0;
-      font-size: 34px;
-      line-height: 1;
-      letter-spacing: -0.05em;
-    }
-    .brand p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.9;
-      max-width: 30ch;
-    }
-    .mini-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .mini {
-      padding: 14px 12px;
-      border-radius: 18px;
+    .art-main, .art-side {
+      border-radius: 22px;
       background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(31,36,48,0.06);
+      border: 1px solid rgba(32,37,50,0.06);
+      overflow: hidden;
     }
-    .mini strong { display: block; font-size: 20px; margin-bottom: 6px; }
-    .mini span { color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .art-main {
+      display: grid;
+      align-content: end;
+      min-height: 280px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.5)),
+        linear-gradient(135deg, rgba(138,165,255,0.26), rgba(245,163,194,0.2), rgba(154,223,207,0.18));
+    }
+    .art-main strong {
+      font-size: 34px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 6ch;
+    }
+    .art-main span {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 20ch;
+    }
+    .art-side {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      align-content: start;
+    }
+    .micro {
+      min-height: 76px;
+      border-radius: 18px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.66);
+      border: 1px solid rgba(32,37,50,0.05);
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+    .micro strong { font-size: 15px; }
+    .micro span { color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-    .section {
-      padding: 24px 0 52px;
-    }
+    .section { padding: 20px 0 48px; }
     .section-head {
       display: flex;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
       align-items: end;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
-    .section-head h3 {
+    .section-head h2 {
       margin: 0;
-      font-size: 26px;
+      font-size: 25px;
       letter-spacing: -0.04em;
     }
     .section-head p {
       margin: 0;
+      max-width: 520px;
       color: var(--muted);
-      max-width: 580px;
       line-height: 1.8;
     }
 
     .grid {
       display: grid;
-      gap: 16px;
       grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
     }
     .card {
       border-radius: 24px;
       background: var(--panel);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
       overflow: hidden;
+      backdrop-filter: blur(16px);
     }
-    .card.pad { padding: 22px; }
+    .pad { padding: 20px; }
     .span-4 { grid-column: span 4; }
-    .span-5 { grid-column: span 5; }
-    .span-7 { grid-column: span 7; }
+    .span-6 { grid-column: span 6; }
     .span-12 { grid-column: 1 / -1; }
 
-    .feature {
+    .block {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
-    .feature .tag {
+    .block .tag {
       width: fit-content;
-      padding: 7px 11px;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(127,156,245,0.12);
-      color: #5d76da;
+      background: rgba(138,165,255,0.12);
+      color: #5970cf;
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .feature h4 {
+    .block h3 {
       margin: 0;
-      font-size: 19px;
+      font-size: 18px;
       letter-spacing: -0.03em;
     }
-    .feature p {
+    .block p {
       margin: 0;
       color: var(--muted);
       line-height: 1.8;
-      font-size: 15px;
+      font-size: 14px;
     }
-
-    .list {
+    .simple-list {
       list-style: none;
-      margin: 18px 0 0;
+      margin: 12px 0 0;
       padding: 0;
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
-    .list li {
+    .simple-list li {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: flex-start;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.52);
-      border: 1px solid rgba(31,36,48,0.06);
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.54);
+      border: 1px solid rgba(32,37,50,0.05);
     }
-    .mark {
-      width: 28px;
-      height: 28px;
+    .simple-list strong { display: block; margin-bottom: 3px; font-size: 14px; }
+    .simple-list span { display: block; color: var(--muted); line-height: 1.65; font-size: 13px; }
+    .num {
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      background: rgba(154,223,207,0.16);
+      color: #4b9f91;
+      font-size: 12px;
+      font-weight: 800;
       flex: 0 0 auto;
-      background: rgba(143,214,201,0.16);
-      color: #4d9c90;
-      font-weight: 900;
-      font-size: 13px;
-    }
-    .list strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 15px;
-    }
-    .list span {
-      display: block;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 14px;
-    }
-
-    .quote {
-      padding: 28px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.76), rgba(255,255,255,0.54));
-      border: 1px solid rgba(31,36,48,0.06);
-    }
-    .quote h4 {
-      margin: 0 0 10px;
-      font-size: 22px;
-      letter-spacing: -0.04em;
-    }
-    .quote p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 15px;
-      max-width: 66ch;
     }
 
     .contact {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-      margin-top: 18px;
+      margin-top: 12px;
     }
     .contact-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.66);
-      border: 1px solid rgba(31,36,48,0.06);
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(32,37,50,0.05);
     }
-    .contact-label {
+    .contact-card .label {
       display: inline-flex;
-      padding: 7px 11px;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(247,166,198,0.14);
-      color: #c85a86;
+      background: rgba(245,163,194,0.14);
+      color: #c95c86;
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .contact-value {
-      margin: 14px 0 8px;
-      font-size: 20px;
+    .contact-card .value {
+      margin: 12px 0 6px;
+      font-size: 18px;
       font-weight: 800;
-      letter-spacing: -0.02em;
       word-break: break-word;
     }
-    .contact-note {
+    .contact-card .note {
       margin: 0;
       color: var(--muted);
-      line-height: 1.75;
-      font-size: 14px;
+      line-height: 1.7;
+      font-size: 13px;
     }
 
     .footer {
-      padding: 18px 0 46px;
+      padding: 16px 0 42px;
       text-align: center;
       color: var(--muted);
-      font-size: 14px;
       line-height: 1.8;
+      font-size: 13px;
     }
 
-    @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; padding-top: 64px; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 60px; }
       .section-head { flex-direction: column; align-items: start; }
-      .span-4, .span-5, .span-7 { grid-column: 1 / -1; }
+      .span-4, .span-6 { grid-column: 1 / -1; }
       .contact { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
       .wrap { padding: 0 16px; }
+      h1 { font-size: clamp(36px, 14vw, 54px); }
       .actions { flex-direction: column; }
       .btn { width: 100%; }
-      .mini-grid { grid-template-columns: 1fr; }
-      .hero-card, .card.pad, .quote, .contact-card { padding: 18px; }
-      h1 { font-size: clamp(38px, 14vw, 56px); }
+      .art-grid { grid-template-columns: 1fr; }
+      .art-main { min-height: 180px; }
+      .art-side { grid-template-columns: 1fr 1fr; }
+      .card.pad, .hero-art { padding: 16px; }
     }
   </style>
 </head>
@@ -387,137 +350,120 @@
   <main class="wrap">
     <section class="hero">
       <div>
-        <div class="pill"><span class="dot"></span>千机百变 · 官方网站</div>
-        <h1>轻便一点，<br>可爱一点，<br>也更有想象力。</h1>
+        <div class="eyebrow"><span class="dot"></span>千机百变 · 官方网站</div>
+        <h1>轻便一点，<br>也可爱一点。</h1>
         <p class="lead">
-          千机百变是一款以 Rive 和 JS 实现的三方资源包。
-          它希望用一个轻便 App 替代所有趣味工具，定义 AI 时代新一代趣味交互。
+          千机百变是一款以 Rive 和 JS 实现的三方资源包，
+          用一个轻便 App 替代所有趣味工具，定义 AI 时代新一代趣味交互。
         </p>
         <div class="actions">
-          <a class="btn primary" href="#features">看看它能做什么</a>
-          <a class="btn" href="#contact">联系我</a>
+          <a class="btn primary" href="#about">了解千机百变</a>
+          <a class="btn" href="#contact">联系方式</a>
         </div>
       </div>
 
-      <aside class="hero-card">
+      <aside class="hero-art">
         <div class="blob one"></div>
         <div class="blob two"></div>
         <div class="blob three"></div>
-        <div class="hero-card-inner">
-          <div class="brand">
-            <div class="badge">Rive + JS Resource Pack</div>
-            <h2>千机百变</h2>
-            <p>
-              像一只会变形的小盒子，装得下趣味、效率和表达，也装得下一个更轻盈的未来。
-            </p>
+        <div class="art-grid">
+          <div class="art-main">
+            <strong>千机百变</strong>
+            <span>一个会变形的趣味交互入口</span>
           </div>
-          <div class="mini-grid">
-            <div class="mini">
-              <strong>变</strong>
-              <span>场景可变，模块可变，玩法也可变。</span>
+          <div class="art-side">
+            <div class="micro">
+              <strong>Rive</strong>
+              <span>让界面更灵动。</span>
             </div>
-            <div class="mini">
-              <strong>轻</strong>
-              <span>一个入口，减少负担，提升体验密度。</span>
+            <div class="micro">
+              <strong>JS</strong>
+              <span>让逻辑更真实。</span>
             </div>
-            <div class="mini">
-              <strong>趣</strong>
-              <span>让每次交互都更像一次小小惊喜。</span>
+            <div class="micro">
+              <strong>资源包</strong>
+              <span>让能力可复用。</span>
             </div>
           </div>
         </div>
       </aside>
     </section>
 
-    <section class="section" id="features">
+    <section class="section" id="about">
       <div class="section-head">
-        <h3>它的气质</h3>
-        <p>
-          简约，是留白；大气，是结构；可爱，是细节。
-          三者合在一起，才像一款真正能被记住的官方首页。
-        </p>
+        <h2>三个文本块，一点配图</h2>
+        <p>页面尽量保持克制，只保留最需要被看见的内容，让产品气质自己说话。</p>
       </div>
       <div class="grid">
-        <article class="card pad span-7">
-          <div class="feature">
-            <div class="tag">Core</div>
-            <h4>让一个轻便 App，替代所有趣味工具</h4>
-            <p>
-              它不是把功能塞满一屏，而是把每个功能都做得更顺手、更轻盈、更像一件小而美的日常工具。
-            </p>
-            <ul class="list">
+        <article class="card pad span-4">
+          <div class="block">
+            <div class="tag">定位</div>
+            <h3>轻便 App，替代趣味工具</h3>
+            <p>把零散的玩法收拢到一个入口里，减少切换，也减少认知负担。</p>
+          </div>
+        </article>
+        <article class="card pad span-4">
+          <div class="block">
+            <div class="tag">能力</div>
+            <h3>Rive + JS 的协作</h3>
+            <p>Rive 负责生命感，JS 负责可运行的逻辑和扩展，二者一起组成完整体验。</p>
+          </div>
+        </article>
+        <article class="card pad span-4">
+          <div class="block">
+            <div class="tag">愿景</div>
+            <h3>定义新一代趣味交互</h3>
+            <p>让工具不只好用，还要可爱、可玩、可被记住，像一个会变形的小世界。</p>
+          </div>
+        </article>
+
+        <article class="card pad span-6">
+          <div class="block">
+            <div class="tag">意象</div>
+            <h3>它像什么</h3>
+            <ul class="simple-list">
               <li>
-                <span class="mark">1</span>
+                <span class="num">1</span>
                 <div>
-                  <strong>Rive 负责生命感</strong>
-                  <span>让界面像在呼吸，像有性格，像能回应你。</span>
+                  <strong>一只会变形的小盒子</strong>
+                  <span>展开后是工具，收起后是一个极简而安静的入口。</span>
                 </div>
               </li>
               <li>
-                <span class="mark">2</span>
+                <span class="num">2</span>
                 <div>
-                  <strong>JS 负责真实能力</strong>
-                  <span>连接逻辑、数据和系统能力，保证它不仅可爱，也可靠。</span>
-                </div>
-              </li>
-              <li>
-                <span class="mark">3</span>
-                <div>
-                  <strong>资源包负责传播与扩展</strong>
-                  <span>把玩法打包成可复用的能力，让创意可以持续迭代。</span>
+                  <strong>一个温柔的交互体</strong>
+                  <span>它的表情、动作和反馈，像在跟用户轻声对话。</span>
                 </div>
               </li>
             </ul>
           </div>
         </article>
 
-        <article class="card pad span-5">
-          <div class="feature">
-            <div class="tag">Vision</div>
-            <h4>定义 AI 时代的新一代趣味交互</h4>
-            <p>
-              我们希望它像一颗小小的机关糖果，打开之后不是冷冰冰的功能，而是一套能让人会心一笑的交互体验。
-            </p>
+        <article class="card pad span-6">
+          <div class="block">
+            <div class="tag">支持</div>
+            <h3 id="contact">联系与反馈</h3>
+            <div class="contact">
+              <div class="contact-card">
+                <div class="label">Email</div>
+                <div class="value"><a href="mailto:qu991221@gmail.com">qu991221@gmail.com</a></div>
+                <p class="note">技术支持、用户反馈、合作沟通。</p>
+              </div>
+              <div class="contact-card">
+                <div class="label">QQ群</div>
+                <div class="value">862835994</div>
+                <p class="note">国内用户交流与问题反馈。</p>
+              </div>
+            </div>
           </div>
         </article>
-
-        <article class="card pad span-12">
-          <div class="quote">
-            <h4>产品想象</h4>
-            <p>
-              千机百变不是传统意义上的“工具箱”。
-              它更像一座轻巧的微型乐园：有动画的呼吸感，有脚本的执行力，有资源包的可扩展性，
-              也有足够克制的界面留白，让人一眼看懂，一用就上手，一玩就想继续探索。
-            </p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="section-head">
-        <h3>联系与支持</h3>
-        <p>技术支持、用户反馈、交流讨论，都可以通过下面的渠道联系我。</p>
-      </div>
-      <div class="card pad">
-        <div class="contact">
-          <div class="contact-card">
-            <div class="contact-label">Email</div>
-            <div class="contact-value"><a href="mailto:qu991221@gmail.com">qu991221@gmail.com</a></div>
-            <p class="contact-note">用于技术支持、用户反馈和合作沟通。</p>
-          </div>
-          <div class="contact-card">
-            <div class="contact-label">QQ群</div>
-            <div class="contact-value">862835994</div>
-            <p class="contact-note">用于国内用户交流、反馈讨论和使用支持。</p>
-          </div>
-        </div>
       </div>
     </section>
 
     <footer class="footer">
-      千机百变 · 轻便、可爱、但不轻飘<br>
-      让趣味工具进入一个更有想象力的时代
+      千机百变 · 轻便、可爱、好看<br>
+      用一个 App 装下更多趣味工具
     </footer>
   </main>
 </body>
