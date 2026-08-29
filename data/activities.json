@@ -1,0 +1,35 @@
+[
+  {
+    "id": "partner-recruitment",
+    "title": "让你的作品出现在这里",
+    "summary": "制作指南、封面规范与投稿方式已经整理好。加入设计伙伴，把一个有趣想法变成可以被发现的案例。",
+    "badge": "长期活动 · 伙伴招募",
+    "cover": "./assets/activities/partner-recruitment.webp",
+    "coverAlt": "紫色与蓝色交叠的伙伴招募活动占位视觉",
+    "url": "./guide/",
+    "linkLabel": "查看制作指南",
+    "visible": true
+  },
+  {
+    "id": "official-showcase",
+    "title": "官方案例征集中",
+    "summary": "提交你最具代表性的 Rive 与 JavaScript 作品。入选案例将在伙伴展示区获得独立卡片与外链入口。",
+    "badge": "官方征集 · 持续进行",
+    "cover": "./assets/activities/official-showcase.webp",
+    "coverAlt": "橙红色几何图形构成的案例征集活动占位视觉",
+    "url": "mailto:qu991221@gmail.com?subject=%E5%8D%83%E6%9C%BA%E7%99%BE%E5%8F%98%E6%A1%88%E4%BE%8B%E6%8A%95%E7%A8%BF",
+    "linkLabel": "邮件投稿",
+    "visible": true
+  },
+  {
+    "id": "community-channel",
+    "title": "一起讨论下一种交互",
+    "summary": "加入官方交流群，讨论资源包能力、跨平台适配与新的互动方向。QQ群：862835994。",
+    "badge": "官方交流 · QQ 群 862835994",
+    "cover": "./assets/activities/community-channel.webp",
+    "coverAlt": "青绿色抽象连接图形构成的官方交流活动占位视觉",
+    "url": "mailto:qu991221@gmail.com?subject=%E5%8A%A0%E5%85%A5%E5%8D%83%E6%9C%BA%E7%99%BE%E5%8F%98%E4%BA%A4%E6%B5%81",
+    "linkLabel": "联系官方",
+    "visible": true
+  }
+]
