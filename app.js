@@ -8,7 +8,6 @@ const caseGrid = document.querySelector("#case-grid");
 const categoryTabs = document.querySelector("#category-tabs");
 const searchInput = document.querySelector("#case-search");
 const platformButtons = document.querySelector("#platform-buttons");
-const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
 
 const state = {
@@ -86,6 +85,7 @@ function renderActivities() {
     cover.src = activity.cover;
     cover.alt = activity.coverAlt || `${activity.title}活动视觉`;
     badge.textContent = activity.badge;
+    badge.hidden = !activity.badge;
     title.textContent = activity.title;
     summary.textContent = activity.summary;
     link.querySelector("span").textContent = activity.linkLabel;
@@ -239,8 +239,6 @@ function renderCases() {
     const fragment = caseTemplate.content.cloneNode(true);
     const card = fragment.querySelector(".case-card");
     const image = fragment.querySelector(".case-media img");
-    const featured = fragment.querySelector(".case-featured");
-    const destination = fragment.querySelector(".case-destination");
     const title = fragment.querySelector("h3");
     const summary = fragment.querySelector(".case-summary");
     const partner = fragment.querySelector(".partner-name");
@@ -253,8 +251,6 @@ function renderCases() {
     card.dataset.official = item.partnerName === "千机百变官方" ? "true" : "false";
     image.src = item.cover;
     image.alt = item.coverAlt || `${item.name}案例封面`;
-    featured.hidden = !item.featured;
-    destination.textContent = item.sourceName;
     title.textContent = item.name;
     summary.textContent = item.summary;
     partner.textContent = item.partnerName;
@@ -264,7 +260,6 @@ function renderCases() {
     caseGrid.append(fragment);
   });
 
-  if (resultsCount) resultsCount.textContent = `显示 ${items.length} / ${state.cases.length} 个案例`;
   if (emptyState) emptyState.hidden = items.length !== 0;
 }
 
@@ -277,7 +272,6 @@ function bindCaseControls() {
 
 function renderLoadError(error) {
   console.error(error);
-  if (resultsCount) resultsCount.textContent = "案例暂时无法载入";
   if (emptyState) {
     emptyState.hidden = false;
     emptyState.querySelector("strong").textContent = "内容载入失败";

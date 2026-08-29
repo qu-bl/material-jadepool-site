@@ -17,8 +17,8 @@
   <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
   <link rel="icon" href="./assets/og.png" type="image/png">
   <title>千机百变 · 官方与伙伴们的创意橱柜</title>
-  <link rel="stylesheet" href="./styles.css?v=3">
-  <script src="./app.js?v=2" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=4">
+  <script src="./app.js?v=4" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#showcase">跳到创意橱柜</a>
@@ -26,16 +26,9 @@
   <main class="app-page">
     <section class="activity-section" aria-label="千机百变官方与活动">
       <div class="activity-carousel" id="activity-carousel" aria-roledescription="轮播">
-        <div class="activity-topbar">
-          <a class="banner-brand" href="./" aria-label="千机百变官方首页">
-            <span class="official-dot" aria-hidden="true"></span>
-            <span>千机百变</span>
-            <small>官方</small>
-          </a>
-          <div class="carousel-controls" aria-label="活动轮播控制">
-            <button class="icon-button" id="activity-prev" type="button" aria-label="上一个活动">←</button>
-            <button class="icon-button" id="activity-next" type="button" aria-label="下一个活动">→</button>
-          </div>
+        <div class="carousel-controls carousel-controls--floating" aria-label="活动轮播控制">
+          <button class="icon-button" id="activity-prev" type="button" aria-label="上一个活动">←</button>
+          <button class="icon-button" id="activity-next" type="button" aria-label="下一个活动">→</button>
         </div>
         <div class="activity-track" id="activity-track"></div>
         <div class="activity-dots" id="activity-dots" aria-label="选择活动"></div>
@@ -45,14 +38,9 @@
 
     <section class="showcase-section" id="showcase" aria-labelledby="showcase-title">
       <div class="showcase-header">
-        <div>
-          <p class="section-kicker">Creative cabinet</p>
-          <h2 id="showcase-title">官方与伙伴们的创意橱柜</h2>
-          <p class="section-description">收藏千机百变官方与设计伙伴创造的界面、工具和互动实验。点击任意卡片即可前往对应的外部页面。</p>
-        </div>
+        <h2 id="showcase-title">官方与伙伴们的创意橱柜</h2>
         <div class="search-wrap">
           <label class="sr-only" for="case-search">搜索创意案例</label>
-          <span class="search-icon" aria-hidden="true">⌕</span>
           <input id="case-search" type="search" placeholder="搜索案例、伙伴或能力" autocomplete="off">
         </div>
       </div>
@@ -60,11 +48,6 @@
       <div class="showcase-toolbar" aria-label="创意案例筛选">
         <div class="category-tabs" id="category-tabs" role="group" aria-label="案例分类"></div>
         <div class="platform-buttons" id="platform-buttons" role="group" aria-label="按运行平台筛选"></div>
-      </div>
-
-      <div class="results-meta">
-        <p id="results-count">正在载入案例…</p>
-        <span>本站仅展示与引流</span>
       </div>
 
       <div class="case-grid" id="case-grid" role="list"></div>
@@ -105,8 +88,6 @@
     <a class="case-card" role="listitem">
       <div class="case-media">
         <img loading="lazy" decoding="async" alt="">
-        <span class="case-featured" hidden>精选</span>
-        <span class="case-destination"></span>
       </div>
       <div class="case-body">
         <div class="case-eyebrow">
@@ -117,7 +98,6 @@
         <p class="case-summary"></p>
         <div class="case-footer">
           <div class="case-platforms"></div>
-          <span class="case-open">查看创意 <b aria-hidden="true">↗</b></span>
         </div>
       </div>
     </a>
