@@ -4,7 +4,7 @@
 
 ## 内容结构
 
-- `index.html`：包含官方介绍的首屏活动轮播、基本信息和创意橱柜
+- `index.html`：包含官方介绍的首屏活动轮播和创意橱柜
 - `guide/index.html`：制作指南与设计伙伴招募
 - `data/activities.json`：官方活动 Banner 数据
 - `data/cases.json`：官方与伙伴案例卡片数据

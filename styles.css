@@ -105,7 +105,6 @@ select:focus-visible {
   overflow: hidden;
 }
 
-.facts-section,
 .showcase-section,
 .closing-strip {
   width: 100%;
@@ -215,7 +214,7 @@ h1 {
 
 .activity-section {
   width: 100%;
-  padding: 0 0 clamp(48px, 7vw, 96px);
+  padding: 0 0 clamp(20px, 3vw, 40px);
 }
 
 .section-heading,
@@ -429,50 +428,6 @@ h2 {
 .activity-dot[aria-current="true"] {
   width: 26px;
   background: #fff;
-}
-
-.facts-section {
-  padding-top: 2px;
-  padding-bottom: clamp(46px, 7vw, 90px);
-}
-
-.facts-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.fact-card {
-  min-height: 190px;
-  padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-}
-
-.fact-card--contact {
-  background: var(--accent-soft);
-}
-
-.fact-label {
-  display: block;
-  margin-bottom: 42px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 720;
-}
-
-.fact-card strong {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 19px;
-  letter-spacing: -0.025em;
-}
-
-.fact-card p {
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 13px;
 }
 
 .showcase-section {
@@ -1097,10 +1052,6 @@ h2 {
     grid-template-columns: 1fr;
   }
 
-  .facts-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .guide-content {
     grid-template-columns: 1fr;
   }
@@ -1169,18 +1120,6 @@ h2 {
 
   .carousel-controls {
     display: none;
-  }
-
-  .facts-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .fact-card {
-    min-height: 150px;
-  }
-
-  .fact-label {
-    margin-bottom: 28px;
   }
 
   .showcase-header {
