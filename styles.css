@@ -105,8 +105,7 @@ select:focus-visible {
   overflow: hidden;
 }
 
-.showcase-section,
-.closing-strip {
+.showcase-section {
   width: 100%;
   padding-inline: max(var(--page-pad), env(safe-area-inset-left));
 }
@@ -241,37 +240,6 @@ h2 {
   line-height: 1;
 }
 
-.carousel-controls {
-  display: flex;
-  gap: 8px;
-}
-
-.carousel-controls--floating {
-  position: absolute;
-  z-index: 8;
-  top: max(20px, env(safe-area-inset-top));
-  right: max(var(--page-pad), env(safe-area-inset-right));
-}
-
-.icon-button {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 50%;
-  background: rgba(13, 12, 20, 0.24);
-  color: #fff;
-  cursor: pointer;
-  backdrop-filter: blur(20px) saturate(135%);
-  transition: transform 150ms ease, background-color 150ms ease;
-}
-
-.icon-button:hover {
-  background: rgba(255, 255, 255, 0.18);
-  transform: scale(1.04);
-}
-
 .activity-carousel {
   position: relative;
   overflow: hidden;
@@ -321,20 +289,8 @@ h2 {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding: clamp(150px, 19vh, 210px) max(var(--page-pad), env(safe-area-inset-right)) clamp(62px, 8vw, 100px) max(var(--page-pad), env(safe-area-inset-left));
+  padding: clamp(78px, 12vh, 120px) max(var(--page-pad), env(safe-area-inset-right)) clamp(62px, 8vw, 100px) max(var(--page-pad), env(safe-area-inset-left));
   color: #fff;
-}
-
-.activity-badge {
-  display: inline-flex;
-  margin-bottom: 18px;
-  padding: 7px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  font-size: 12px;
-  font-weight: 730;
-  backdrop-filter: blur(14px);
 }
 
 .activity-content h3 {
@@ -608,11 +564,6 @@ h2 {
   color: var(--accent-strong);
 }
 
-.case-category {
-  flex: 0 0 auto;
-  color: color-mix(in srgb, var(--muted) 74%, transparent);
-}
-
 .case-body > h3 {
   margin-bottom: 9px;
   font-size: clamp(20px, 1.8vw, 26px);
@@ -677,36 +628,6 @@ h2 {
 
 .empty-state p {
   margin-bottom: 0;
-}
-
-.closing-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding-top: 24px;
-  padding-bottom: 10px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.closing-strip > div,
-.closing-links {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.closing-strip strong {
-  color: var(--text);
-}
-
-.closing-links a {
-  text-decoration: none;
-}
-
-.closing-links a:hover {
-  color: var(--text);
 }
 
 .sr-only {
@@ -999,7 +920,7 @@ h2 {
 
   .activity-content {
     max-width: none;
-    padding: 132px max(22px, env(safe-area-inset-right)) 68px max(22px, env(safe-area-inset-left));
+    padding: 78px max(22px, env(safe-area-inset-right)) 68px max(22px, env(safe-area-inset-left));
   }
 
   .activity-content h3 {
@@ -1015,10 +936,6 @@ h2 {
   .activity-dots {
     right: max(22px, env(safe-area-inset-right));
     bottom: 28px;
-  }
-
-  .carousel-controls {
-    display: none;
   }
 
   .showcase-header {
@@ -1056,11 +973,6 @@ h2 {
     align-items: center;
     flex-direction: row;
     gap: 10px;
-  }
-
-  .closing-strip {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .guide-topbar {

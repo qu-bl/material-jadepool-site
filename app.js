@@ -75,7 +75,6 @@ function renderActivities() {
     const fragment = activityTemplate.content.cloneNode(true);
     const slide = fragment.querySelector(".activity-slide");
     const cover = fragment.querySelector(".activity-cover");
-    const badge = fragment.querySelector(".activity-badge");
     const title = fragment.querySelector("h3");
     const summary = fragment.querySelector("p");
     const link = fragment.querySelector(".banner-action");
@@ -84,13 +83,15 @@ function renderActivities() {
     slide.setAttribute("aria-roledescription", "幻灯片");
     cover.src = activity.cover;
     cover.alt = activity.coverAlt || `${activity.title}活动视觉`;
-    badge.textContent = activity.badge;
-    badge.hidden = !activity.badge;
     title.textContent = activity.title;
     summary.textContent = activity.summary;
-    link.querySelector("span").textContent = activity.linkLabel;
-    link.querySelector("b").textContent = isExternalUrl(activity.url) ? "↗" : "→";
-    configureLink(link, activity.url);
+    if (activity.url) {
+      link.querySelector("span").textContent = activity.linkLabel;
+      link.querySelector("b").textContent = isExternalUrl(activity.url) ? "↗" : "→";
+      configureLink(link, activity.url);
+    } else {
+      link.hidden = true;
+    }
     activityTrack.append(fragment);
 
     if (activityDots) {
@@ -136,9 +137,6 @@ function scheduleCarousel() {
 }
 
 function bindCarouselControls() {
-  document.querySelector("#activity-prev")?.addEventListener("click", () => setActivity(state.activityIndex - 1, true));
-  document.querySelector("#activity-next")?.addEventListener("click", () => setActivity(state.activityIndex + 1, true));
-
   if (!activityCarousel) return;
   const pause = () => {
     state.paused = true;
@@ -242,7 +240,6 @@ function renderCases() {
     const title = fragment.querySelector("h3");
     const summary = fragment.querySelector(".case-summary");
     const partner = fragment.querySelector(".partner-name");
-    const category = fragment.querySelector(".case-category");
     const platforms = fragment.querySelector(".case-platforms");
 
     configureLink(card, item.url);
@@ -253,8 +250,7 @@ function renderCases() {
     image.alt = item.coverAlt || `${item.name}案例封面`;
     title.textContent = item.name;
     summary.textContent = item.summary;
-    partner.textContent = item.partnerName;
-    category.textContent = item.category;
+    partner.textContent = item.partnerName === "千机百变官方" ? "官方" : item.partnerName;
     platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
     item.platforms.forEach((platform) => platforms.append(createPlatformIcon(platform, "platform-icon--case")));
     caseGrid.append(fragment);

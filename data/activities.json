@@ -2,19 +2,17 @@
   {
     "id": "official-intro",
     "title": "一千部手机，\n有一百个样子。",
-    "summary": "千机百变把 Rive 的视觉、JavaScript 的真实逻辑与创作者的奇思妙想装进一个轻便入口。这里展示官方计划，也收藏伙伴们带来的新鲜交互。",
-    "badge": "",
+    "summary": "千机百变把 Rive 视觉、JavaScript 逻辑与创作者的想法装进一个轻便入口。",
     "cover": "./assets/activities/official-intro-v2.webp",
     "coverAlt": "紫蓝与珊瑚色的立体界面形态围绕发光轨道展开",
-    "url": "#showcase",
-    "linkLabel": "打开创意橱柜",
+    "url": "",
+    "linkLabel": "",
     "visible": true
   },
   {
     "id": "partner-recruitment",
     "title": "把你的想法，\n做成新的样子。",
-    "summary": "制作指南、封面规范与投稿方式已经整理好。加入设计伙伴，让一个有趣想法成为可以被看见、被使用的作品。",
-    "badge": "长期活动 · 制作指南与伙伴招募",
+    "summary": "阅读制作指南，准备封面与外链，把作品提交到创意橱柜。",
     "cover": "./assets/activities/partner-recruitment-v2.webp",
     "coverAlt": "蓝紫色模块与状态节点组合成富有动感的互动装置",
     "url": "./guide/",
@@ -22,21 +20,9 @@
     "visible": true
   },
   {
-    "id": "official-showcase",
-    "title": "把好创意，\n放进橱柜。",
-    "summary": "官方作品与入选伙伴案例会在创意橱柜获得独立封面、作者署名和外链入口，让不同的好点子被长期发现。",
-    "badge": "官方征集 · 持续进行",
-    "cover": "./assets/activities/official-showcase-v2.webp",
-    "coverAlt": "暖红色创意陈列柜展示多个发光互动装置",
-    "url": "mailto:qu991221@gmail.com?subject=%E5%8D%83%E6%9C%BA%E7%99%BE%E5%8F%98%E6%A1%88%E4%BE%8B%E6%8A%95%E7%A8%BF",
-    "linkLabel": "邮件投稿",
-    "visible": true
-  },
-  {
     "id": "community-channel",
     "title": "一起讨论，\n下一种交互。",
-    "summary": "加入官方交流群，讨论资源包能力、三端适配与新的互动方向。QQ群：862835994。",
-    "badge": "官方交流 · QQ 群 862835994",
+    "summary": "讨论资源包能力、三端适配与新的互动方向。QQ群：862835994。",
     "cover": "./assets/activities/community-channel-v2.webp",
     "coverAlt": "青绿色发光轨道连接多个柔软的立体创意形态",
     "url": "mailto:qu991221@gmail.com?subject=%E5%8A%A0%E5%85%A5%E5%8D%83%E6%9C%BA%E7%99%BE%E5%8F%98%E4%BA%A4%E6%B5%81",

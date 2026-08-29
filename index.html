@@ -17,8 +17,8 @@
   <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
   <link rel="icon" href="./assets/og.png" type="image/png">
   <title>千机百变 · 官方与伙伴们的创意橱柜</title>
-  <link rel="stylesheet" href="./styles.css?v=4">
-  <script src="./app.js?v=4" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=5">
+  <script src="./app.js?v=5" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#showcase">跳到创意橱柜</a>
@@ -26,10 +26,6 @@
   <main class="app-page">
     <section class="activity-section" aria-label="千机百变官方与活动">
       <div class="activity-carousel" id="activity-carousel" aria-roledescription="轮播">
-        <div class="carousel-controls carousel-controls--floating" aria-label="活动轮播控制">
-          <button class="icon-button" id="activity-prev" type="button" aria-label="上一个活动">←</button>
-          <button class="icon-button" id="activity-next" type="button" aria-label="下一个活动">→</button>
-        </div>
         <div class="activity-track" id="activity-track"></div>
         <div class="activity-dots" id="activity-dots" aria-label="选择活动"></div>
         <p class="sr-only" id="activity-status" aria-live="polite"></p>
@@ -38,7 +34,7 @@
 
     <section class="showcase-section" id="showcase" aria-labelledby="showcase-title">
       <div class="showcase-header">
-        <h2 id="showcase-title">官方与伙伴们的创意橱柜</h2>
+        <h2 id="showcase-title">创意橱柜</h2>
         <div class="search-wrap">
           <label class="sr-only" for="case-search">搜索创意案例</label>
           <input id="case-search" type="search" placeholder="搜索案例、伙伴或能力" autocomplete="off">
@@ -57,18 +53,6 @@
       </div>
     </section>
 
-    <section class="closing-strip" aria-label="官方信息">
-      <div>
-        <span class="official-dot" aria-hidden="true"></span>
-        <strong>千机百变</strong>
-        <span>轻便、可爱、直接。</span>
-      </div>
-      <div class="closing-links">
-        <a href="./guide/">制作指南</a>
-        <a href="https://github.com/qu-bl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <a href="mailto:qu991221@gmail.com">邮件</a>
-      </div>
-    </section>
   </main>
 
   <template id="activity-template">
@@ -76,7 +60,6 @@
       <img class="activity-cover" alt="">
       <div class="activity-scrim" aria-hidden="true"></div>
       <div class="activity-content">
-        <span class="activity-badge"></span>
         <h3></h3>
         <p></p>
         <a class="banner-action"><span></span><b aria-hidden="true">↗</b></a>
@@ -92,7 +75,6 @@
       <div class="case-body">
         <div class="case-eyebrow">
           <span class="partner-name"></span>
-          <span class="case-category"></span>
         </div>
         <h3></h3>
         <p class="case-summary"></p>
