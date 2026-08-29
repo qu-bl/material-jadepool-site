@@ -7,7 +7,7 @@ const caseTemplate = document.querySelector("#case-template");
 const caseGrid = document.querySelector("#case-grid");
 const categoryTabs = document.querySelector("#category-tabs");
 const searchInput = document.querySelector("#case-search");
-const platformSelect = document.querySelector("#platform-select");
+const platformButtons = document.querySelector("#platform-buttons");
 const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
 
@@ -23,6 +23,31 @@ const state = {
 };
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const PLATFORM_LABELS = {
+  Apple: "苹果",
+  Android: "安卓",
+  HarmonyOS: "鸿蒙",
+};
+
+const PLATFORM_ICONS = {
+  "全部平台": `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="2"></rect><rect x="14" y="4" width="6" height="6" rx="2"></rect><rect x="4" y="14" width="6" height="6" rx="2"></rect><rect x="14" y="14" width="6" height="6" rx="2"></rect></svg>`,
+  Apple: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.9 12.9c0-2.2 1.8-3.3 1.9-3.4-1.1-1.5-2.7-1.7-3.3-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 6.9 1.1 9.1.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3.1-.7 1.4 0 1.9.7 3.1.7 1.3 0 2.1-1.1 2.8-2.2.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.7-1-2.7-3.7zM14.6 6.3c.6-.8 1.1-2 1-3.1-1 .1-2.2.7-2.9 1.5-.6.7-1.1 1.9-1 3 1.1.1 2.2-.5 2.9-1.4z"></path></svg>`,
+  Android: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.1 8.2h9.8c1.1 0 2 .9 2 2v7.1c0 .6-.5 1.1-1.1 1.1h-1v2.1a1.2 1.2 0 0 1-2.4 0v-2.1H9.6v2.1a1.2 1.2 0 0 1-2.4 0v-2.1h-1c-.6 0-1.1-.5-1.1-1.1v-7.1c0-1.1.9-2 2-2z"></path><path d="M7.7 8.1a4.5 4.5 0 0 1 8.6 0M8.1 3.2l1.2 2M15.9 3.2l-1.2 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path><circle cx="9.2" cy="6.9" r=".7" fill="var(--icon-cutout, #fff)"></circle><circle cx="14.8" cy="6.9" r=".7" fill="var(--icon-cutout, #fff)"></circle></svg>`,
+  HarmonyOS: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.2 9.5c2-2.7 4.6-4.1 7.8-4.1s5.8 1.4 7.8 4.1M6.1 13c1.5-1.8 3.5-2.7 5.9-2.7s4.4.9 5.9 2.7M8.5 16.4c.9-.9 2.1-1.4 3.5-1.4s2.6.5 3.5 1.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><circle cx="12" cy="19.2" r="1.45" fill="currentColor"></circle></svg>`,
+};
+
+function platformLabel(platform) {
+  return platform === "全部平台" ? "全部平台" : PLATFORM_LABELS[platform] || platform;
+}
+
+function createPlatformIcon(platform, className = "") {
+  const icon = document.createElement("span");
+  icon.className = `platform-icon ${className}`.trim();
+  icon.innerHTML = PLATFORM_ICONS[platform] || "";
+  icon.title = platformLabel(platform);
+  return icon;
+}
 
 function isExternalUrl(url) {
   return /^(https?:|mailto:)/i.test(url);
@@ -151,9 +176,8 @@ function bindCarouselControls() {
 }
 
 function renderFilters() {
-  if (!categoryTabs || !platformSelect) return;
+  if (!categoryTabs || !platformButtons) return;
   const categories = ["全部", ...new Set(state.cases.map((item) => item.category))];
-  const platforms = [...new Set(state.cases.flatMap((item) => item.platforms))];
 
   categoryTabs.replaceChildren();
   categories.forEach((category) => {
@@ -172,12 +196,25 @@ function renderFilters() {
     categoryTabs.append(button);
   });
 
-  platformSelect.querySelectorAll("option:not(:first-child)").forEach((option) => option.remove());
-  platforms.forEach((platform) => {
-    const option = document.createElement("option");
-    option.value = platform;
-    option.textContent = platform;
-    platformSelect.append(option);
+  platformButtons.replaceChildren();
+  ["全部平台", "Apple", "Android", "HarmonyOS"].forEach((platform) => {
+    const button = document.createElement("button");
+    const label = platformLabel(platform);
+    button.className = "platform-button";
+    button.type = "button";
+    button.dataset.platform = platform;
+    button.setAttribute("aria-label", label);
+    button.setAttribute("aria-pressed", platform === state.platform ? "true" : "false");
+    button.title = label;
+    button.append(createPlatformIcon(platform));
+    button.addEventListener("click", () => {
+      state.platform = platform;
+      platformButtons.querySelectorAll("button").forEach((item) => {
+        item.setAttribute("aria-pressed", item === button ? "true" : "false");
+      });
+      renderCases();
+    });
+    platformButtons.append(button);
   });
 }
 
@@ -207,18 +244,23 @@ function renderCases() {
     const title = fragment.querySelector("h3");
     const summary = fragment.querySelector(".case-summary");
     const partner = fragment.querySelector(".partner-name");
-    const platform = fragment.querySelector(".case-platform");
+    const category = fragment.querySelector(".case-category");
+    const platforms = fragment.querySelector(".case-platforms");
 
     configureLink(card, item.url);
     card.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，前往 ${item.sourceName}`);
+    card.dataset.featured = item.featured ? "true" : "false";
+    card.dataset.official = item.partnerName === "千机百变官方" ? "true" : "false";
     image.src = item.cover;
     image.alt = item.coverAlt || `${item.name}案例封面`;
     featured.hidden = !item.featured;
     destination.textContent = item.sourceName;
     title.textContent = item.name;
     summary.textContent = item.summary;
-    partner.textContent = `by ${item.partnerName}`;
-    platform.textContent = item.platforms.slice(0, 2).join(" · ");
+    partner.textContent = item.partnerName;
+    category.textContent = item.category;
+    platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
+    item.platforms.forEach((platform) => platforms.append(createPlatformIcon(platform, "platform-icon--case")));
     caseGrid.append(fragment);
   });
 
@@ -229,10 +271,6 @@ function renderCases() {
 function bindCaseControls() {
   searchInput?.addEventListener("input", (event) => {
     state.query = event.target.value;
-    renderCases();
-  });
-  platformSelect?.addEventListener("change", (event) => {
-    state.platform = event.target.value;
     renderCases();
   });
 }

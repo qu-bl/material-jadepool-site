@@ -3,58 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f3f3f5" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)">
-  <meta name="description" content="千机百变官方活动与设计伙伴案例展示。">
+  <meta name="theme-color" content="#f2f0ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12110f" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="千机百变官方活动，以及官方与伙伴们共同创作的互动案例。">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="千机百变 · 官方活动与设计伙伴案例">
-  <meta property="og:description" content="认识官方计划，发现设计伙伴用 Rive 与 JavaScript 创作的不同可能。">
-  <meta property="og:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og.png">
+  <meta property="og:title" content="千机百变 · 官方与伙伴们的创意橱柜">
+  <meta property="og:description" content="认识官方计划，发现官方与伙伴们用 Rive 和 JavaScript 创作的不同可能。">
+  <meta property="og:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
   <meta property="og:url" content="https://qu-bl.github.io/material-jadepool-site/">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="千机百变 · 官方活动与设计伙伴案例">
-  <meta name="twitter:description" content="认识官方计划，发现设计伙伴用 Rive 与 JavaScript 创作的不同可能。">
-  <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og.png">
+  <meta name="twitter:title" content="千机百变 · 官方与伙伴们的创意橱柜">
+  <meta name="twitter:description" content="认识官方计划，发现官方与伙伴们用 Rive 和 JavaScript 创作的不同可能。">
+  <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
   <link rel="icon" href="./assets/og.png" type="image/png">
-  <title>千机百变 · 官方与伙伴案例</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" defer></script>
+  <title>千机百变 · 官方与伙伴们的创意橱柜</title>
+  <link rel="stylesheet" href="./styles.css?v=2">
+  <script src="./app.js?v=2" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#showcase">跳到伙伴案例</a>
+  <a class="skip-link" href="#showcase">跳到创意橱柜</a>
 
   <main class="app-page">
-    <section class="official-intro" aria-labelledby="page-title">
-      <div class="intro-copy">
-        <div class="official-mark">
-          <span class="official-dot" aria-hidden="true"></span>
-          千机百变官方
-        </div>
-        <h1 id="page-title">一千部手机，<br>有一百个样子。</h1>
-        <p class="intro-text">
-          这里聚合官方计划、近期活动与设计伙伴的创作案例。
-          每一个资源包都由 Rive 与 JavaScript 驱动，再通过伙伴自己的渠道继续生长。
-        </p>
-      </div>
-      <div class="intro-actions" aria-label="页面快捷入口">
-        <a class="primary-action" href="#showcase">浏览伙伴案例</a>
-        <a class="secondary-action" href="./guide/">查看制作指南</a>
-      </div>
-    </section>
-
-    <section class="activity-section" aria-labelledby="activity-title">
-      <div class="section-heading activity-heading">
-        <div>
-          <p class="section-kicker">Official events</p>
-          <h2 id="activity-title">官方活动</h2>
-        </div>
-        <div class="carousel-controls" aria-label="活动轮播控制">
-          <button class="icon-button" id="activity-prev" type="button" aria-label="上一个活动">←</button>
-          <button class="icon-button" id="activity-next" type="button" aria-label="下一个活动">→</button>
-        </div>
-      </div>
-
+    <section class="activity-section" aria-label="千机百变官方与活动">
       <div class="activity-carousel" id="activity-carousel" aria-roledescription="轮播">
+        <div class="activity-topbar">
+          <a class="banner-brand" href="./" aria-label="千机百变官方首页">
+            <span class="official-dot" aria-hidden="true"></span>
+            <span>千机百变</span>
+            <small>官方</small>
+          </a>
+          <div class="carousel-controls" aria-label="活动轮播控制">
+            <button class="icon-button" id="activity-prev" type="button" aria-label="上一个活动">←</button>
+            <button class="icon-button" id="activity-next" type="button" aria-label="下一个活动">→</button>
+          </div>
+        </div>
         <div class="activity-track" id="activity-track"></div>
         <div class="activity-dots" id="activity-dots" aria-label="选择活动"></div>
         <p class="sr-only" id="activity-status" aria-live="polite"></p>
@@ -77,7 +59,7 @@
         <article class="fact-card">
           <span class="fact-label">支持方向</span>
           <strong>多端资源展示</strong>
-          <p>面向 HarmonyOS、Android、Apple 与 Web 相关案例。</p>
+          <p>聚焦苹果、安卓与鸿蒙三个平台的互动案例。</p>
         </article>
         <article class="fact-card">
           <span class="fact-label">合作方式</span>
@@ -95,25 +77,20 @@
     <section class="showcase-section" id="showcase" aria-labelledby="showcase-title">
       <div class="showcase-header">
         <div>
-          <p class="section-kicker">Design partners</p>
-          <h2 id="showcase-title">设计伙伴案例</h2>
-          <p class="section-description">发现不同伙伴创造的界面、工具与互动实验。点击卡片将前往对应伙伴的外部页面。</p>
+          <p class="section-kicker">Creative cabinet</p>
+          <h2 id="showcase-title">官方与伙伴们的创意橱柜</h2>
+          <p class="section-description">收藏千机百变官方与设计伙伴创造的界面、工具和互动实验。点击任意卡片即可前往对应的外部页面。</p>
         </div>
         <div class="search-wrap">
-          <label class="sr-only" for="case-search">搜索伙伴案例</label>
+          <label class="sr-only" for="case-search">搜索创意案例</label>
           <span class="search-icon" aria-hidden="true">⌕</span>
           <input id="case-search" type="search" placeholder="搜索案例、伙伴或能力" autocomplete="off">
         </div>
       </div>
 
-      <div class="showcase-toolbar" aria-label="案例筛选">
+      <div class="showcase-toolbar" aria-label="创意案例筛选">
         <div class="category-tabs" id="category-tabs" role="group" aria-label="案例分类"></div>
-        <label class="platform-filter">
-          <span class="sr-only">筛选运行平台</span>
-          <select id="platform-select">
-            <option value="全部平台">全部平台</option>
-          </select>
-        </label>
+        <div class="platform-buttons" id="platform-buttons" role="group" aria-label="按运行平台筛选"></div>
       </div>
 
       <div class="results-meta">
@@ -163,14 +140,15 @@
         <span class="case-destination"></span>
       </div>
       <div class="case-body">
-        <div class="case-title-row">
-          <h3></h3>
-          <span class="external-arrow" aria-hidden="true">↗</span>
+        <div class="case-eyebrow">
+          <span class="partner-name"></span>
+          <span class="case-category"></span>
         </div>
+        <h3></h3>
         <p class="case-summary"></p>
         <div class="case-footer">
-          <span class="partner-name"></span>
-          <span class="case-platform"></span>
+          <div class="case-platforms"></div>
+          <span class="case-open">查看创意 <b aria-hidden="true">↗</b></span>
         </div>
       </div>
     </a>
