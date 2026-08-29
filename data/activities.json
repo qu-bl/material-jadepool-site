@@ -1,32 +1,55 @@
 [
   {
     "id": "official-intro",
-    "title": "一千部手机，\n有一百个样子。",
-    "summary": "千机百变把 Rive 视觉、JavaScript 逻辑与创作者的想法装进一个轻便入口。",
-    "cover": "./assets/activities/official-intro-v2.webp",
-    "coverAlt": "紫蓝与珊瑚色的立体界面形态围绕发光轨道展开",
-    "url": "",
-    "linkLabel": "",
+    "title": "千机百变，\n让手机界面动起来。",
+    "summary": "将 Rive 动画与 JavaScript 交互制作成可加载的界面资源，支持苹果、安卓与鸿蒙。",
+    "cover": "./assets/activities/official-intro-v3.webp",
+    "coverAlt": "三台手机分别展示车辆仪表、天气微件与液态开关，并连接动画状态与交互节点",
     "visible": true
   },
   {
     "id": "partner-recruitment",
-    "title": "把你的想法，\n做成新的样子。",
-    "summary": "阅读制作指南，准备封面与外链，把作品提交到创意橱柜。",
-    "cover": "./assets/activities/partner-recruitment-v2.webp",
-    "coverAlt": "蓝紫色模块与状态节点组合成富有动感的互动装置",
-    "url": "./guide/",
-    "linkLabel": "查看制作指南",
+    "title": "查看制作指南，\n提交你的作品。",
+    "summary": "按照指南准备资源包、案例封面与平台内容，通过入驻申请加入创意橱柜。",
+    "cover": "./assets/activities/partner-recruitment-v3.webp",
+    "coverAlt": "手机界面设计经过状态编辑、封面准备与检查后提交到案例展示橱柜",
+    "linkLabel": "查看指南与入驻方式",
+    "access": {
+      "eyebrow": "金山文档",
+      "title": "制作指南与伙伴入驻",
+      "summary": "制作规范、封面要求、提交流程与入驻条件统一在金山文档维护。",
+      "items": [
+        {
+          "platform": "kdocs",
+          "label": "金山文档",
+          "value": "正式链接待发布",
+          "copyable": false
+        }
+      ],
+      "note": "这样可以避免重复维护网页内容，并始终以文档中的最新说明为准。"
+    },
     "visible": true
   },
   {
     "id": "community-channel",
-    "title": "一起讨论，\n下一种交互。",
-    "summary": "讨论资源包能力、三端适配与新的互动方向。QQ群：862835994。",
-    "cover": "./assets/activities/community-channel-v2.webp",
-    "coverAlt": "青绿色发光轨道连接多个柔软的立体创意形态",
-    "url": "mailto:qu991221@gmail.com?subject=%E5%8A%A0%E5%85%A5%E5%8D%83%E6%9C%BA%E7%99%BE%E5%8F%98%E4%BA%A4%E6%B5%81",
-    "linkLabel": "联系官方",
+    "title": "加入创作者群，\n交流制作与适配。",
+    "summary": "交流资源包制作、Rive 动画、JavaScript 交互，以及苹果、安卓、鸿蒙三端适配。QQ群：862835994。",
+    "cover": "./assets/activities/community-channel-v3.webp",
+    "coverAlt": "多位创作者围绕群聊、资源包、动画状态图与三端设备交流制作经验",
+    "linkLabel": "复制 QQ 群号",
+    "access": {
+      "eyebrow": "官方联系",
+      "title": "加入创作者交流群",
+      "summary": "选择 QQ 后复制群号，再自行前往 QQ 加群。",
+      "items": [
+        {
+          "platform": "qq",
+          "label": "QQ群",
+          "value": "862835994",
+          "description": "点击复制群号"
+        }
+      ]
+    },
     "visible": true
   }
 ]

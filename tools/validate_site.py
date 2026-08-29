@@ -38,7 +38,7 @@ def validate_page(path):
         assert target.exists(), f"{path}: missing local reference {ref}"
 
 
-for page in (ROOT / "index.html", ROOT / "guide" / "index.html"):
+for page in (ROOT / "index.html",):
     validate_page(page)
 
 activities = json.loads((ROOT / "data" / "activities.json").read_text(encoding="utf-8"))
@@ -47,4 +47,25 @@ for item in activities + cases:
     cover = ROOT / item["cover"].removeprefix("./")
     assert cover.exists(), f"missing cover: {cover}"
 
-print(f"validated 2 pages, {len(activities)} activities, {len(cases)} cases")
+access_platforms = {"bilibili", "xiaohongshu", "douyin", "kdocs", "qq", "github"}
+
+
+def validate_access_item(owner_id, access_item):
+    platform = access_item.get("platform")
+    assert platform in access_platforms, f"{owner_id}: invalid access platform"
+    assert access_item.get("label"), f"{owner_id}: access label is required"
+    assert access_item.get("value"), f"{owner_id}: access value is required"
+    icon = ROOT / "assets" / "platforms" / f"{platform}.svg"
+    assert icon.exists(), f"{owner_id}: missing platform logo {icon.name}"
+
+for item in cases:
+    access_items = item.get("access", {}).get("items", [])
+    assert access_items, f"{item['id']}: at least one access item is required"
+    for access_item in access_items:
+        validate_access_item(item["id"], access_item)
+
+for item in activities:
+    for access_item in item.get("access", {}).get("items", []):
+        validate_access_item(item["id"], access_item)
+
+print(f"validated 1 page, {len(activities)} activities, {len(cases)} cases")

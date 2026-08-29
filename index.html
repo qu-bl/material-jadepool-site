@@ -15,10 +15,10 @@
   <meta name="twitter:title" content="千机百变 · 官方与伙伴们的创意橱柜">
   <meta name="twitter:description" content="认识官方计划，发现官方与伙伴们用 Rive 和 JavaScript 创作的不同可能。">
   <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
-  <link rel="icon" href="./assets/og.png" type="image/png">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <title>千机百变 · 官方与伙伴们的创意橱柜</title>
-  <link rel="stylesheet" href="./styles.css?v=6">
-  <script src="./app.js?v=6" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=16">
+  <script src="./app.js?v=16" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#showcase">跳到创意橱柜</a>
@@ -37,7 +37,7 @@
         <h2 id="showcase-title">创意橱柜</h2>
         <div class="search-wrap">
           <label class="sr-only" for="case-search">搜索创意案例</label>
-          <input id="case-search" type="search" placeholder="搜索案例、伙伴或能力" autocomplete="off">
+          <input id="case-search" type="search" placeholder="搜索案例或伙伴" autocomplete="off">
         </div>
       </div>
 
@@ -62,26 +62,41 @@
       <div class="activity-content">
         <h3></h3>
         <p></p>
-        <a class="banner-action"><span></span><b aria-hidden="true">↗</b></a>
+        <button class="banner-action" type="button"><span></span><b aria-hidden="true">→</b></button>
       </div>
     </article>
   </template>
 
   <template id="case-template">
-    <a class="case-card" role="listitem">
-      <div class="case-media">
-        <img loading="lazy" decoding="async" alt="">
-      </div>
-      <div class="case-body">
-        <div class="case-eyebrow">
-          <span class="partner-name"></span>
+    <article class="case-card" role="listitem">
+      <button class="case-card-trigger" type="button">
+        <div class="case-media">
+          <img loading="lazy" decoding="async" alt="">
         </div>
-        <h3></h3>
-        <p class="case-summary"></p>
-      </div>
-      <div class="case-platforms"></div>
-      <span class="case-open" aria-hidden="true">↗</span>
-    </a>
+        <div class="case-body">
+          <div class="case-copy">
+            <h3></h3>
+            <span class="partner-name"></span>
+          </div>
+          <div class="case-platforms"></div>
+        </div>
+      </button>
+    </article>
   </template>
+
+  <dialog class="access-dialog" id="access-dialog" aria-labelledby="access-title">
+    <div class="access-sheet">
+      <header class="access-header">
+        <div>
+          <p class="access-eyebrow" id="access-eyebrow">获取信息</p>
+          <h2 id="access-title"></h2>
+        </div>
+      </header>
+      <p class="access-summary" id="access-summary"></p>
+      <div class="access-items" id="access-items" aria-label="选择复制平台"></div>
+      <p class="access-note" id="access-note"></p>
+    </div>
+  </dialog>
+  <p class="copy-toast" id="copy-toast" role="status" aria-live="polite"></p>
 </body>
 </html>

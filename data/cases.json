@@ -8,8 +8,28 @@
     "platforms": ["HarmonyOS", "Android"],
     "tags": ["Rive", "状态机", "数据绑定"],
     "cover": "./assets/cases/vehicle-dashboard.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "官方项目",
+    "access": {
+      "items": [
+        {
+          "platform": "xiaohongshu",
+          "label": "小红书",
+          "description": "点击复制小红书内容",
+          "value": "小红书：千机百变（展示样例，待替换）"
+        },
+        {
+          "platform": "bilibili",
+          "label": "哔哩哔哩",
+          "description": "点击复制哔哩哔哩内容",
+          "value": "哔哩哔哩：千机百变（展示样例，待替换）"
+        },
+        {
+          "platform": "douyin",
+          "label": "抖音",
+          "description": "点击复制抖音内容",
+          "value": "抖音：千机百变（展示样例，待替换）"
+        }
+      ]
+    },
     "featured": true,
     "visible": true
   },
@@ -22,8 +42,16 @@
     "platforms": ["HarmonyOS", "Apple"],
     "tags": ["网络数据", "主题适配", "状态机"],
     "cover": "./assets/cases/weather-widget.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "示例外链",
+    "access": {
+      "items": [
+        {
+          "platform": "xiaohongshu",
+          "label": "小红书",
+          "description": "点击复制小红书内容",
+          "value": "小红书：天气状态微件（展示样例，待替换）"
+        }
+      ]
+    },
     "featured": true,
     "visible": true
   },
@@ -36,8 +64,16 @@
     "platforms": ["Android", "HarmonyOS"],
     "tags": ["Rive", "时间", "动态布局"],
     "cover": "./assets/cases/dynamic-wallpaper.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "示例外链",
+    "access": {
+      "items": [
+        {
+          "platform": "bilibili",
+          "label": "哔哩哔哩",
+          "description": "点击复制哔哩哔哩内容",
+          "value": "哔哩哔哩：呼吸感动态壁纸（展示样例，待替换）"
+        }
+      ]
+    },
     "featured": false,
     "visible": true
   },
@@ -50,8 +86,16 @@
     "platforms": ["Apple", "Android"],
     "tags": ["音频", "Rive", "交互实验"],
     "cover": "./assets/cases/audio-orbit.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "示例外链",
+    "access": {
+      "items": [
+        {
+          "platform": "douyin",
+          "label": "抖音",
+          "description": "点击复制抖音内容",
+          "value": "抖音：声音轨道实验（展示样例，待替换）"
+        }
+      ]
+    },
     "featured": false,
     "visible": true
   },
@@ -64,8 +108,16 @@
     "platforms": ["Apple", "Android", "HarmonyOS"],
     "tags": ["图片绑定", "数据绑定", "模板"],
     "cover": "./assets/cases/image-binding-cards.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "官方项目",
+    "access": {
+      "items": [
+        {
+          "platform": "github",
+          "label": "GitHub",
+          "description": "点击复制 GitHub 内容",
+          "value": "GitHub：图片绑定卡片组（展示样例，待替换）"
+        }
+      ]
+    },
     "featured": false,
     "visible": true
   },
@@ -78,8 +130,16 @@
     "platforms": ["Android", "Apple"],
     "tags": ["传感器", "方向", "状态机"],
     "cover": "./assets/cases/sensor-compass.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "示例外链",
+    "access": {
+      "items": [
+        {
+          "platform": "qq",
+          "label": "QQ",
+          "description": "点击复制 QQ 群号",
+          "value": "862835994"
+        }
+      ]
+    },
     "featured": false,
     "visible": true
   },
@@ -92,8 +152,17 @@
     "platforms": ["HarmonyOS", "Apple"],
     "tags": ["时间", "JavaScript", "状态机"],
     "cover": "./assets/cases/focus-controller.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "示例外链",
+    "access": {
+      "items": [
+        {
+          "platform": "kdocs",
+          "label": "金山文档",
+          "description": "正式内容待发布",
+          "value": "金山文档内容待发布",
+          "copyable": false
+        }
+      ]
+    },
     "featured": false,
     "visible": true
   },
@@ -106,8 +175,22 @@
     "platforms": ["Apple", "Android", "HarmonyOS"],
     "tags": ["Rive", "组件", "状态机"],
     "cover": "./assets/cases/liquid-switch.webp",
-    "url": "https://github.com/qu-bl",
-    "sourceName": "示例外链",
+    "access": {
+      "items": [
+        {
+          "platform": "github",
+          "label": "GitHub",
+          "description": "点击复制 GitHub 内容",
+          "value": "GitHub：液态开关组件（展示样例，待替换）"
+        },
+        {
+          "platform": "xiaohongshu",
+          "label": "小红书",
+          "description": "点击复制小红书内容",
+          "value": "小红书：液态开关组件（展示样例，待替换）"
+        }
+      ]
+    },
     "featured": false,
     "visible": true
   }
