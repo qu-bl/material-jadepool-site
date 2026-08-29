@@ -233,7 +233,9 @@ function renderCases() {
   const items = getFilteredCases();
   caseGrid.replaceChildren();
 
-  items.forEach((item) => {
+  const editorialLayouts = ["hero", "support", "standard", "standard", "standard", "standard", "wide", "wide"];
+
+  items.forEach((item, index) => {
     const fragment = caseTemplate.content.cloneNode(true);
     const card = fragment.querySelector(".case-card");
     const image = fragment.querySelector(".case-media img");
@@ -246,6 +248,8 @@ function renderCases() {
     card.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，前往 ${item.sourceName}`);
     card.dataset.featured = item.featured ? "true" : "false";
     card.dataset.official = item.partnerName === "千机百变官方" ? "true" : "false";
+    card.dataset.layout = editorialLayouts[index % editorialLayouts.length];
+    card.style.setProperty("--card-index", Math.min(index, 7));
     image.src = item.cover;
     image.alt = item.coverAlt || `${item.name}案例封面`;
     title.textContent = item.name;
