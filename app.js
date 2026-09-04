@@ -10,11 +10,10 @@ const searchInput = document.querySelector("#case-search");
 const platformButtons = document.querySelector("#platform-buttons");
 const emptyState = document.querySelector("#empty-state");
 const accessDialog = document.querySelector("#access-dialog");
-const accessEyebrow = document.querySelector("#access-eyebrow");
 const accessTitle = document.querySelector("#access-title");
 const accessSummary = document.querySelector("#access-summary");
+const accessMedia = document.querySelector("#access-media");
 const accessItems = document.querySelector("#access-items");
-const accessNote = document.querySelector("#access-note");
 const copyToast = document.querySelector("#copy-toast");
 
 const state = {
@@ -54,6 +53,7 @@ const PLATFORM_ICONS = {
 };
 
 const ACCESS_META = {
+  youtube: { label: "YouTube", icon: "./assets/platforms/youtube.svg" },
   bilibili: {
     label: "哔哩哔哩",
     icon: "./assets/platforms/bilibili.svg",
@@ -99,6 +99,7 @@ function getAccess(item) {
 
 function closeAccessDialog() {
   if (!accessDialog) return;
+  accessMedia.replaceChildren();
   if (typeof accessDialog.close === "function" && accessDialog.open) {
     accessDialog.close();
   } else {
@@ -121,59 +122,96 @@ function fallbackCopy(value) {
   if (!copied) throw new Error("copy failed");
 }
 
-async function copyAccessValue(value, label, button, status) {
+async function copyAccessValue(value, label, button) {
   try {
     if (navigator.clipboard?.writeText && window.isSecureContext) {
       await navigator.clipboard.writeText(value);
     } else {
       fallbackCopy(value);
     }
-    const original = status.textContent;
-    status.textContent = "已复制到剪贴板";
     button.dataset.copied = "true";
     if (copyToast) {
       copyToast.textContent = `已复制${label}`;
       copyToast.dataset.visible = "true";
     }
     window.setTimeout(() => {
-      status.textContent = original;
       delete button.dataset.copied;
       if (copyToast) delete copyToast.dataset.visible;
     }, 1600);
   } catch (error) {
     console.error(error);
     if (copyToast) {
-      copyToast.textContent = "复制失败，请长按内容手动复制";
+      copyToast.textContent = "复制失败，请重试";
       copyToast.dataset.visible = "true";
       window.setTimeout(() => delete copyToast.dataset.visible, 2200);
     }
   }
 }
 
+function renderAccessMedia(item) {
+  accessMedia.replaceChildren();
+  const video = SiteMedia.videoSource(item.video);
+  accessMedia.hidden = !video && !item.cover;
+  accessMedia.style.aspectRatio = String(video?.ratio || 16 / 9);
+  accessMedia.classList.toggle("access-media--portrait", Boolean(video && video.ratio < 1));
+  if (item.cover) {
+    const poster = document.createElement("img");
+    poster.src = item.cover;
+    poster.alt = item.coverAlt || `${item.name || item.title}封面`;
+    accessMedia.append(poster);
+  }
+  if (!video) return;
+  const play = document.createElement("button");
+  play.type = "button";
+  play.className = "video-load";
+  play.textContent = "播放视频";
+  play.addEventListener("click", () => {
+    const frame = document.createElement("iframe");
+    frame.src = video.embed;
+    frame.title = `${item.name || item.title}视频`;
+    frame.allow = "fullscreen; encrypted-media; picture-in-picture";
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    accessMedia.replaceChildren(frame);
+  }, {once: true});
+  accessMedia.append(play);
+}
+
 function openAccessDialog(item, trigger) {
   if (!accessDialog || !accessItems) return;
   const access = getAccess(item);
   state.dialogTrigger = trigger;
+  renderAccessMedia(item);
 
-  accessEyebrow.textContent = access.eyebrow || (item.partnerName === "千机百变官方" ? "官方发布" : "获取信息");
   accessTitle.textContent = access.title || item.name || item.title;
-  accessSummary.textContent = access.summary || item.summary || "选择对应平台，复制所需内容后自行前往该平台。";
-  accessNote.textContent = access.note || "复制后请自行打开对应平台，并粘贴内容完成后续操作。";
+  accessSummary.textContent = item.description || access.description || access.summary || item.summary || "";
+  accessSummary.hidden = !accessSummary.textContent;
   accessItems.replaceChildren();
 
-  access.items.forEach((accessItem) => {
+  const entries = [...access.items];
+  const video = SiteMedia.videoSource(item.video);
+  if (video && !entries.some(entry => SiteMedia.accessAction(entry).href === video.href)) {
+    entries.unshift({platform: video.platform, value: video.href});
+  }
+  entries.forEach((accessItem) => {
     const meta = ACCESS_META[accessItem.platform];
     if (!meta) return;
-    const option = document.createElement("button");
+    const action = SiteMedia.accessAction(accessItem);
+    const option = document.createElement(action.type === "link" ? "a" : "button");
     const icon = document.createElement("span");
     const logo = document.createElement("img");
     const label = document.createElement("strong");
-    const status = document.createElement("small");
 
     option.className = "access-option";
-    option.type = "button";
+    if (action.type === "link") {
+      option.href = action.href;
+      option.target = "_blank";
+      option.rel = "noopener noreferrer";
+    } else {
+      option.type = "button";
+      option.disabled = action.type === "unavailable";
+    }
     option.dataset.platform = accessItem.platform;
-    option.disabled = accessItem.copyable === false;
     icon.className = "access-option-icon";
     logo.src = meta.icon;
     logo.alt = "";
@@ -181,18 +219,23 @@ function openAccessDialog(item, trigger) {
     logo.setAttribute("aria-hidden", "true");
     icon.append(logo);
     label.textContent = accessItem.label || meta.label;
-    status.textContent = accessItem.copyable === false
-      ? "正式内容待发布"
-      : (accessItem.description || "点击复制所需信息");
-    option.append(icon, label, status);
-    if (accessItem.copyable !== false) {
-      option.setAttribute("aria-label", `选择${accessItem.label || meta.label}并复制所需信息`);
-      option.addEventListener("click", () => copyAccessValue(accessItem.value, accessItem.label || meta.label, option, status));
+    option.append(icon, label);
+    if (action.type === "unavailable") {
+      const status = document.createElement("small");
+      status.textContent = "待发布";
+      option.append(status);
+    }
+    if (action.type === "copy") {
+      option.setAttribute("aria-label", `复制${accessItem.label || meta.label}`);
+      option.addEventListener("click", () => copyAccessValue(action.value, accessItem.label || meta.label, option));
+    } else if (action.type === "link") {
+      option.setAttribute("aria-label", `前往${accessItem.label || meta.label}（新窗口）`);
     }
     accessItems.append(option);
   });
 
-  if (!access.items.length) {
+  accessItems.hidden = false;
+  if (!entries.length) {
     const unavailable = document.createElement("p");
     unavailable.className = "access-unavailable";
     unavailable.textContent = "相关信息还在整理中。";
@@ -222,17 +265,33 @@ function renderActivities() {
     const fragment = activityTemplate.content.cloneNode(true);
     const slide = fragment.querySelector(".activity-slide");
     const cover = fragment.querySelector(".activity-cover");
-    const title = fragment.querySelector("h3");
+    const title = fragment.querySelector("h2");
     const summary = fragment.querySelector("p");
     const action = fragment.querySelector(".banner-action");
 
     slide.setAttribute("aria-label", `${index + 1} / ${state.activities.length}：${activity.title}`);
     slide.setAttribute("aria-roledescription", "幻灯片");
     cover.src = activity.cover;
+    cover.decoding = "async";
+    cover.loading = index === 0 ? "eager" : "lazy";
+    slide.dataset.theme = activity.id;
     cover.alt = activity.coverAlt || `${activity.title}活动视觉`;
     title.textContent = activity.title;
     summary.textContent = activity.summary;
-    if (getAccess(activity).items.length) {
+    if (activity.action === "showcase") {
+      action.querySelector("span").textContent = activity.linkLabel;
+      action.addEventListener("click", () => {
+        state.category = activity.category || "全部";
+        state.platform = "全部平台";
+        state.query = "";
+        searchInput.value = "";
+        renderFilters();
+        renderCases();
+        const showcase = document.querySelector("#showcase");
+        showcase.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
+        document.querySelector("#case-search").focus({ preventScroll: true });
+      });
+    } else if (getAccess(activity).items.length) {
       action.querySelector("span").textContent = activity.linkLabel || "获取信息";
       action.addEventListener("click", () => openAccessDialog(activity, action));
     } else {
@@ -244,6 +303,7 @@ function renderActivities() {
       const dot = document.createElement("button");
       dot.className = "activity-dot";
       dot.type = "button";
+      dot.textContent = activity.label;
       dot.setAttribute("aria-label", `显示活动：${activity.title}`);
       dot.addEventListener("click", () => setActivity(index, true));
       activityDots.append(dot);
@@ -266,6 +326,7 @@ function setActivity(index, announce = false) {
   activityTrack.querySelectorAll(".activity-slide").forEach((slide, slideIndex) => {
     const active = slideIndex === state.activityIndex;
     slide.setAttribute("aria-hidden", active ? "false" : "true");
+    slide.inert = !active;
     slide.querySelector(".banner-action")?.setAttribute("tabindex", active ? "0" : "-1");
   });
 
@@ -278,7 +339,7 @@ function setActivity(index, announce = false) {
 
 function scheduleCarousel() {
   window.clearTimeout(state.timer);
-  if (state.paused || reduceMotion.matches || state.activities.length < 2 || document.hidden) return;
+  if (state.paused || state.activities.length < 2 || document.hidden) return;
   state.timer = window.setTimeout(() => setActivity(state.activityIndex + 1), 7000);
 }
 
@@ -293,10 +354,6 @@ function bindCarouselControls() {
     scheduleCarousel();
   };
 
-  activityCarousel.addEventListener("mouseenter", pause);
-  activityCarousel.addEventListener("mouseleave", resume);
-  activityCarousel.addEventListener("focusin", pause);
-  activityCarousel.addEventListener("focusout", resume);
 
   let pointerStart = null;
   activityCarousel.addEventListener("pointerdown", (event) => {
@@ -355,6 +412,7 @@ function renderFilters() {
     categoryTabs.append(button);
   });
 
+  document.querySelector("#platform-current").textContent = platformLabel(state.platform);
   platformButtons.replaceChildren();
   ["全部平台", "Apple", "Android", "HarmonyOS"].forEach((platform) => {
     const button = document.createElement("button");
@@ -368,6 +426,10 @@ function renderFilters() {
     button.append(createPlatformIcon(platform));
     button.addEventListener("click", () => {
       state.platform = platform;
+      document.querySelector("#platform-current").textContent = label;
+      const picker = document.querySelector("#platform-picker");
+      picker.open = false;
+      picker.querySelector("summary").focus();
       platformButtons.querySelectorAll("button").forEach((item) => {
         item.setAttribute("aria-pressed", item === button ? "true" : "false");
       });
@@ -407,7 +469,7 @@ function renderCases() {
     const platforms = fragment.querySelector(".case-platforms");
 
     const access = getAccess(item);
-    trigger.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，查看并复制获取信息，共 ${access.items.length} 项`);
+    trigger.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，查看视频、简介和平台入口`);
     trigger.addEventListener("click", () => openAccessDialog(item, trigger));
     card.dataset.featured = item.featured ? "true" : "false";
     card.dataset.official = item.partnerName === "千机百变官方" ? "true" : "false";
@@ -461,6 +523,7 @@ function bindAccessDialog() {
     if (event.target === accessDialog) closeAccessDialog();
   });
   accessDialog?.addEventListener("close", () => {
+    accessMedia.replaceChildren();
     document.body.classList.remove("dialog-open");
     state.dialogTrigger?.focus();
   });
@@ -476,9 +539,24 @@ function renderLoadError(error) {
 }
 
 async function initialize() {
+  const picker = document.querySelector("#platform-picker");
+  document.addEventListener("click", event => {
+    if (picker.open && !picker.contains(event.target)) picker.open = false;
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && picker.open) {
+      picker.open = false;
+      picker.querySelector("summary").focus();
+      event.preventDefault();
+    }
+  });
+  picker.addEventListener("focusout", event => {
+    if (!picker.contains(event.relatedTarget)) picker.open = false;
+  });
+  document.querySelector(".dialog-close")?.addEventListener("click", closeAccessDialog);
   bindCarouselControls();
   bindCaseControls();
-  bindCardMotion();
+
   bindAccessDialog();
   try {
     const [activities, cases] = await Promise.all([

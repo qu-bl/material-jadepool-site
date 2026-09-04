@@ -47,14 +47,14 @@ for item in activities + cases:
     cover = ROOT / item["cover"].removeprefix("./")
     assert cover.exists(), f"missing cover: {cover}"
 
-access_platforms = {"bilibili", "xiaohongshu", "douyin", "kdocs", "qq", "github"}
+access_platforms = {"bilibili", "xiaohongshu", "douyin", "kdocs", "qq", "github", "youtube"}
 
 
 def validate_access_item(owner_id, access_item):
     platform = access_item.get("platform")
     assert platform in access_platforms, f"{owner_id}: invalid access platform"
     assert access_item.get("label"), f"{owner_id}: access label is required"
-    assert access_item.get("value"), f"{owner_id}: access value is required"
+    assert access_item.get("value") or access_item.get("url"), f"{owner_id}: access value is required"
     icon = ROOT / "assets" / "platforms" / f"{platform}.svg"
     assert icon.exists(), f"{owner_id}: missing platform logo {icon.name}"
 

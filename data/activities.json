@@ -1,55 +1,108 @@
 [
   {
-    "id": "official-intro",
-    "title": "千机百变，\n让手机界面动起来。",
-    "summary": "将 Rive 动画与 JavaScript 交互制作成可加载的界面资源，支持苹果、安卓与鸿蒙。",
-    "cover": "./assets/activities/official-intro-v3.webp",
-    "coverAlt": "三台手机分别展示车辆仪表、天气微件与液态开关，并连接动画状态与交互节点",
+    "id": "discover",
+    "label": "发现创意",
+    "eyebrow": "千机百变 · 互动创意平台",
+    "title": "让创意动起来，\n让屏幕有个性。",
+    "summary": "发现设计师的互动作品与趣味工具，让每一块屏幕，都有属于自己的精彩。",
+    "linkLabel": "探索创意作品",
+    "action": "showcase",
+    "coverAlt": "圆形、长条形与方形屏幕里的互动角色与趣味工具",
+    "cover": "./assets/activities/creativity-v17.webp",
     "visible": true
   },
   {
-    "id": "partner-recruitment",
-    "title": "查看制作指南，\n提交你的作品。",
-    "summary": "按照指南准备资源包、案例封面与平台内容，通过入驻申请加入创意橱柜。",
-    "cover": "./assets/activities/partner-recruitment-v3.webp",
-    "coverAlt": "手机界面设计经过状态编辑、封面准备与检查后提交到案例展示橱柜",
-    "linkLabel": "查看指南与入驻方式",
+    "id": "custom",
+    "label": "设计定制",
+    "eyebrow": "为品牌、产品与独特的想法",
+    "title": "你的想法，\n值得被做出来。",
+    "summary": "从角色形象到互动界面，与设计师一起，把你的想法变成可以体验的作品。欢迎聊聊定制需求。",
+    "linkLabel": "聊聊定制需求",
     "access": {
-      "eyebrow": "金山文档",
-      "title": "制作指南与伙伴入驻",
-      "summary": "制作规范、封面要求、提交流程与入驻条件统一在金山文档维护。",
+      "eyebrow": "千机百变 · 交流与咨询",
+      "title": "聊聊你的定制想法",
+      "summary": "角色形象、互动界面与屏幕定制。",
+      "items": [
+        {
+          "platform": "qq",
+          "label": "创作者交流群",
+          "value": "862835994",
+          "description": "点击复制 QQ 群号"
+        }
+      ],
+      "note": "复制群号后，在 QQ 搜索并申请加入：862835994。"
+    },
+    "coverAlt": "设计师把角色草图转化为完整的互动屏幕作品",
+    "cover": "./assets/activities/custom-design-v17.webp",
+    "visible": true
+  },
+  {
+    "id": "shaped",
+    "label": "异形屏幕",
+    "eyebrow": "异形屏幕 · 拟人角色 · AI 陪伴",
+    "title": "不规则的屏幕，\n不设限的创意。",
+    "summary": "圆屏、长条屏，都能拥有自己的表情。探索拟人角色、触碰回应与 AI 陪伴的定制可能。",
+    "linkLabel": "交流屏幕设计",
+    "access": {
+      "eyebrow": "千机百变 · 交流与咨询",
+      "title": "为你的屏幕设计",
+      "summary": "异形屏幕、拟人角色与 AI 陪伴设计。",
+      "items": [
+        {
+          "platform": "qq",
+          "label": "创作者交流群",
+          "value": "862835994",
+          "description": "点击复制 QQ 群号"
+        }
+      ],
+      "note": "复制群号后，在 QQ 搜索并申请加入：862835994。"
+    },
+    "coverAlt": "友善角色住进圆形与长条形屏幕，回应手指的触碰",
+    "cover": "./assets/activities/unusual-screens-v17.webp",
+    "visible": true
+  },
+  {
+    "id": "learn",
+    "label": "学习创作",
+    "eyebrow": "从第一件作品开始",
+    "title": "让作品集，\n不止于效果图。",
+    "summary": "从易懂的制作步骤出发，把静态设计变成能操作的作品。学习、投稿，让你的创作能力更容易被看见。",
+    "linkLabel": "制作指南与投稿",
+    "access": {
+      "eyebrow": "学习与创作者入驻",
+      "title": "开始你的第一件互动作品",
+      "summary": "制作指南筹备中，欢迎加入创作者交流群。",
       "items": [
         {
           "platform": "kdocs",
           "label": "金山文档",
           "value": "正式链接待发布",
           "copyable": false
+        },
+        {
+          "platform": "qq",
+          "label": "创作者交流群",
+          "value": "862835994",
+          "description": "点击复制 QQ 群号"
         }
       ],
-      "note": "这样可以避免重复维护网页内容，并始终以文档中的最新说明为准。"
+      "note": "金山文档发布后将在这里更新；交流群 QQ：862835994。"
     },
+    "coverAlt": "创作者从静态角色草图出发，制作可以互动的作品集",
+    "cover": "./assets/activities/learning-v17.webp",
     "visible": true
   },
   {
-    "id": "community-channel",
-    "title": "加入创作者群，\n交流制作与适配。",
-    "summary": "交流资源包制作、Rive 动画、JavaScript 交互，以及苹果、安卓、鸿蒙三端适配。QQ群：862835994。",
-    "cover": "./assets/activities/community-channel-v3.webp",
-    "coverAlt": "多位创作者围绕群聊、资源包、动画状态图与三端设备交流制作经验",
-    "linkLabel": "复制 QQ 群号",
-    "access": {
-      "eyebrow": "官方联系",
-      "title": "加入创作者交流群",
-      "summary": "选择 QQ 后复制群号，再自行前往 QQ 加群。",
-      "items": [
-        {
-          "platform": "qq",
-          "label": "QQ群",
-          "value": "862835994",
-          "description": "点击复制群号"
-        }
-      ]
-    },
+    "id": "tools",
+    "label": "趣味工具",
+    "eyebrow": "给日常加一点乐趣",
+    "title": "给屏幕，\n添一点好玩。",
+    "summary": "从互动角色到专注计时，挑选喜欢的趣味工具，了解购买与加载方式，把创意带进日常。",
+    "linkLabel": "发现趣味工具",
+    "action": "showcase",
+    "category": "趣味工具",
+    "coverAlt": "时钟、计数器和数字宠物组成明快有趣的工具橱窗",
+    "cover": "./assets/activities/fun-tools-v17.webp",
     "visible": true
   }
 ]

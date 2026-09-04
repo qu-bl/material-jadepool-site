@@ -3,31 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f2f3f8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#090a11" media="(prefers-color-scheme: dark)">
-  <meta name="description" content="千机百变官方活动，以及官方与伙伴们共同创作的互动案例。">
+  <meta name="theme-color" content="#faf9fd">
+  <meta name="description" content="发现互动设计、异形屏幕定制、创作入门与趣味工具，让创意动起来，让屏幕有个性。">
   <meta property="og:type" content="website">
   <meta property="og:title" content="千机百变 · 官方与伙伴们的创意橱柜">
-  <meta property="og:description" content="认识官方计划，发现官方与伙伴们用 Rive 和 JavaScript 创作的不同可能。">
+  <meta property="og:description" content="发现互动作品，交流屏幕定制，学习创作，让设计走进日常。">
   <meta property="og:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
   <meta property="og:url" content="https://qu-bl.github.io/material-jadepool-site/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="千机百变 · 官方与伙伴们的创意橱柜">
-  <meta name="twitter:description" content="认识官方计划，发现官方与伙伴们用 Rive 和 JavaScript 创作的不同可能。">
+  <meta name="twitter:description" content="发现互动作品，交流屏幕定制，学习创作，让设计走进日常。">
   <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
-  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./assets/favicon.svg?v=28" type="image/svg+xml">
   <title>千机百变 · 官方与伙伴们的创意橱柜</title>
-  <link rel="stylesheet" href="./styles.css?v=16">
-  <script src="./app.js?v=16" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=28">
+  <script src="./theme.js?v=28"></script>
+  <script src="./media.js?v=28" defer></script>
+  <script src="./app.js?v=28" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#showcase">跳到创意橱柜</a>
 
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="千机百变首页"><img src="./assets/brand-logo.svg?v=28" alt="" width="40" height="40"><span>千机百变</span></a>
+
+  </header>
   <main class="app-page">
-    <section class="activity-section" aria-label="千机百变官方与活动">
+    <h1 class="sr-only">千机百变 · 让创意动起来，让屏幕有个性</h1>
+    <section class="activity-section" aria-label="探索千机百变">
       <div class="activity-carousel" id="activity-carousel" aria-roledescription="轮播">
         <div class="activity-track" id="activity-track"></div>
-        <div class="activity-dots" id="activity-dots" aria-label="选择活动"></div>
+        <div class="banner-navigation"><div class="activity-dots" id="activity-dots" aria-label="选择主题"></div></div>
         <p class="sr-only" id="activity-status" aria-live="polite"></p>
       </div>
     </section>
@@ -43,7 +49,10 @@
 
       <div class="showcase-toolbar" aria-label="创意案例筛选">
         <div class="category-tabs" id="category-tabs" role="group" aria-label="案例分类"></div>
-        <div class="platform-buttons" id="platform-buttons" role="group" aria-label="按运行平台筛选"></div>
+        <details class="platform-picker" id="platform-picker">
+          <summary aria-controls="platform-buttons"><span id="platform-current">全部平台</span><span class="platform-chevron" aria-hidden="true">▾</span></summary>
+          <div class="platform-buttons" id="platform-buttons" role="group" aria-label="按运行平台筛选"></div>
+        </details>
       </div>
 
       <div class="case-grid" id="case-grid" role="list"></div>
@@ -58,11 +67,11 @@
   <template id="activity-template">
     <article class="activity-slide">
       <img class="activity-cover" alt="">
-      <div class="activity-scrim" aria-hidden="true"></div>
+
       <div class="activity-content">
-        <h3></h3>
+        <h2></h2>
         <p></p>
-        <button class="banner-action" type="button"><span></span><b aria-hidden="true">→</b></button>
+        <button class="banner-action" type="button"><span></span></button>
       </div>
     </article>
   </template>
@@ -88,13 +97,13 @@
     <div class="access-sheet">
       <header class="access-header">
         <div>
-          <p class="access-eyebrow" id="access-eyebrow">获取信息</p>
           <h2 id="access-title"></h2>
         </div>
+        <button class="dialog-close" type="button" aria-label="关闭">×</button>
       </header>
+      <div class="access-media" id="access-media" aria-label="作品预览" hidden></div>
       <p class="access-summary" id="access-summary"></p>
-      <div class="access-items" id="access-items" aria-label="选择复制平台"></div>
-      <p class="access-note" id="access-note"></p>
+      <div class="access-items" id="access-items" aria-label="平台链接与联系方式"></div>
     </div>
   </dialog>
   <p class="copy-toast" id="copy-toast" role="status" aria-live="polite"></p>
