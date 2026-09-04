@@ -408,6 +408,15 @@ function bindCarouselControls() {
   reduceMotion.addEventListener?.("change", scheduleCarousel);
 }
 
+function updatePlatformLabel() {
+  const current = document.querySelector("#platform-current");
+  const label = document.createElement("span");
+  label.textContent = platformLabel(state.platform);
+  const icon = createPlatformIcon(state.platform);
+  icon.setAttribute("aria-hidden", "true");
+  current.replaceChildren(icon, label);
+}
+
 function renderFilters() {
   if (!categoryTabs || !platformButtons) return;
   const categories = ["全部", ...new Set(state.cases.map((item) => item.category))];
@@ -429,7 +438,7 @@ function renderFilters() {
     categoryTabs.append(button);
   });
 
-  document.querySelector("#platform-current").textContent = platformLabel(state.platform);
+  updatePlatformLabel();
   platformButtons.replaceChildren();
   ["全部平台", "Apple", "Android", "HarmonyOS"].forEach((platform) => {
     const button = document.createElement("button");
@@ -443,10 +452,10 @@ function renderFilters() {
     button.append(createPlatformIcon(platform));
     button.addEventListener("click", () => {
       state.platform = platform;
-      document.querySelector("#platform-current").textContent = label;
+      updatePlatformLabel();
       const picker = document.querySelector("#platform-picker");
       picker.open = false;
-      picker.querySelector("summary").focus();
+      picker.querySelector("summary").focus({ preventScroll: true });
       platformButtons.querySelectorAll("button").forEach((item) => {
         item.setAttribute("aria-pressed", item === button ? "true" : "false");
       });
@@ -693,12 +702,26 @@ async function initialize() {
   document.addEventListener("keydown", event => {
     if (event.key === "Escape" && picker.open) {
       picker.open = false;
-      picker.querySelector("summary").focus();
+      picker.querySelector("summary").focus({ preventScroll: true });
       event.preventDefault();
     }
   });
   picker.addEventListener("focusout", event => {
-    if (!picker.contains(event.relatedTarget)) picker.open = false;
+    // A null relatedTarget also occurs during pointer interaction in some browsers.
+    if (event.relatedTarget && !picker.contains(event.relatedTarget)) picker.open = false;
+  });
+  picker.addEventListener("keydown", event => {
+    const buttons = [...platformButtons.querySelectorAll("button")];
+    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key) || !buttons.length) return;
+    event.preventDefault();
+    const wasOpen = picker.open;
+    picker.open = true;
+    const index = buttons.indexOf(document.activeElement);
+    const selected = buttons.findIndex(button => button.getAttribute("aria-pressed") === "true");
+    const next = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1
+      : !wasOpen || index < 0 ? Math.max(0, selected)
+      : (index + (event.key === "ArrowDown" ? 1 : -1) + buttons.length) % buttons.length;
+    buttons[next].focus({ preventScroll: true });
   });
   document.querySelector(".dialog-close")?.addEventListener("click", closeAccessDialog);
   bindCarouselControls();
