@@ -97,16 +97,14 @@ function getAccess(item) {
   return { items: [] };
 }
 
+function openAccessDialog(item, trigger) {
+  if (!accessDialog.open) mountAccessDialog(item, trigger);
+}
+
 function closeAccessDialog() {
-  if (!accessDialog) return;
   accessMedia.replaceChildren();
-  if (typeof accessDialog.close === "function" && accessDialog.open) {
-    accessDialog.close();
-  } else {
-    accessDialog.removeAttribute("open");
-    document.body.classList.remove("dialog-open");
-    state.dialogTrigger?.focus();
-  }
+  if (accessDialog.open) accessDialog.close();
+  document.body.classList.remove("dialog-open");
 }
 
 function fallbackCopy(value) {
@@ -148,7 +146,7 @@ async function copyAccessValue(value, label, button) {
   }
 }
 
-function renderAccessMedia(item) {
+function renderAccessMedia(item, accessMedia = document.querySelector("#access-media")) {
   accessMedia.replaceChildren();
   const video = SiteMedia.videoSource(item.video);
   accessMedia.hidden = !video && !item.cover;
@@ -177,10 +175,11 @@ function renderAccessMedia(item) {
   accessMedia.append(play);
 }
 
-function openAccessDialog(item, trigger) {
+function mountAccessDialog(item, trigger) {
   if (!accessDialog || !accessItems) return;
   const access = getAccess(item);
   state.dialogTrigger = trigger;
+  const sourceBounds = trigger?.getBoundingClientRect();
   renderAccessMedia(item);
 
   accessTitle.textContent = access.title || item.name || item.title;
@@ -188,6 +187,30 @@ function openAccessDialog(item, trigger) {
   accessSummary.hidden = !accessSummary.textContent;
   accessItems.replaceChildren();
 
+  renderAccessItems(item, accessItems);
+
+  document.body.classList.add("dialog-open");
+  if (typeof accessDialog.showModal === "function") {
+    accessDialog.showModal();
+  } else {
+    accessDialog.setAttribute("open", "");
+  }
+  accessDialog.scrollTop = 0;
+  accessDialog.getAnimations?.().forEach(animation => animation.cancel());
+  if (!reduceMotion.matches && accessDialog.animate) {
+    const target = accessDialog.getBoundingClientRect();
+    const dx = sourceBounds ? sourceBounds.left + sourceBounds.width / 2 - (target.left + target.width / 2) : 0;
+    const dy = sourceBounds ? sourceBounds.top + sourceBounds.height / 2 - (target.top + target.height / 2) : 40;
+    const scale = sourceBounds ? Math.max(.25, Math.min(.8, sourceBounds.width / target.width)) : .85;
+    accessDialog.animate([
+      { opacity: 0, transform: `translate(${dx}px, ${dy}px) scale(${scale})` },
+      { opacity: 1, transform: 'translate(0, 0) scale(1)' }
+    ], { duration: 480, easing: 'cubic-bezier(.16, 1, .3, 1)' });
+  }
+}
+
+function renderAccessItems(item, accessItems) {
+  const access = getAccess(item);
   const entries = [...access.items];
   const video = SiteMedia.videoSource(item.video);
   if (video && !entries.some(entry => SiteMedia.accessAction(entry).href === video.href)) {
@@ -242,12 +265,6 @@ function openAccessDialog(item, trigger) {
     accessItems.append(unavailable);
   }
 
-  document.body.classList.add("dialog-open");
-  if (typeof accessDialog.showModal === "function") {
-    accessDialog.showModal();
-  } else {
-    accessDialog.setAttribute("open", "");
-  }
 }
 
 async function loadJson(url) {
@@ -451,8 +468,123 @@ function getFilteredCases() {
   });
 }
 
+let expandedCard = null;
+const cardBackdrop = document.createElement("div");
+cardBackdrop.className = "card-backdrop";
+cardBackdrop.hidden = true;
+document.body.append(cardBackdrop);
+cardBackdrop.addEventListener("click", () => collapseCard());
+
+function cardBounds() {
+  const margin = innerWidth < 720 ? 12 : 32;
+  const width = Math.min(760, innerWidth - margin * 2);
+  return { left: (innerWidth - width) / 2, top: margin, width, height: innerHeight - margin * 2 };
+}
+
+function geometry(rect) {
+  return Object.fromEntries(["left", "top", "width", "height"].map(key => [key, `${rect[key]}px`]));
+}
+
+async function expandCard(card) {
+  if (expandedCard) return;
+  const host = card.closest(".case-card");
+  const from = card.getBoundingClientRect();
+  const hiddenSiblings = [];
+  host.style.height = `${host.getBoundingClientRect().height}px`;
+  host.classList.add("has-expanded-card");
+  host.classList.add("card-entered");
+  expandedCard = { card, host, hiddenSiblings, busy: true };
+  for (let node = card; node.parentElement && node !== document.body; node = node.parentElement) {
+    for (const sibling of node.parentElement.children) {
+      if (sibling !== node && sibling !== cardBackdrop && !sibling.inert) {
+        sibling.inert = true;
+        hiddenSiblings.push(sibling);
+      }
+    }
+  }
+  document.body.classList.add("dialog-open");
+  cardBackdrop.hidden = false;
+  if (!reduceMotion.matches) {
+    cardBackdrop.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: "ease-out" });
+  }
+  card.classList.add("is-expanded");
+  card.setAttribute("role", "dialog");
+  card.setAttribute("aria-modal", "true");
+  card.removeAttribute("aria-expanded");
+  // Top layer changes presentation only: the card and its iframe stay in place in the DOM.
+  if (card.showPopover) {
+    card.setAttribute("popover", "manual");
+    card.showPopover();
+  }
+  Object.assign(card.style, geometry(cardBounds()));
+  card.focus({ preventScroll: true });
+  if (!reduceMotion.matches) {
+    await card.animate([geometry(from), geometry(cardBounds())], {
+      duration: 480, easing: "cubic-bezier(.16,1,.3,1)"
+    }).finished.catch(() => {});
+  }
+  if (expandedCard) expandedCard.busy = false;
+}
+
+async function collapseCard() {
+  const current = expandedCard;
+  if (!current || current.closing) return;
+  current.closing = true;
+  const { card, host, hiddenSiblings } = current;
+  const from = card.getBoundingClientRect();
+  card.getAnimations().forEach(animation => animation.cancel());
+  const target = host.getBoundingClientRect();
+  card.scrollTop = 0;
+  if (!reduceMotion.matches) {
+    cardBackdrop.getAnimations().forEach(animation => animation.cancel());
+    await Promise.all([
+      card.animate([geometry(from), geometry(target)], {
+        duration: 400, easing: "cubic-bezier(.16,1,.3,1)", fill: "forwards"
+      }).finished.catch(() => {}),
+      cardBackdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 400, easing: "ease-out", fill: "forwards"
+      }).finished.catch(() => {})
+    ]);
+  }
+  if (card.hasAttribute("popover")) {
+    card.hidePopover();
+    card.removeAttribute("popover");
+  }
+  card.getAnimations().forEach(animation => animation.cancel());
+  card.classList.remove("is-expanded");
+  card.removeAttribute("style");
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-expanded", "false");
+  card.removeAttribute("aria-modal");
+  host.style.height = "";
+  host.classList.remove("has-expanded-card");
+  hiddenSiblings.forEach(node => node.inert = false);
+  cardBackdrop.hidden = true;
+  cardBackdrop.getAnimations().forEach(animation => animation.cancel());
+  document.body.classList.remove("dialog-open");
+  expandedCard = null;
+  card.focus({ preventScroll: true });
+}
+
+window.addEventListener("resize", () => {
+  if (expandedCard && !expandedCard.closing) Object.assign(expandedCard.card.style, geometry(cardBounds()));
+});
+document.addEventListener("keydown", event => {
+  if (!expandedCard) return;
+  if (event.key === "Escape") { event.preventDefault(); collapseCard(); }
+  if (event.key === "Tab") {
+    const controls = [...expandedCard.card.querySelectorAll('button:not(:disabled), a[href], iframe, [tabindex="0"]')];
+    const first = controls[0] || expandedCard.card, last = controls.at(-1) || expandedCard.card;
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === expandedCard.card)) {
+      event.preventDefault(); last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first?.focus();
+    }
+  }
+});
+
 function renderCases() {
-  if (!caseGrid || !caseTemplate) return;
+  if (!caseGrid || !caseTemplate || expandedCard) return;
   const items = getFilteredCases();
   cardObserver?.disconnect();
   caseGrid.replaceChildren();
@@ -464,19 +596,30 @@ function renderCases() {
     const card = fragment.querySelector(".case-card");
     const trigger = fragment.querySelector(".case-card-trigger");
     const image = fragment.querySelector(".case-media img");
-    const title = fragment.querySelector("h3");
+    const title = fragment.querySelector(".case-title");
     const partner = fragment.querySelector(".partner-name");
     const platforms = fragment.querySelector(".case-platforms");
 
     const access = getAccess(item);
     trigger.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，查看视频、简介和平台入口`);
-    trigger.addEventListener("click", () => openAccessDialog(item, trigger));
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.addEventListener("click", event => {
+      if (!expandedCard && !event.target.closest("button, a, iframe")) expandCard(trigger);
+    });
+    trigger.addEventListener("keydown", event => {
+      if (event.target === trigger && !expandedCard && ["Enter", " "].includes(event.key)) {
+        event.preventDefault(); expandCard(trigger);
+      }
+    });
+    renderAccessItems(item, trigger.querySelector(".card-access"));
+    fragment.querySelector(".case-summary").textContent = item.description || access.description || access.summary || item.summary || "";
     card.dataset.featured = item.featured ? "true" : "false";
     card.dataset.official = item.partnerName === "千机百变官方" ? "true" : "false";
     card.dataset.layout = editorialLayouts[index % editorialLayouts.length];
     card.style.setProperty("--card-index", Math.min(index, 7));
     image.src = item.cover;
     image.alt = item.coverAlt || `${item.name}案例封面`;
+    if (SiteMedia.videoSource(item.video)) renderAccessMedia(item, trigger.querySelector(".case-media"));
     title.textContent = item.name;
     partner.textContent = item.partnerName === "千机百变官方" ? "官方" : item.partnerName;
     platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
@@ -519,6 +662,10 @@ function bindCaseControls() {
 }
 
 function bindAccessDialog() {
+  accessDialog?.addEventListener("cancel", event => {
+    event.preventDefault();
+    closeAccessDialog();
+  });
   accessDialog?.addEventListener("click", (event) => {
     if (event.target === accessDialog) closeAccessDialog();
   });

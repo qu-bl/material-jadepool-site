@@ -98,7 +98,7 @@ a { color: var(--accent); }
 .case-media { width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 24px; background: var(--surface-soft); }
 .case-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .case-body { display: flex; flex: 1; flex-direction: row; align-items: flex-start; justify-content: space-between; padding: 14px 0 0; width: 100%; gap: 12px; }
-.case-copy h3 { margin-bottom: 4px; font-size: 20px; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
+.case-copy .case-title { margin-bottom: 4px; font-size: 20px; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
 .partner-name { display: block; color: var(--muted); font-size: 14px; }
 .case-platforms { display: flex; flex-shrink: 0; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 .platform-icon--case { --icon-cutout: var(--page); width: 18px; height: 18px; color: var(--muted); }
@@ -111,9 +111,9 @@ a { color: var(--accent); }
 .access-header h2 { font-size: 28px; line-height: 1.4; }
 .dialog-close { width: 44px; height: 44px; flex-shrink: 0; border: 0; border-radius: 50%; background: var(--surface-soft); color: var(--text); font-size: 26px; }
 .access-summary { margin: 20px 0 24px; color: var(--muted); font-size: 16px; }
-.access-items { display: grid; gap: 12px; }
-.access-option { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 0 16px; padding: 16px; border: 0; border-radius: 24px; text-align: left; background: var(--surface); color: var(--text); text-decoration: none; }
-.access-option:not(:disabled):hover { background: var(--surface-soft); color: var(--accent); }
+.access-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr)); gap: 12px; }
+.access-option { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-width: 0; min-height: 120px; padding: 16px 12px; border: 0; border-radius: 24px; text-align: center; background: var(--surface-soft); color: var(--text); text-decoration: none; }
+.access-option:not(:disabled):hover { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
 .access-option:disabled { opacity: .6; cursor: default; }
 .access-option-icon { display: grid; place-items: center; grid-row: 1 / span 2; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); }
 .access-option-icon img { width: 26px; height: 26px; object-fit: contain; }
@@ -122,6 +122,7 @@ a { color: var(--accent); }
 .access-option[data-copied="true"] { background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
 .access-option[data-copied="true"] small { color: inherit; }
 .access-option[data-platform="kdocs"] .access-option-icon { background: #fff; }
+.access-unavailable { grid-column: 1 / -1; }
 .access-note, .access-unavailable { color: var(--muted); font-size: 14px; margin: 24px 0 0; }
 .copy-toast { position: fixed; z-index: 220; left: 50%; bottom: max(24px, env(safe-area-inset-bottom)); max-width: calc(100vw - 32px); margin: 0; padding: 14px 24px; border-radius: 24px; background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 12px); transition: opacity .2s, transform .2s; }
 .copy-toast[data-visible="true"] { opacity: 1; transform: translate(-50%, 0); }
@@ -149,7 +150,7 @@ a { color: var(--accent); }
   .showcase-toolbar { gap: 8px; }
   .case-grid { gap: 16px; }
   .case-body { padding: 12px 0 0; flex-wrap: wrap; }
-  .case-copy h3 { font-size: 20px; }
+  .case-copy .case-title { font-size: 20px; }
   .access-sheet { padding: 24px; }
 }
 @media(max-width: 480px) { .case-grid { grid-template-columns: 1fr; } }
@@ -176,3 +177,84 @@ a { color: var(--accent); }
 .access-dialog::-webkit-scrollbar, .access-sheet::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
 .brand img { display: block; flex-shrink: 0; background: #fff; border-radius: 12px; }
+
+/* Motion follows the existing content hierarchy without adding decoration. */
+@media (prefers-reduced-motion: no-preference) {
+  .activity-slide[aria-hidden="false"] .activity-content h2 { animation: banner-enter 620ms var(--ease-out) both; }
+  .activity-slide[aria-hidden="false"] .activity-content p { animation: banner-enter 620ms 90ms var(--ease-out) both; }
+  .activity-slide[aria-hidden="false"] .banner-action { animation: banner-enter 620ms 160ms var(--ease-out) both; }
+  .activity-slide[aria-hidden="false"] .activity-cover { animation: illustration-float 5s ease-in-out infinite; }
+  .activity-slide[aria-hidden="true"] .activity-cover { animation: none; }
+  .case-card[data-visible="true"] { animation: card-enter 580ms var(--ease-out) both; animation-delay: calc(var(--card-index, 0) * 45ms); }
+  .case-card-trigger { transition: transform 260ms var(--ease-out), color 220ms ease; }
+  .case-media img { transition: transform 450ms var(--ease-out); }
+  .banner-action, .category-button, .activity-dot, .platform-button, .access-option, .dialog-close, .video-load { transition: transform 180ms var(--ease-out), background-color 220ms ease, color 220ms ease; }
+  .banner-action:active, .category-button:active, .activity-dot:active, .platform-button:active, .access-option:active, .dialog-close:active { transform: scale(.95); }
+  .platform-picker[open] .platform-buttons { transform-origin: top right; animation: picker-enter 230ms var(--ease-out) both; }
+  .access-dialog[open] { transform-origin: center; }
+
+  .access-dialog[open]::backdrop { animation: backdrop-enter 360ms ease both; }
+  .access-dialog[open] .access-summary { animation: banner-enter 420ms 170ms var(--ease-out) both; }
+  .access-dialog[open] .access-items { animation: banner-enter 420ms 230ms var(--ease-out) both; }
+  .access-option[data-copied="true"] .access-option-icon { animation: copy-confirm 400ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .case-card-trigger:hover { transform: translateY(-4px); }
+    .case-card-trigger:hover .case-media img { transform: scale(1.035); }
+    .banner-action:hover, .access-option:hover { transform: translateY(-2px); }
+    .banner-action:active, .access-option:active { transform: scale(.95); }
+  }
+}
+@keyframes banner-enter { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+@keyframes illustration-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes card-enter { from { opacity: 0; translate: 0 20px; } to { opacity: 1; translate: 0 0; } }
+@keyframes picker-enter { from { opacity: 0; transform: translateY(-6px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes backdrop-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes copy-confirm { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.14); } }
+
+
+.case-preview { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; color: var(--text); }
+.case-media iframe { display: block; width: 100%; height: 100%; border: 0; }
+.case-detail { border: 0; background: transparent; color: inherit; text-align: left; }
+.case-title { display: block; }
+.detail-label { margin-left: auto; font-size: 14px; color: var(--accent); white-space: nowrap; }
+.inline-play { position: absolute; bottom: 16px; left: 16px; padding: 8px 16px; border-radius: 24px; background: var(--accent); color: var(--md-sys-color-on-primary); font-size: 14px; }
+.case-preview:focus-visible { outline-offset: -4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .case-card-trigger:has(iframe):hover { transform: none; }
+}
+
+/* The compact and expanded views share the card, cover, title and description. */
+.case-card-trigger { border-radius: 24px; overflow: hidden; background: var(--surface); }
+
+.case-media { display: block; border-radius: 24px 24px 0 0; }
+.case-body { padding: 20px; flex-wrap: wrap; }
+.case-copy { min-width: 0; width: 100%; }
+.case-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--muted); font-size: 16px; line-height: 1.65; margin-top: 12px; white-space: pre-wrap; }
+.access-sheet { display: flex; flex-direction: column; position: relative; }
+.access-media { order: 0; margin-top: 40px; }
+.access-header { order: 1; margin-top: 20px; }
+.access-summary { order: 2; }
+.access-items { order: 3; }
+.access-header .dialog-close { position: absolute; right: 16px; top: 12px; }
+.access-dialog[open] .access-summary, .access-dialog[open] .access-items { animation: none; }
+@media (max-width: 719px) { .case-body { padding: 18px; } }
+/* The original card expands in place; no second card or transition snapshots. */
+.card-backdrop { position: fixed; inset: 0; z-index: 190; background: rgb(0 0 0 / .32); }
+.card-backdrop[hidden] { display: none; }
+.case-card-trigger { position: relative; cursor: pointer; box-sizing: border-box; }
+.case-card-trigger .card-access { display: none; }
+.case-card.has-expanded-card { animation: none; transform: none; }
+.case-card-trigger.is-expanded { position: fixed; z-index: 200; margin: 0; border: 0; padding: 0; max-width: none; max-height: none; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; background: var(--surface); color: var(--text); transform: none; transition: none; cursor: default; display: block; }
+.case-card-trigger.is-expanded::-webkit-scrollbar { display: none; }
+.case-card-trigger.is-expanded::backdrop { background: transparent; }
+.case-card-trigger.is-expanded .case-media { width: 100%; flex-shrink: 0; }
+.case-card-trigger.is-expanded .case-media img { transform: none; }
+.case-card-trigger.is-expanded .case-summary { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.case-card-trigger.is-expanded .card-access { display: grid; width: 100%; margin-top: 20px; }
+.case-media iframe { display: block; border: 0; width: 100%; height: 100%; }
+.case-card-trigger .case-media { position: relative; }
+.case-card-trigger:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+/* Keep the page width stable during scroll locking and never replay entry on collapse. */
+html { scrollbar-gutter: stable; }
+.case-card.card-entered { animation: none; translate: none; }

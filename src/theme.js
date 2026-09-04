@@ -1,4 +1,4 @@
-import { Hct, argbFromHex, hexFromArgb, SchemeTonalSpot, MaterialDynamicColors } from '../vendor/material-color-utilities/index.js';
+import { Hct, argbFromHex, hexFromArgb, SchemeVibrant, MaterialDynamicColors } from '../vendor/material-color-utilities/index.js';
 
 // Synchronous, local bundle: available before app.js and the first page paint.
 (() => {
@@ -50,7 +50,7 @@ import { Hct, argbFromHex, hexFromArgb, SchemeTonalSpot, MaterialDynamicColors }
   function apply() {
     const mode = settings.mode === 'system' ? (media.matches ? 'dark' : 'light') : settings.mode;
     const seed = settings.colorMode === 'default' ? '#4285f4' : settings.seedColor;
-    const scheme = new SchemeTonalSpot(Hct.fromInt(argbFromHex(seed)), mode === 'dark', 0);
+    const scheme = new SchemeVibrant(Hct.fromInt(argbFromHex(seed)), mode === 'dark', 0);
     const dynamic = new MaterialDynamicColors();
     const colors = Object.fromEntries(roles.map(role => [role, hexFromArgb(dynamic[role]().getArgb(scheme))]));
     if (settings.colorMode === 'custom') {

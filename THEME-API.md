@@ -13,7 +13,7 @@ window.setAppTheme({
 ```
 
 - `mode` 是独立的深浅模式设置，`system` 跟随网页环境的 prefers-color-scheme。
-- `default` 使用本站蓝色种子；`seed` 使用应用的 seedColor，由官方 SchemeTonalSpot 算法生成配色。种子色不是最终按钮色。
+- `default` 使用本站蓝色种子；`seed` 使用应用的 seedColor，由官方 SchemeVibrant 算法生成配色。种子色不是最终按钮色。
 - `custom` 精确应用宿主提供的深浅色板。宿主负责自定义颜色的可读性。
 - 仅提交需要更新的字段，其余设置保留。`palettes` 字段整体替换，不做深层合并。
 - 数据只在本次页面生命周期保存，重新加载后宿主应重新传入；不把上一个宿主的颜色存入浏览器。
