@@ -2,7 +2,6 @@
   {
     "id": "discover",
     "label": "发现创意",
-    "eyebrow": "千机百变 · 互动创意平台",
     "title": "让创意动起来，\n让屏幕有个性。",
     "summary": "发现设计师的互动作品与趣味工具，让每一块屏幕，都有属于自己的精彩。",
     "linkLabel": "探索创意作品",
@@ -14,23 +13,19 @@
   {
     "id": "custom",
     "label": "设计定制",
-    "eyebrow": "为品牌、产品与独特的想法",
     "title": "你的想法，\n值得被做出来。",
     "summary": "从角色形象到互动界面，与设计师一起，把你的想法变成可以体验的作品。欢迎聊聊定制需求。",
     "linkLabel": "聊聊定制需求",
     "access": {
-      "eyebrow": "千机百变 · 交流与咨询",
       "title": "聊聊你的定制想法",
       "summary": "角色形象、互动界面与屏幕定制。",
       "items": [
         {
           "platform": "qq",
           "label": "创作者交流群",
-          "value": "862835994",
-          "description": "点击复制 QQ 群号"
+          "value": "862835994"
         }
-      ],
-      "note": "复制群号后，在 QQ 搜索并申请加入：862835994。"
+      ]
     },
     "coverAlt": "设计师把角色草图转化为完整的互动屏幕作品",
     "cover": "./assets/activities/custom-design-v17.webp",
@@ -39,23 +34,19 @@
   {
     "id": "shaped",
     "label": "异形屏幕",
-    "eyebrow": "异形屏幕 · 拟人角色 · AI 陪伴",
     "title": "不规则的屏幕，\n不设限的创意。",
     "summary": "圆屏、长条屏，都能拥有自己的表情。探索拟人角色、触碰回应与 AI 陪伴的定制可能。",
     "linkLabel": "交流屏幕设计",
     "access": {
-      "eyebrow": "千机百变 · 交流与咨询",
       "title": "为你的屏幕设计",
       "summary": "异形屏幕、拟人角色与 AI 陪伴设计。",
       "items": [
         {
           "platform": "qq",
           "label": "创作者交流群",
-          "value": "862835994",
-          "description": "点击复制 QQ 群号"
+          "value": "862835994"
         }
-      ],
-      "note": "复制群号后，在 QQ 搜索并申请加入：862835994。"
+      ]
     },
     "coverAlt": "友善角色住进圆形与长条形屏幕，回应手指的触碰",
     "cover": "./assets/activities/unusual-screens-v17.webp",
@@ -64,12 +55,10 @@
   {
     "id": "learn",
     "label": "学习创作",
-    "eyebrow": "从第一件作品开始",
     "title": "让作品集，\n不止于效果图。",
     "summary": "从易懂的制作步骤出发，把静态设计变成能操作的作品。学习、投稿，让你的创作能力更容易被看见。",
     "linkLabel": "制作指南与投稿",
     "access": {
-      "eyebrow": "学习与创作者入驻",
       "title": "开始你的第一件互动作品",
       "summary": "制作指南筹备中，欢迎加入创作者交流群。",
       "items": [
@@ -82,11 +71,9 @@
         {
           "platform": "qq",
           "label": "创作者交流群",
-          "value": "862835994",
-          "description": "点击复制 QQ 群号"
+          "value": "862835994"
         }
-      ],
-      "note": "金山文档发布后将在这里更新；交流群 QQ：862835994。"
+      ]
     },
     "coverAlt": "创作者从静态角色草图出发，制作可以互动的作品集",
     "cover": "./assets/activities/learning-v17.webp",
@@ -95,7 +82,6 @@
   {
     "id": "tools",
     "label": "趣味工具",
-    "eyebrow": "给日常加一点乐趣",
     "title": "给屏幕，\n添一点好玩。",
     "summary": "从互动角色到专注计时，挑选喜欢的趣味工具，了解购买与加载方式，把创意带进日常。",
     "linkLabel": "发现趣味工具",

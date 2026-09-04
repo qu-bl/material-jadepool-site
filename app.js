@@ -291,7 +291,6 @@ function renderActivities() {
     cover.src = activity.cover;
     cover.decoding = "async";
     cover.loading = index === 0 ? "eager" : "lazy";
-    slide.dataset.theme = activity.id;
     cover.alt = activity.coverAlt || `${activity.title}活动视觉`;
     title.textContent = activity.title;
     summary.textContent = activity.summary;
@@ -371,7 +370,6 @@ function bindCarouselControls() {
     scheduleCarousel();
   };
 
-
   let pointerStart = null;
   activityCarousel.addEventListener("pointerdown", (event) => {
     pointerStart = event.clientX;
@@ -388,21 +386,6 @@ function bindCarouselControls() {
     pointerStart = null;
     resume();
   });
-
-  if (!reduceMotion.matches) {
-    activityCarousel.addEventListener("pointermove", (event) => {
-      if (event.pointerType === "touch") return;
-      const bounds = activityCarousel.getBoundingClientRect();
-      const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * -12;
-      const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * -8;
-      activityCarousel.style.setProperty("--banner-x", `${x.toFixed(2)}px`);
-      activityCarousel.style.setProperty("--banner-y", `${y.toFixed(2)}px`);
-    });
-    activityCarousel.addEventListener("pointerleave", () => {
-      activityCarousel.style.setProperty("--banner-x", "0px");
-      activityCarousel.style.setProperty("--banner-y", "0px");
-    });
-  }
 
   document.addEventListener("visibilitychange", scheduleCarousel);
   reduceMotion.addEventListener?.("change", scheduleCarousel);
@@ -502,7 +485,7 @@ async function expandCard(card) {
   host.style.height = `${host.getBoundingClientRect().height}px`;
   host.classList.add("has-expanded-card");
   host.classList.add("card-entered");
-  expandedCard = { card, host, hiddenSiblings, busy: true };
+  expandedCard = { card, host, hiddenSiblings };
   for (let node = card; node.parentElement && node !== document.body; node = node.parentElement) {
     for (const sibling of node.parentElement.children) {
       if (sibling !== node && sibling !== cardBackdrop && !sibling.inert) {
@@ -532,7 +515,6 @@ async function expandCard(card) {
       duration: 480, easing: "cubic-bezier(.16,1,.3,1)"
     }).finished.catch(() => {});
   }
-  if (expandedCard) expandedCard.busy = false;
 }
 
 async function collapseCard() {
@@ -598,8 +580,6 @@ function renderCases() {
   cardObserver?.disconnect();
   caseGrid.replaceChildren();
 
-  const editorialLayouts = ["hero", "support", "standard", "standard", "standard", "standard", "wide", "wide"];
-
   items.forEach((item, index) => {
     const fragment = caseTemplate.content.cloneNode(true);
     const card = fragment.querySelector(".case-card");
@@ -622,9 +602,6 @@ function renderCases() {
     });
     renderAccessItems(item, trigger.querySelector(".card-access"));
     fragment.querySelector(".case-summary").textContent = item.description || access.description || access.summary || item.summary || "";
-    card.dataset.featured = item.featured ? "true" : "false";
-    card.dataset.official = item.partnerName === "千机百变官方" ? "true" : "false";
-    card.dataset.layout = editorialLayouts[index % editorialLayouts.length];
     card.style.setProperty("--card-index", Math.min(index, 7));
     image.src = item.cover;
     image.alt = item.coverAlt || `${item.name}案例封面`;
@@ -639,28 +616,6 @@ function renderCases() {
   });
 
   if (emptyState) emptyState.hidden = items.length !== 0;
-}
-
-function bindCardMotion() {
-  if (!caseGrid || reduceMotion.matches) return;
-  caseGrid.addEventListener("pointermove", (event) => {
-    if (event.pointerType === "touch") return;
-    const card = event.target.closest(".case-card");
-    if (!card) return;
-    const bounds = card.getBoundingClientRect();
-    const px = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const py = (event.clientY - bounds.top) / bounds.height - 0.5;
-    card.style.setProperty("--card-rx", `${(-py * 2.4).toFixed(2)}deg`);
-    card.style.setProperty("--card-ry", `${(px * 2.4).toFixed(2)}deg`);
-    card.style.setProperty("--glow-x", `${((px + 0.5) * 100).toFixed(1)}%`);
-    card.style.setProperty("--glow-y", `${((py + 0.5) * 100).toFixed(1)}%`);
-  });
-  caseGrid.addEventListener("pointerout", (event) => {
-    const card = event.target.closest(".case-card");
-    if (!card || card.contains(event.relatedTarget)) return;
-    card.style.setProperty("--card-rx", "0deg");
-    card.style.setProperty("--card-ry", "0deg");
-  });
 }
 
 function bindCaseControls() {
