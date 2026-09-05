@@ -99,3 +99,7 @@ python3 tools/validate_site.py
 ```
 
 这里已完成网页端接收接口；Android、鸿蒙、Apple 宿主 WebView 的注入接线须由各应用在对应页面加载后调用上述 API。
+
+## 顶部安全区域
+
+页面顶部在 Logo 前预留 40px，并额外避让 `env(safe-area-inset-top)`。应用 WebView 如需提供更大的异形屏幕避让高度，可设置根元素 CSS 变量 `--app-safe-area-top`（例如 `80px`）；页面取该值与系统安全区的较大值，避免重复累加。`--header-top-space` 可调整基础留白。

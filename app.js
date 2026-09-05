@@ -319,7 +319,9 @@ function renderActivities() {
       const dot = document.createElement("button");
       dot.className = "activity-dot";
       dot.type = "button";
-      dot.textContent = activity.label;
+      const label = document.createElement("span");
+      label.textContent = activity.label;
+      dot.append(label);
       dot.setAttribute("aria-label", `显示活动：${activity.title}`);
       dot.addEventListener("click", () => setActivity(index, true));
       activityDots.append(dot);
@@ -404,6 +406,18 @@ function setPlatformExpanded(expanded) {
   platformButtons.scrollLeft = 0;
 }
 
+function setCategoryExpanded(expanded) {
+  categoryTabs.dataset.expanded = String(expanded);
+  categoryTabs.querySelectorAll("button").forEach(button => {
+    const selected = button.dataset.category === state.category;
+    button.setAttribute("aria-pressed", String(selected));
+    button.inert = !expanded && !selected;
+    if (selected) button.setAttribute("aria-expanded", String(expanded));
+    else button.removeAttribute("aria-expanded");
+  });
+  categoryTabs.scrollLeft = 0;
+}
+
 function renderFilters() {
   if (!categoryTabs || !platformButtons) return;
   const categories = ["全部", ...new Set(state.cases.map((item) => item.category))];
@@ -414,16 +428,21 @@ function renderFilters() {
     button.className = "category-button";
     button.type = "button";
     button.textContent = category;
+    button.dataset.category = category;
     button.setAttribute("aria-pressed", category === state.category ? "true" : "false");
     button.addEventListener("click", () => {
+      if (categoryTabs.dataset.expanded !== "true") {
+        setCategoryExpanded(true);
+        return;
+      }
       state.category = category;
-      categoryTabs.querySelectorAll("button").forEach((item) => {
-        item.setAttribute("aria-pressed", item === button ? "true" : "false");
-      });
+      setCategoryExpanded(false);
+      button.focus({ preventScroll: true });
       renderCases();
     });
     categoryTabs.append(button);
   });
+  setCategoryExpanded(false);
 
   platformButtons.replaceChildren();
   ["全部平台", "Apple", "Android", "HarmonyOS"].forEach((platform) => {
@@ -653,28 +672,27 @@ function renderLoadError(error) {
   }
 }
 
-async function initialize() {
-  const picker = document.querySelector("#platform-picker");
+function bindCollapsibleFilter(picker, options, setExpanded) {
   document.addEventListener("click", event => {
-    if ((picker.dataset.expanded === "true") && !picker.contains(event.target)) setPlatformExpanded(false);
+    if ((picker.dataset.expanded === "true") && !picker.contains(event.target)) setExpanded(false);
   });
   document.addEventListener("keydown", event => {
     if (event.key === "Escape" && (picker.dataset.expanded === "true")) {
-      setPlatformExpanded(false);
-      platformButtons.querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
+      setExpanded(false);
+      options.querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
       event.preventDefault();
     }
   });
   picker.addEventListener("focusout", event => {
     // A null relatedTarget also occurs during pointer interaction in some browsers.
-    if (event.relatedTarget && !picker.contains(event.relatedTarget)) setPlatformExpanded(false);
+    if (event.relatedTarget && !picker.contains(event.relatedTarget)) setExpanded(false);
   });
   picker.addEventListener("keydown", event => {
-    const buttons = [...platformButtons.querySelectorAll("button")];
+    const buttons = [...options.querySelectorAll("button")];
     if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key) || !buttons.length) return;
     event.preventDefault();
     const wasOpen = (picker.dataset.expanded === "true");
-    setPlatformExpanded(true);
+    setExpanded(true);
     const index = buttons.indexOf(document.activeElement);
     const selected = buttons.findIndex(button => button.getAttribute("aria-pressed") === "true");
     const next = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1
@@ -683,6 +701,11 @@ async function initialize() {
     buttons[next].focus({ preventScroll: true });
     buttons[next].scrollIntoView({ block: "nearest", inline: "nearest" });
   });
+}
+
+async function initialize() {
+  bindCollapsibleFilter(document.querySelector("#platform-picker"), platformButtons, setPlatformExpanded);
+  bindCollapsibleFilter(categoryTabs, categoryTabs, setCategoryExpanded);
   document.querySelector(".dialog-close")?.addEventListener("click", closeAccessDialog);
   bindCarouselControls();
   bindCaseControls();
