@@ -391,13 +391,17 @@ function bindCarouselControls() {
   reduceMotion.addEventListener?.("change", scheduleCarousel);
 }
 
-function updatePlatformLabel() {
-  const current = document.querySelector("#platform-current");
-  const label = document.createElement("span");
-  label.textContent = platformLabel(state.platform);
-  const icon = createPlatformIcon(state.platform);
-  icon.setAttribute("aria-hidden", "true");
-  current.replaceChildren(icon, label);
+function setPlatformExpanded(expanded) {
+  const picker = document.querySelector("#platform-picker");
+  picker.dataset.expanded = String(expanded);
+  platformButtons.querySelectorAll("button").forEach(button => {
+    const selected = button.dataset.platform === state.platform;
+    button.setAttribute("aria-pressed", String(selected));
+    button.inert = !expanded && !selected;
+    if (selected) button.setAttribute("aria-expanded", String(expanded));
+    else button.removeAttribute("aria-expanded");
+  });
+  platformButtons.scrollLeft = 0;
 }
 
 function renderFilters() {
@@ -421,7 +425,6 @@ function renderFilters() {
     categoryTabs.append(button);
   });
 
-  updatePlatformLabel();
   platformButtons.replaceChildren();
   ["全部平台", "Apple", "Android", "HarmonyOS"].forEach((platform) => {
     const button = document.createElement("button");
@@ -434,18 +437,19 @@ function renderFilters() {
     button.title = label;
     button.append(createPlatformIcon(platform));
     button.addEventListener("click", () => {
+      const expanded = document.querySelector("#platform-picker").dataset.expanded === "true";
+      if (!expanded) {
+        setPlatformExpanded(true);
+        return;
+      }
       state.platform = platform;
-      updatePlatformLabel();
-      const picker = document.querySelector("#platform-picker");
-      picker.open = false;
-      picker.querySelector("summary").focus({ preventScroll: true });
-      platformButtons.querySelectorAll("button").forEach((item) => {
-        item.setAttribute("aria-pressed", item === button ? "true" : "false");
-      });
+      setPlatformExpanded(false);
+      button.focus({ preventScroll: true });
       renderCases();
     });
     platformButtons.append(button);
   });
+  setPlatformExpanded(false);
 }
 
 function getFilteredCases() {
@@ -652,31 +656,32 @@ function renderLoadError(error) {
 async function initialize() {
   const picker = document.querySelector("#platform-picker");
   document.addEventListener("click", event => {
-    if (picker.open && !picker.contains(event.target)) picker.open = false;
+    if ((picker.dataset.expanded === "true") && !picker.contains(event.target)) setPlatformExpanded(false);
   });
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && picker.open) {
-      picker.open = false;
-      picker.querySelector("summary").focus({ preventScroll: true });
+    if (event.key === "Escape" && (picker.dataset.expanded === "true")) {
+      setPlatformExpanded(false);
+      platformButtons.querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
       event.preventDefault();
     }
   });
   picker.addEventListener("focusout", event => {
     // A null relatedTarget also occurs during pointer interaction in some browsers.
-    if (event.relatedTarget && !picker.contains(event.relatedTarget)) picker.open = false;
+    if (event.relatedTarget && !picker.contains(event.relatedTarget)) setPlatformExpanded(false);
   });
   picker.addEventListener("keydown", event => {
     const buttons = [...platformButtons.querySelectorAll("button")];
-    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key) || !buttons.length) return;
+    if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key) || !buttons.length) return;
     event.preventDefault();
-    const wasOpen = picker.open;
-    picker.open = true;
+    const wasOpen = (picker.dataset.expanded === "true");
+    setPlatformExpanded(true);
     const index = buttons.indexOf(document.activeElement);
     const selected = buttons.findIndex(button => button.getAttribute("aria-pressed") === "true");
     const next = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1
       : !wasOpen || index < 0 ? Math.max(0, selected)
-      : (index + (event.key === "ArrowDown" ? 1 : -1) + buttons.length) % buttons.length;
+      : (index + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
     buttons[next].focus({ preventScroll: true });
+    buttons[next].scrollIntoView({ block: "nearest", inline: "nearest" });
   });
   document.querySelector(".dialog-close")?.addEventListener("click", closeAccessDialog);
   bindCarouselControls();
