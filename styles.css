@@ -23,7 +23,7 @@
   --accent: var(--md-sys-color-primary);
   --page-pad: clamp(16px, 4vw, 56px);
   --app-safe-area-top: 0px;
-  --header-top-space: 40px;
+  --header-top-space: 88px;
   --ease-out: cubic-bezier(.2, 0, 0, 1);
 }
 * { box-sizing: border-box; }
@@ -40,13 +40,13 @@ h2 { margin-bottom: 0; font-size: clamp(30px, 3.5vw, 46px); font-weight: 500; li
 a { color: var(--accent); }
 .skip-link { position: fixed; z-index: 300; top: 12px; left: 12px; padding: 10px 20px; border-radius: 100px; background: var(--accent); color: var(--md-sys-color-on-primary); transform: translateY(-160%); }
 .skip-link:focus { transform: none; }
-.site-header { max-width: 1440px; margin: auto; padding: calc(var(--header-top-space) + max(env(safe-area-inset-top, 0px), var(--app-safe-area-top))) var(--page-pad) 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.site-header { max-width: 1440px; margin: auto; padding: calc(var(--header-top-space) + max(env(safe-area-inset-top, 0px), var(--app-safe-area-top))) var(--page-pad) 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand { display: inline-flex; flex-shrink: 0; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-size: 21px; font-weight: 550; }
 .app-page { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
 .activity-section, .showcase-section { max-width: 1440px; margin: auto; padding-inline: var(--page-pad); }
 .activity-carousel { overflow: hidden; color: var(--text); touch-action: pan-y; }
 .activity-track { display: flex; transition: transform 500ms var(--ease-out); }
-.activity-slide { position: relative; flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; padding: 32px 0; min-height: 420px; }
+.activity-slide { position: relative; flex: 0 0 100%; min-width: 0; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; padding: 4px 0 24px; min-height: 360px; }
 .activity-cover { grid-column: 2; grid-row: 1; width: 100%; aspect-ratio: 3/2; object-fit: contain; border-radius: 24px; }
 .activity-content { grid-column: 1; grid-row: 1; min-width: 0; }
 .activity-content h2 { margin: 0 0 22px; font-size: clamp(28px, 3.7vw, 52px); font-weight: 550; line-height: 1.35; white-space: pre-line; }
@@ -125,13 +125,12 @@ a { color: var(--accent); }
 .empty-state p { margin: 12px 0 0; }
 .sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
 @media(max-width: 1050px) {
-  .activity-slide { padding: 28px 0; gap: 24px; }
+  .activity-slide { padding: 4px 0 24px; gap: 24px; }
   .case-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media(max-width: 719px) {
-  .site-header { padding-bottom: 18px; }
   .brand { font-size: 19px; }
-  .activity-slide { grid-template-columns: 1fr; grid-template-rows: auto auto; align-content: start; padding: 24px 0 16px; min-height: 0; }
+  .activity-slide { grid-template-columns: 1fr; grid-template-rows: auto auto; align-content: start; padding: 4px 0 16px; min-height: 0; }
   .activity-content h2 { font-size: clamp(28px,7.7vw,44px); margin-bottom: 16px; }
   .activity-content p { margin-bottom: 20px; }
   .activity-cover { grid-column: 1; grid-row: 2; max-width: 420px; justify-self: center; border-radius: 24px; }
