@@ -23,7 +23,6 @@
   --accent: var(--md-sys-color-primary);
   --page-pad: clamp(16px, 4vw, 56px);
   --app-safe-area-top: 0px;
-  --header-top-space: 88px;
   --ease-out: cubic-bezier(.2, 0, 0, 1);
 }
 * { box-sizing: border-box; }
@@ -40,9 +39,7 @@ h2 { margin-bottom: 0; font-size: clamp(30px, 3.5vw, 46px); font-weight: 500; li
 a { color: var(--accent); }
 .skip-link { position: fixed; z-index: 300; top: 12px; left: 12px; padding: 10px 20px; border-radius: 100px; background: var(--accent); color: var(--md-sys-color-on-primary); transform: translateY(-160%); }
 .skip-link:focus { transform: none; }
-.site-header { max-width: 1440px; margin: auto; padding: calc(var(--header-top-space) + max(env(safe-area-inset-top, 0px), var(--app-safe-area-top))) var(--page-pad) 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.brand { display: inline-flex; flex-shrink: 0; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-size: 21px; font-weight: 550; }
-.app-page { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+.app-page { padding-top: calc(64px + max(env(safe-area-inset-top, 0px), var(--app-safe-area-top))); padding-bottom: max(24px, env(safe-area-inset-bottom)); }
 .activity-section, .showcase-section { max-width: 1440px; margin: auto; padding-inline: var(--page-pad); }
 .activity-carousel { overflow: hidden; color: var(--text); touch-action: pan-y; }
 .activity-track { display: flex; transition: transform 500ms var(--ease-out); }
@@ -92,8 +89,8 @@ a { color: var(--accent); }
 .case-card-trigger:hover { color: var(--accent); }
 .case-media { width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 24px 24px 0 0; background: var(--surface-soft); display: block; position: relative; }
 .case-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.case-body { display: flex; flex: 1; flex-direction: row; align-items: flex-start; justify-content: space-between; padding: 20px; width: 100%; gap: 12px; flex-wrap: wrap; }
-.case-copy .case-title { margin-bottom: 4px; font-size: 20px; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
+.case-body { display: flex; flex: 1; flex-direction: column; align-items: stretch; padding: 20px; width: 100%; gap: 16px; }
+.case-copy .case-title { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
 .partner-name { display: block; color: var(--muted); font-size: 14px; }
 .case-platforms { display: flex; flex-shrink: 0; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 .platform-icon--case { --icon-cutout: var(--page); width: 18px; height: 18px; color: var(--muted); }
@@ -129,7 +126,6 @@ a { color: var(--accent); }
   .case-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media(max-width: 719px) {
-  .brand { font-size: 19px; }
   .activity-slide { grid-template-columns: 1fr; grid-template-rows: auto auto; align-content: start; padding: 4px 0 16px; min-height: 0; }
   .activity-content h2 { font-size: clamp(28px,7.7vw,44px); margin-bottom: 16px; }
   .activity-content p { margin-bottom: 20px; }
@@ -166,7 +162,6 @@ a { color: var(--accent); }
 .access-dialog, .access-sheet { scrollbar-width: none; -ms-overflow-style: none; }
 .access-dialog::-webkit-scrollbar, .access-sheet::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
-.brand img { display: block; flex-shrink: 0; background: #fff; border-radius: 12px; }
 
 /* Motion follows the existing content hierarchy without adding decoration. */
 @media (prefers-reduced-motion: no-preference) {
@@ -206,7 +201,7 @@ a { color: var(--accent); }
 /* The compact and expanded views share the card, cover, title and description. */
 
 .case-copy { min-width: 0; width: 100%; }
-.case-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--muted); font-size: 16px; line-height: 1.65; margin-top: 12px; white-space: pre-wrap; }
+.case-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--muted); font-size: 16px; line-height: 1.65; margin: 8px 0 0; white-space: pre-wrap; }
 .access-header .dialog-close { position: absolute; right: 16px; top: 12px; }
 /* The original card expands in place; no second card or transition snapshots. */
 .card-backdrop { position: fixed; inset: 0; z-index: 190; background: rgb(0 0 0 / .32); }
@@ -218,7 +213,7 @@ a { color: var(--accent); }
 .case-card-trigger.is-expanded .case-media { width: 100%; flex-shrink: 0; }
 .case-card-trigger.is-expanded .case-media img { transform: none; }
 .case-card-trigger.is-expanded .case-summary { display: block; -webkit-line-clamp: unset; overflow: visible; }
-.case-card-trigger.is-expanded .card-access { display: grid; width: 100%; margin-top: 20px; }
+.case-card-trigger.is-expanded .card-access { display: grid; width: 100%; margin: 0; order: 2; }
 .case-card-trigger:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 
 /* Keep the page width stable during scroll locking and never replay entry on collapse. */
@@ -242,3 +237,16 @@ a { color: var(--accent); }
 .category-tabs .category-button { min-width: 0; max-width: 180px; overflow: hidden; transition: max-width 280ms var(--ease-out), padding 280ms var(--ease-out), opacity 180ms ease, background-color 220ms ease; }
 .category-tabs[data-expanded="false"] .category-button[aria-pressed="false"] { max-width: 0; padding-inline: 0; opacity: 0; pointer-events: none; }
 .platform-picker { flex-shrink: 0; }
+
+/* One content hierarchy for compact and expanded cards. */
+.case-copy { order: 0; }
+.case-details { display: none; order: 1; min-width: 0; padding: 18px; border-radius: 20px; background: var(--surface-soft); }
+.case-card-trigger.is-expanded .case-details { display: block; }
+.case-section-label { margin: 0 0 8px; font-size: 14px; font-weight: 500; color: var(--muted); }
+.case-details-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; color: var(--text); }
+.case-platforms { order: 3; margin: 0; gap: 8px; }
+.case-platforms .platform-icon { width: 32px; height: 32px; padding: 7px; border-radius: 50%; background: var(--surface-soft); }
+.case-tags { order: 4; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.case-tag { max-width: 100%; padding: 5px 12px; border-radius: 999px; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.case-card-trigger:not(.is-expanded) .case-tag:nth-child(n+3) { display: none; }
+.case-card-trigger.is-expanded .case-body { gap: 20px; }

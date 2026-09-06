@@ -102,4 +102,4 @@ python3 tools/validate_site.py
 
 ## 顶部安全区域
 
-页面顶部在 Logo 前预留 88px，并额外避让 `env(safe-area-inset-top)`。应用 WebView 如需提供更大的异形屏幕避让高度，可设置根元素 CSS 变量 `--app-safe-area-top`（例如 `80px`）；页面取该值与系统安全区的较大值，避免重复累加。`--header-top-space` 可调整基础留白。
+页面已移除顶部品牌栏。内容顶部预留 64px，并额外保留 `env(safe-area-inset-top)` 安全区避让；应用 WebView 可通过根元素 CSS 变量 `--app-safe-area-top` 提供额外避让高度（例如 `80px`）。页面取两者较大值，避免重复累加。

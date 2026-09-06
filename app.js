@@ -476,7 +476,7 @@ function getFilteredCases() {
   return state.cases.filter((item) => {
     const categoryMatches = state.category === "全部" || item.category === state.category;
     const platformMatches = state.platform === "全部平台" || item.platforms.includes(state.platform);
-    const searchable = [item.name, item.summary, item.partnerName, item.category, ...item.platforms, ...item.tags]
+    const searchable = [item.name, item.summary, item.details, item.description, item.partnerName, item.category, ...item.platforms, ...item.tags]
       .join(" ")
       .toLocaleLowerCase("zh-CN");
     return categoryMatches && platformMatches && (!query || searchable.includes(query));
@@ -609,7 +609,6 @@ function renderCases() {
     const trigger = fragment.querySelector(".case-card-trigger");
     const image = fragment.querySelector(".case-media img");
     const title = fragment.querySelector(".case-title");
-    const partner = fragment.querySelector(".partner-name");
     const platforms = fragment.querySelector(".case-platforms");
 
     const access = getAccess(item);
@@ -624,13 +623,27 @@ function renderCases() {
       }
     });
     renderAccessItems(item, trigger.querySelector(".card-access"));
-    fragment.querySelector(".case-summary").textContent = item.description || access.description || access.summary || item.summary || "";
+    const summary = item.summary || access.summary || "";
+    const summaryElement = fragment.querySelector(".case-summary");
+    summaryElement.textContent = summary;
+    summaryElement.hidden = !summary;
+    const details = item.details || item.description || access.description || "";
+    const detailSection = fragment.querySelector(".case-details");
+    detailSection.querySelector(".case-details-text").textContent = details;
+    detailSection.hidden = !details;
+    const tags = fragment.querySelector(".case-tags");
+    [...new Set(item.tags || [])].forEach(tag => {
+      const capsule = document.createElement("span");
+      capsule.className = "case-tag";
+      capsule.textContent = tag;
+      tags.append(capsule);
+    });
+    tags.hidden = !tags.children.length;
     card.style.setProperty("--card-index", Math.min(index, 7));
     image.src = item.cover;
     image.alt = item.coverAlt || `${item.name}案例封面`;
     if (SiteMedia.videoSource(item.video)) renderAccessMedia(item, trigger.querySelector(".case-media"));
     title.textContent = item.name;
-    partner.textContent = item.partnerName === "千机百变官方" ? "官方" : item.partnerName;
     platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
     item.platforms.forEach((platform) => platforms.append(createPlatformIcon(platform, "platform-icon--case")));
     caseGrid.append(fragment);

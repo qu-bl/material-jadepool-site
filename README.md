@@ -87,3 +87,7 @@ access.items 中的 `url` 或 `value` 为完整 HTTP(S) 网址时，新窗口打
 数据验证：`node tools/test_media.cjs`。实际视频的播放效果仍需使用正式链接在宿主 WebView 中验证。
 
 `assets/brand-logo.svg` 为网站品牌 Logo，源自用户提供的 `0 2.svg`，仅增加白色底。系统筛选的苹果、安卓、鸿蒙标识，以及外链平台图标保持各自独立，不替换成品牌 Logo。
+
+## 卡片内容字段
+
+卡片依次展示媒体（`video`，未配置时使用 `cover`）、标题（`name`）、简介（`summary`）、详情（`details`，兼容 `description`）、三方入口（`access.items`）、系统（`platforms`）和关键词（`tags`）。折叠时隐藏详情和三方入口，简介最多两行，关键词显示前两个；展开后显示全部。未填写的详情不显示，不自动重复简介。

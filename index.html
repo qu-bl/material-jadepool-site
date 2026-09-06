@@ -14,20 +14,16 @@
   <meta name="twitter:title" content="千机百变 · 官方与伙伴们的创意橱柜">
   <meta name="twitter:description" content="发现互动作品，交流屏幕定制，学习创作，让设计走进日常。">
   <meta name="twitter:image" content="https://qu-bl.github.io/material-jadepool-site/assets/og-v2.png">
-  <link rel="icon" href="./assets/favicon.svg?v=50" type="image/svg+xml">
+  <link rel="icon" href="./assets/favicon.svg?v=54" type="image/svg+xml">
   <title>千机百变 · 官方与伙伴们的创意橱柜</title>
-  <link rel="stylesheet" href="./styles.css?v=50">
-  <script src="./theme.js?v=50"></script>
-  <script src="./media.js?v=50" defer></script>
-  <script src="./app.js?v=50" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=54">
+  <script src="./theme.js?v=54"></script>
+  <script src="./media.js?v=54" defer></script>
+  <script src="./app.js?v=54" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#showcase">跳到创意橱柜</a>
 
-  <header class="site-header">
-    <a class="brand" href="#" aria-label="千机百变首页"><img src="./assets/brand-logo.svg?v=50" alt="" width="40" height="40"><span>千机百变</span></a>
-
-  </header>
   <main class="app-page">
     <h1 class="sr-only">千机百变 · 让创意动起来，让屏幕有个性</h1>
     <section class="activity-section" aria-label="探索千机百变">
@@ -79,15 +75,19 @@
     <article class="case-card" role="listitem">
       <div class="case-card-trigger" role="button" tabindex="0">
         <span class="case-media"><img loading="lazy" decoding="async" alt=""></span>
-        <span class="case-body">
-          <span class="case-copy">
-            <span class="case-title"></span>
-            <span class="partner-name"></span>
-            <span class="case-summary"></span>
-          </span>
-          <span class="case-platforms"></span>
-          <span class="access-items card-access" aria-label="平台链接与联系方式"></span>
-        </span>
+        <div class="case-body">
+          <div class="case-copy">
+            <h3 class="case-title"></h3>
+            <p class="case-summary"></p>
+          </div>
+          <section class="case-details" aria-label="作品详情" hidden>
+            <h4 class="case-section-label">详情</h4>
+            <p class="case-details-text"></p>
+          </section>
+          <div class="access-items card-access" aria-label="三方链接与联系方式"></div>
+          <div class="case-platforms" aria-label="支持系统"></div>
+          <div class="case-tags" aria-label="关键词"></div>
+        </div>
       </div>
     </article>
   </template>
