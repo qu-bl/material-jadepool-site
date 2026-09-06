@@ -74,7 +74,7 @@ python3 -m http.server 4173
 
 ## 展开信息卡片（视频 → 全文简介 → 平台入口）
 
-案例或 Banner 可增加 `description` 保存完整简介（支持换行，不截断），以及 `video`：
+案例使用 `summary` 保存简短简介，使用独立的 `details` 保存详细说明（支持换行）。Banner 的 `description` 用于咨询弹窗说明。两者均可配置 `video`：
 
 ```json
 "video": { "platform": "bilibili", "id": "真实BV号", "aspectRatio": 1.7777777778 }
@@ -90,4 +90,15 @@ access.items 中的 `url` 或 `value` 为完整 HTTP(S) 网址时，新窗口打
 
 ## 卡片内容字段
 
-卡片依次展示媒体（`video`，未配置时使用 `cover`）、标题（`name`）、简介（`summary`）、详情（`details`，兼容 `description`）、三方入口（`access.items`）、系统（`platforms`）和关键词（`tags`）。折叠时隐藏详情和三方入口，简介最多两行，关键词显示前两个；展开后显示全部。未填写的详情不显示，不自动重复简介。
+卡片依次展示媒体（`video`，未配置时使用 `cover`）、标题（`name`）、简介（`summary`）、系统（`platforms`）、关键词（`tags`）、详情（`details`）和三方入口（`access.items`）。折叠时隐藏详情和三方入口，简介最多两行，关键词显示前两个；展开后显示全部。未填写的详情不显示，不自动重复简介。
+
+### 后续填写简介与详情
+
+每张卡片在 `data/cases.json` 中都已预留 `details` 空字符串，紧跟在 `summary` 后面。修改对应卡片即可：
+
+```json
+"summary": "一句话介绍作品。",
+"details": "这里填写详细说明。\n这里填写使用方法或注意事项。"
+```
+
+`summary` 和 `details` 独立维护。`details` 留空时不显示详情区域，填入文字后会自动出现在展开卡片的关键词之后、三方链接之前。换行使用 `\n`，文字按纯文本显示。

@@ -623,11 +623,11 @@ function renderCases() {
       }
     });
     renderAccessItems(item, trigger.querySelector(".card-access"));
-    const summary = item.summary || access.summary || "";
+    const summary = item.summary || "";
     const summaryElement = fragment.querySelector(".case-summary");
     summaryElement.textContent = summary;
     summaryElement.hidden = !summary;
-    const details = item.details || item.description || access.description || "";
+    const details = item.details || "";
     const detailSection = fragment.querySelector(".case-details");
     detailSection.querySelector(".case-details-text").textContent = details;
     detailSection.hidden = !details;
