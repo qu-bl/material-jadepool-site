@@ -11,7 +11,7 @@
 | `resource-package.md` | 「资源包」场景规范 |
 | `rules.json` | 版本清单：`version` + 每个文件的 `sha256` + `minAppVersion` |
 
-App 拉取地址：`https://qu-bl.github.io/material-jadepool-site/ai-rules/`
+App 拉取地址：`https://qu-bl.github.io/one-fuzhu/ai-rules/`
 
 ## 如何发布一次更新
 
