@@ -146,33 +146,36 @@ async function copyAccessValue(value, label, button) {
   }
 }
 
+function createPlayerFrame(item, video) {
+  const frame = document.createElement("iframe");
+  frame.src = video.embed;
+  frame.title = `${item.name || item.title}视频`;
+  frame.allow = "fullscreen; encrypted-media; picture-in-picture";
+  frame.allowFullscreen = true;
+  frame.loading = "lazy";
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+  // 屏蔽播放器"点击画面跳转B站"：不给 allow-popups / allow-top-navigation，播放与控件不受影响。
+  frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-presentation allow-forms");
+  return frame;
+}
+
 function renderAccessMedia(item, accessMedia = document.querySelector("#access-media")) {
   accessMedia.replaceChildren();
   const video = SiteMedia.videoSource(item.video);
   accessMedia.hidden = !video && !item.cover;
   accessMedia.style.aspectRatio = String(video?.ratio || 16 / 9);
   accessMedia.classList.toggle("access-media--portrait", Boolean(video && video.ratio < 1));
+  // 视频优先：直接加载播放器（自带封面/播放键），不再需要"播放视频"按钮。
+  if (video) {
+    accessMedia.append(createPlayerFrame(item, video));
+    return;
+  }
   if (item.cover) {
     const poster = document.createElement("img");
     poster.src = item.cover;
     poster.alt = item.coverAlt || `${item.name || item.title}封面`;
     accessMedia.append(poster);
   }
-  if (!video) return;
-  const play = document.createElement("button");
-  play.type = "button";
-  play.className = "video-load";
-  play.textContent = "播放视频";
-  play.addEventListener("click", () => {
-    const frame = document.createElement("iframe");
-    frame.src = video.embed;
-    frame.title = `${item.name || item.title}视频`;
-    frame.allow = "fullscreen; encrypted-media; picture-in-picture";
-    frame.allowFullscreen = true;
-    frame.referrerPolicy = "strict-origin-when-cross-origin";
-    accessMedia.replaceChildren(frame);
-  }, {once: true});
-  accessMedia.append(play);
 }
 
 function mountAccessDialog(item, trigger) {
