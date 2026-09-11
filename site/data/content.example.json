@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "banners": [
+    {
+      "id": "banner-example",
+      "label": "轮播圆点文字",
+      "title": "标题第一行，\n标题第二行（用 \\n 换行）",
+      "summary": "一句话简介，显示在标题下方。",
+      "linkLabel": "按钮文字",
+      "action": "showcase",
+      "category": "全部",
+      "video": { "platform": "bilibili", "id": "BV1xx411c7mD", "aspectRatio": 1.7777 },
+      "cover": "./assets/xxx.webp",
+      "coverAlt": "封面替代文字（可选）",
+      "access": {
+        "title": "弹窗标题",
+        "summary": "弹窗简介",
+        "items": [
+          { "platform": "qq", "label": "交流群", "value": "123456789", "action": "copy" },
+          { "platform": "bilibili", "label": "哔哩哔哩", "url": "https://www.bilibili.com/video/BV1xx411c7mD/" }
+        ]
+      },
+      "visible": true
+    }
+  ],
+  "cards": [
+    {
+      "id": "card-example-video",
+      "name": "卡片标题（必填）",
+      "summary": "简短简介，显示在卡片上。",
+      "details": "详情正文，展开卡片后显示，可以写多行文字。",
+      "partnerName": "伙伴名称",
+      "category": "互动组件",
+      "platforms": ["HarmonyOS", "Android", "Apple"],
+      "tags": ["Rive", "状态机", "数据绑定"],
+      "video": { "platform": "bilibili", "id": "BV1xx411c7mD", "aspectRatio": 1.7777 },
+      "cover": "./assets/cases/xxx.webp",
+      "coverAlt": "封面替代文字（可选）",
+      "access": {
+        "title": "更多入口",
+        "summary": "在不同平台找到我。",
+        "items": [
+          { "platform": "bilibili", "label": "哔哩哔哩", "url": "https://www.bilibili.com/video/BV1xx411c7mD/" },
+          { "platform": "youtube", "label": "YouTube", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+          { "platform": "douyin", "label": "抖音", "url": "https://www.douyin.com/video/7123456789012345678" },
+          { "platform": "xiaohongshu", "label": "小红书", "url": "https://www.xiaohongshu.com/explore/xxxxxxxx" },
+          { "platform": "kdocs", "label": "金山文档", "url": "https://www.kdocs.cn/l/xxxxxxxx" },
+          { "platform": "github", "label": "GitHub", "url": "https://github.com/qu-bl" },
+          { "platform": "qq", "label": "QQ 群", "value": "123456789", "action": "copy" }
+        ]
+      },
+      "featured": true,
+      "visible": true
+    },
+    {
+      "id": "card-example-min",
+      "name": "最简卡片示例",
+      "summary": "最少只需要这几个字段。",
+      "category": "微件",
+      "partnerName": "某某伙伴",
+      "platforms": ["HarmonyOS"],
+      "tags": ["Rive"],
+      "video": { "platform": "bilibili", "id": "BV1xx411c7mD" },
+      "visible": true
+    }
+  ]
+}
