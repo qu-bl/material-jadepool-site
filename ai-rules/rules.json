@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.09.11.1",
+  "minAppVersion": "1.0.0",
+  "files": [
+    { "name": "qu-code-skill.md", "sha256": "19f041792012a4fd35b82236584b86ec2f209d31ded1886f7eab7b697828cd5f" },
+    { "name": "application-script.md", "sha256": "9c34021b5e28d0af317cf12af04fd8d86631774ece0ce7f5076cae7d2d1a596b" },
+    { "name": "resource-package.md", "sha256": "0db6881b8cfc3699f41bb9745455a077fb942343dcc2e49b3fe39764579d1474" }
+  ]
+}
