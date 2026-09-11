@@ -145,7 +145,12 @@
         ]
       },
       "featured": false,
-      "visible": true
+      "visible": true,
+      "video": {
+        "platform": "douyin",
+        "id": "3.84 o@q.eo 11/26 :8pm AGi:/ 知否放大镜110｜低头，才能看见水里，映着天 # 知否知否应是绿肥红瘦 # 知否知否 # 知否放大镜 # 飞奔啊蜗牛 # 知否解说  https://v.douyin.com/ux96a0_8fEQ/ 复制此链接，打开Dou音搜索，直接观看视频！",
+        "aspectRatio": 1.7777
+      }
     },
     {
       "id": "sensor-compass",
