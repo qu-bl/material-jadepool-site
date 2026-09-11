@@ -232,6 +232,21 @@
       },
       "featured": false,
       "visible": true
+    },
+    {
+      "id": "card-1789134281380",
+      "name": "新卡片",
+      "summary": "111",
+      "category": "互动组件",
+      "partnerName": "111",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [
+        "1"
+      ],
+      "visible": true,
+      "details": "111"
     }
   ]
 }
