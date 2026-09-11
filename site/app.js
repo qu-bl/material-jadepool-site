@@ -154,8 +154,6 @@ function createPlayerFrame(item, video) {
   frame.allowFullscreen = true;
   frame.loading = "lazy";
   frame.referrerPolicy = "strict-origin-when-cross-origin";
-  // 屏蔽播放器"点击画面跳转B站"：不给 allow-popups / allow-top-navigation，播放与控件不受影响。
-  frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-presentation allow-forms");
   return frame;
 }
 
