@@ -249,3 +249,9 @@ a { color: var(--accent); }
 .case-tags { order: 2; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
 .case-tag { max-width: 100%; padding: 5px 12px; border-radius: 999px; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
 .case-card-trigger:not(.is-expanded) .case-tag:nth-child(n+3) { display: none; }
+
+/* Site footer (user agreement entry). */
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px; max-width: 1440px; margin: 0 auto; padding: 20px var(--page-pad) max(36px, env(safe-area-inset-bottom)); color: var(--muted); font-size: 14px; }
+.site-footer-sep { opacity: .6; }
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
