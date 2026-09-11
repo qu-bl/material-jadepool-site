@@ -288,10 +288,14 @@ function renderActivities() {
 
     slide.setAttribute("aria-label", `${index + 1} / ${state.activities.length}：${activity.title}`);
     slide.setAttribute("aria-roledescription", "幻灯片");
-    cover.src = activity.cover;
-    cover.decoding = "async";
-    cover.loading = index === 0 ? "eager" : "lazy";
-    cover.alt = activity.coverAlt || `${activity.title}活动视觉`;
+    if (activity.cover) {
+      cover.src = activity.cover;
+      cover.decoding = "async";
+      cover.loading = index === 0 ? "eager" : "lazy";
+      cover.alt = activity.coverAlt || `${activity.title}活动视觉`;
+    } else {
+      cover.hidden = true;
+    }
     title.textContent = activity.title;
     summary.textContent = activity.summary;
     if (activity.action === "showcase") {
@@ -640,9 +644,15 @@ function renderCases() {
     });
     tags.hidden = !tags.children.length;
     card.style.setProperty("--card-index", Math.min(index, 7));
-    image.src = item.cover;
-    image.alt = item.coverAlt || `${item.name}案例封面`;
-    if (SiteMedia.videoSource(item.video)) renderAccessMedia(item, trigger.querySelector(".case-media"));
+    // Cover images are optional; cards are video-first. Hide the media area
+    // entirely when there is neither a cover nor a video link.
+    const media = fragment.querySelector(".case-media");
+    if (item.cover) {
+      image.src = item.cover;
+      image.alt = item.coverAlt || `${item.name}案例封面`;
+    }
+    if (SiteMedia.videoSource(item.video)) renderAccessMedia(item, media);
+    else if (!item.cover) media.hidden = true;
     title.textContent = item.name;
     platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
     item.platforms.forEach((platform) => platforms.append(createPlatformIcon(platform, "platform-icon--case")));
@@ -725,12 +735,11 @@ async function initialize() {
 
   bindAccessDialog();
   try {
-    const [activities, cases] = await Promise.all([
-      loadJson("./data/activities.json"),
-      loadJson("./data/cases.json"),
-    ]);
-    state.activities = activities.filter((item) => item.visible !== false);
-    state.cases = cases.filter((item) => item.visible !== false);
+    // Single source of truth: banners + cards all come from one JSON file,
+    // so publishing content only means editing data/content.json.
+    const content = await loadJson("./data/content.json");
+    state.activities = (content.banners || []).filter((item) => item.visible !== false);
+    state.cases = (content.cards || []).filter((item) => item.visible !== false);
     renderActivities();
     renderFilters();
     renderCases();

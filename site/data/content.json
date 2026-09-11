@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 1,
+  "banners": [
+    {
+      "id": "discover",
+      "label": "发现创意",
+      "title": "让创意动起来，\n让屏幕有个性。",
+      "summary": "发现设计师的互动作品与趣味工具，让每一块屏幕，都有属于自己的精彩。",
+      "linkLabel": "探索创意作品",
+      "action": "showcase",
+      "visible": true
+    },
+    {
+      "id": "custom",
+      "label": "设计定制",
+      "title": "你的想法，\n值得被做出来。",
+      "summary": "从角色形象到互动界面，与设计师一起，把你的想法变成可以体验的作品。欢迎聊聊定制需求。",
+      "linkLabel": "聊聊定制需求",
+      "access": {
+        "title": "聊聊你的定制想法",
+        "summary": "角色形象、互动界面与屏幕定制。",
+        "items": [
+          {
+            "platform": "qq",
+            "label": "创作者交流群",
+            "value": "862835994"
+          }
+        ]
+      },
+      "visible": true
+    },
+    {
+      "id": "shaped",
+      "label": "异形屏幕",
+      "title": "不规则的屏幕，\n不设限的创意。",
+      "summary": "圆屏、长条屏，都能拥有自己的表情。探索拟人角色、触碰回应与 AI 陪伴的定制可能。",
+      "linkLabel": "交流屏幕设计",
+      "access": {
+        "title": "为你的屏幕设计",
+        "summary": "异形屏幕、拟人角色与 AI 陪伴设计。",
+        "items": [
+          {
+            "platform": "qq",
+            "label": "创作者交流群",
+            "value": "862835994"
+          }
+        ]
+      },
+      "visible": true
+    },
+    {
+      "id": "learn",
+      "label": "学习创作",
+      "title": "让作品集，\n不止于效果图。",
+      "summary": "从易懂的制作步骤出发，把静态设计变成能操作的作品。学习、投稿，让你的创作能力更容易被看见。",
+      "linkLabel": "制作指南与投稿",
+      "access": {
+        "title": "开始你的第一件互动作品",
+        "summary": "制作指南筹备中，欢迎加入创作者交流群。",
+        "items": [
+          {
+            "platform": "kdocs",
+            "label": "金山文档",
+            "value": "正式链接待发布",
+            "copyable": false
+          },
+          {
+            "platform": "qq",
+            "label": "创作者交流群",
+            "value": "862835994"
+          }
+        ]
+      },
+      "visible": true
+    },
+    {
+      "id": "tools",
+      "label": "趣味工具",
+      "title": "给屏幕，\n添一点好玩。",
+      "summary": "从互动角色到专注计时，挑选喜欢的趣味工具，了解购买与加载方式，把创意带进日常。",
+      "linkLabel": "发现趣味工具",
+      "action": "showcase",
+      "category": "趣味工具",
+      "visible": true
+    }
+  ],
+  "cards": [
+    {
+      "id": "vehicle-dashboard",
+      "name": "车辆互动仪表盘",
+      "summary": "使用状态机与数据绑定驱动车辆信息和交互反馈。",
+      "details": "",
+      "partnerName": "千机百变官方",
+      "category": "互动组件",
+      "platforms": [
+        "HarmonyOS",
+        "Android"
+      ],
+      "tags": [
+        "Rive",
+        "状态机",
+        "数据绑定"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "xiaohongshu",
+            "label": "小红书",
+            "value": "小红书：千机百变（展示样例，待替换）"
+          },
+          {
+            "platform": "bilibili",
+            "label": "哔哩哔哩",
+            "value": "哔哩哔哩：千机百变（展示样例，待替换）"
+          },
+          {
+            "platform": "douyin",
+            "label": "抖音",
+            "value": "抖音：千机百变（展示样例，待替换）"
+          }
+        ]
+      },
+      "featured": true,
+      "visible": true
+    },
+    {
+      "id": "weather-widget",
+      "name": "天气状态微件",
+      "summary": "根据实时天气和系统主题切换动画状态的轻量微件。",
+      "details": "",
+      "partnerName": "示例伙伴 B",
+      "category": "微件",
+      "platforms": [
+        "HarmonyOS",
+        "Apple"
+      ],
+      "tags": [
+        "网络数据",
+        "主题适配",
+        "状态机"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "xiaohongshu",
+            "label": "小红书",
+            "value": "小红书：天气状态微件（展示样例，待替换）"
+          }
+        ]
+      },
+      "featured": true,
+      "visible": true
+    },
+    {
+      "id": "dynamic-wallpaper",
+      "name": "呼吸感动态壁纸",
+      "summary": "随时间与设备状态改变颜色和节奏的动态桌面场景。",
+      "details": "",
+      "partnerName": "示例伙伴 C",
+      "category": "桌面与壁纸",
+      "platforms": [
+        "Android",
+        "HarmonyOS"
+      ],
+      "tags": [
+        "Rive",
+        "时间",
+        "动态布局"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "bilibili",
+            "label": "哔哩哔哩",
+            "value": "哔哩哔哩：呼吸感动态壁纸（展示样例，待替换）"
+          }
+        ]
+      },
+      "featured": false,
+      "visible": true
+    },
+    {
+      "id": "audio-orbit",
+      "name": "声音轨道实验",
+      "summary": "用音频事件驱动轨道、光点和空间节奏的互动实验。",
+      "details": "",
+      "partnerName": "示例伙伴 D",
+      "category": "游戏与实验",
+      "platforms": [
+        "Apple",
+        "Android"
+      ],
+      "tags": [
+        "音频",
+        "Rive",
+        "交互实验"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "douyin",
+            "label": "抖音",
+            "value": "抖音：声音轨道实验（展示样例，待替换）"
+          }
+        ]
+      },
+      "featured": false,
+      "visible": true
+    },
+    {
+      "id": "image-binding-cards",
+      "name": "图片绑定卡片组",
+      "summary": "以外部图片和数据驱动的可复用内容卡片模板。",
+      "details": "",
+      "partnerName": "千机百变官方",
+      "category": "模板与示例",
+      "platforms": [
+        "Apple",
+        "Android",
+        "HarmonyOS"
+      ],
+      "tags": [
+        "图片绑定",
+        "数据绑定",
+        "模板"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "github",
+            "label": "GitHub",
+            "value": "GitHub：图片绑定卡片组（展示样例，待替换）"
+          }
+        ]
+      },
+      "featured": false,
+      "visible": true
+    },
+    {
+      "id": "sensor-compass",
+      "name": "感应罗盘",
+      "summary": "将方向与传感器信息转换成具有生命感的指针反馈。",
+      "details": "",
+      "partnerName": "示例伙伴 F",
+      "category": "趣味工具",
+      "platforms": [
+        "Android",
+        "Apple"
+      ],
+      "tags": [
+        "传感器",
+        "方向",
+        "状态机"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "qq",
+            "label": "QQ",
+            "value": "862835994"
+          }
+        ]
+      },
+      "featured": false,
+      "visible": true
+    },
+    {
+      "id": "focus-controller",
+      "name": "专注节奏控制器",
+      "summary": "把倒计时、阶段状态和轻量反馈组合成一件桌面工具。",
+      "details": "",
+      "partnerName": "示例伙伴 G",
+      "category": "趣味工具",
+      "platforms": [
+        "HarmonyOS",
+        "Apple"
+      ],
+      "tags": [
+        "时间",
+        "JavaScript",
+        "状态机"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "kdocs",
+            "label": "金山文档",
+            "value": "金山文档内容待发布",
+            "copyable": false
+          }
+        ]
+      },
+      "featured": false,
+      "visible": true
+    },
+    {
+      "id": "liquid-switch",
+      "name": "液态开关组件",
+      "summary": "围绕按压、拖动和状态变化设计的高反馈交互组件。",
+      "details": "",
+      "partnerName": "示例伙伴 H",
+      "category": "互动组件",
+      "platforms": [
+        "Apple",
+        "Android",
+        "HarmonyOS"
+      ],
+      "tags": [
+        "Rive",
+        "组件",
+        "状态机"
+      ],
+      "access": {
+        "items": [
+          {
+            "platform": "github",
+            "label": "GitHub",
+            "value": "GitHub：液态开关组件（展示样例，待替换）"
+          },
+          {
+            "platform": "xiaohongshu",
+            "label": "小红书",
+            "value": "小红书：液态开关组件（展示样例，待替换）"
+          }
+        ]
+      },
+      "featured": false,
+      "visible": true
+    }
+  ]
+}
