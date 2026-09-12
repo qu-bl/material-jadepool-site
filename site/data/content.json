@@ -242,6 +242,90 @@
       },
       "featured": false,
       "visible": true
+    },
+    {
+      "id": "card-1789178404623",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
+    },
+    {
+      "id": "card-1789178404779",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
+    },
+    {
+      "id": "card-1789178404929",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
+    },
+    {
+      "id": "card-1789178405079",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
+    },
+    {
+      "id": "card-1789178405229",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
+    },
+    {
+      "id": "card-1789178405389",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
+    },
+    {
+      "id": "card-1789178405529",
+      "name": "新卡片",
+      "summary": "",
+      "category": "互动组件",
+      "partnerName": "",
+      "platforms": [
+        "HarmonyOS"
+      ],
+      "tags": [],
+      "visible": true
     }
   ]
 }
