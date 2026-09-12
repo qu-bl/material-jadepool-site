@@ -110,7 +110,7 @@
           }
         ]
       },
-      "featured": false,
+      "featured": true,
       "visible": true,
       "video": {
         "platform": "bilibili",
@@ -144,7 +144,7 @@
           }
         ]
       },
-      "featured": false,
+      "featured": true,
       "visible": true,
       "video": {
         "platform": "douyin",
@@ -177,7 +177,7 @@
           }
         ]
       },
-      "featured": false,
+      "featured": true,
       "visible": true
     },
     {
