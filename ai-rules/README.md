@@ -1,34 +1,41 @@
 # AI 生成规则（可远程更新）
 
-这个目录是「千机百变」AI 生成脚本所用的规则，App **启动时后台拉取更新**，无需发版即可生效。
+这个目录是「千机百变」AI 生成脚本所用的规则，App 进入对应页面时后台拉取更新，无需发版即可生效。
 
 ## 目录内容
 
 | 文件 | 用途 |
 | --- | --- |
-| `qu-code-skill.md` | 公共能力契约（必读，所有场景共用） |
-| `application-script.md` | 「应用脚本」场景规范 |
-| `resource-package.md` | 「资源包」场景规范 |
-| `rules.json` | 版本清单：`version` + 每个文件的 `sha256` + `minAppVersion` |
+| `application-script.md` | 「应用脚本」场景规则，**自包含**（执行环境 + QVMI + 系统字段 + 日志提醒 + 网络 + 应用脚本规范） |
+| `resource-package.md` | 「资源包」场景规则，**自包含**（同上前五节 + 资源包规范） |
+| `rules.json` | 版本清单：`schemaVersion:2` + 每个文件的 `version` / `minAppVersion` / `sha256` |
 
 App 拉取地址：`https://qu-bl.github.io/one-fuzhu/ai-rules/`
 
+## 两个场景完全独立
+
+- 应用脚本与资源包各有一份**自包含**规则，App 只加载当前场景那一份：应用脚本的提示词里不含资源包内容，反之亦然。
+- 更新也独立：`rules.json` 按文件记录各自的 `version`，App 进入「应用脚本」或「资源包制作台」时只检查、只下载、只通知自己那一份。
+- 代价：两份文件里的**宿主能力事实（QVMI、系统字段表、日志提醒、网络、执行环境）是重复的**，改公共能力时必须两边同步修改，否则会漂移。
+
 ## 如何发布一次更新
 
-1. 修改对应的 `.md` 规则文件；
+1. 修改对应的 `.md` 规则文件（改哪个就只动哪个）；
 2. 运行脚本重新生成 `rules.json`：
    ```bash
-   tools/update-rules.sh            # version 用当前时间
+   tools/update-rules.sh            # 本次改动的文件用当前时间做 version
    # 或指定版本 + 最低 App 版本
    tools/update-rules.sh 2026.09.12
    MIN_APP_VERSION=1.1.0 tools/update-rules.sh 2026.09.12
    ```
+   脚本只给**内容变化**的文件升级 `version`，没变的沿用旧版本。
 3. `git add ai-rules && git commit && git push`；
 4. 等 GitHub Pages CDN 生效（约 10 分钟，`max-age=600`；App 拉取时带 `?t=` 绕过缓存）；
-5. App 下次启动后即会更新，并弹出一条通知「AI 规则已更新」。
+5. App 下次冷启动进入对应页面即会更新，并弹出通知「应用脚本规则已更新」/「资源包规则已更新」。
 
 ## 兼容性约定
 
-- `minAppVersion`：规则要求的最低 App 版本。App 版本低于它时**忽略该次更新**，继续用缓存/内置规则，避免旧 App 拉到不兼容的新规则。
+- `minAppVersion`：该规则文件要求的最低 App 版本。App 版本低于它时**忽略该文件本次更新**，继续用缓存/内置规则，避免旧 App 拉到不兼容的新规则。
 - 规则的接口事实必须与 App 实际暴露的桥接一致；不兼容的接口变更应通过 `minAppVersion` 配合发版发布。
-- 任何拉取/校验失败都不影响 App：继续使用本地缓存或内置 `rawfile`。
+- 任何拉取/校验失败都不影响 App：继续使用本地缓存或内置 `rawfile/ai/`。
+- `rawfile/ai/` 是 App 内置的兜底副本，**每份规则更新后需同步复制到 `entry/src/main/resources/rawfile/ai/`**。
