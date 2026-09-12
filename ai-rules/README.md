@@ -37,5 +37,5 @@ App 拉取地址：`https://qu-bl.github.io/one-fuzhu/ai-rules/`
 
 - `minAppVersion`：该规则文件要求的最低 App 版本。App 版本低于它时**忽略该文件本次更新**，继续用缓存/内置规则，避免旧 App 拉到不兼容的新规则。
 - 规则的接口事实必须与 App 实际暴露的桥接一致；不兼容的接口变更应通过 `minAppVersion` 配合发版发布。
-- 任何拉取/校验失败都不影响 App：继续使用本地缓存或内置 `rawfile/ai/`。
-- `rawfile/ai/` 是 App 内置的兜底副本，**每份规则更新后需同步复制到 `entry/src/main/resources/rawfile/ai/`**。
+- 规则只存在于设备缓存里：App 进入对应页面时拉取并保存；没有缓存时会在发送前提示"规则尚未就绪，请联网后重试"（AI 本来就需要联网，不再内置副本）。
+- 因此**改完规则必须推送并等 Pages 生效**，否则设备上仍是旧规则。
