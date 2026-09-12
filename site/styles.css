@@ -83,8 +83,9 @@ a { color: var(--accent); }
 .platform-icon { display: inline-grid; width: 20px; height: 20px; place-items: center; }
 .platform-icon svg { width: 100%; height: 100%; fill: currentColor; }
 .harmony-logo { width: 100%; height: 100%; background: currentColor; -webkit-mask: url('./assets/platforms/harmonyos.svg') center/contain no-repeat; mask: url('./assets/platforms/harmonyos.svg') center/contain no-repeat; }
-.case-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 36px 24px; }
-.case-card { min-width: 0; }
+/* Vertical waterfall: cards flow down balanced columns and may differ in height. */
+.case-grid { column-count: 3; column-gap: 24px; }
+.case-card { min-width: 0; break-inside: avoid; margin: 0 0 36px; }
 .case-card-trigger { display: flex; flex-direction: column; width: 100%; height: 100%; padding: 0; border: 0; background: var(--surface); color: var(--text); text-align: left; border-radius: 24px; overflow: hidden; position: relative; cursor: pointer; }
 .case-card-trigger:hover { color: var(--accent); }
 .case-media { width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 24px 24px 0 0; background: var(--surface-soft); display: block; position: relative; }
@@ -123,7 +124,7 @@ a { color: var(--accent); }
 .sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
 @media(max-width: 1050px) {
   .activity-slide { padding: 4px 0 24px; gap: 24px; }
-  .case-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .case-grid { column-count: 2; }
 }
 @media(max-width: 719px) {
   .activity-slide { grid-template-columns: 1fr; grid-template-rows: auto auto; align-content: start; padding: 4px 0 16px; min-height: 0; }
@@ -137,11 +138,12 @@ a { color: var(--accent); }
   .showcase-header { grid-template-columns: 1fr; gap: 12px; }
   .search-wrap { grid-column: 1; grid-row: auto; margin-top: 12px; }
   .showcase-toolbar { gap: 8px; }
-  .case-grid { gap: 16px; }
+  .case-grid { column-gap: 16px; }
+  .case-card { margin-bottom: 16px; }
   .case-body { padding: 18px; }
   .access-sheet { padding: 24px; }
 }
-@media(max-width: 480px) { .case-grid { grid-template-columns: 1fr; } }
+@media(max-width: 480px) { .case-grid { column-count: 1; } }
 @media(prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 
 /* Platform identities retain their own colors, independent of page theme. */
@@ -250,8 +252,44 @@ a { color: var(--accent); }
 .case-tag { max-width: 100%; padding: 5px 12px; border-radius: 999px; background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
 .case-card-trigger:not(.is-expanded) .case-tag:nth-child(n+3) { display: none; }
 
+/* Featured banner: the first tile of the waterfall, spanning every column.
+   It is one card larger than the rest and cycles through all featured cards;
+   opening a slide reuses the normal card expand/collapse animation. */
+.featured-carousel { column-span: all; margin: 0 0 36px; touch-action: pan-y; }
+.featured-viewport { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "slide"; }
+.featured-slide { grid-area: slide; margin: 0; opacity: 0; visibility: hidden; }
+.featured-slide.is-active { opacity: 1; visibility: visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .featured-slide { transition: opacity 440ms var(--ease-out), visibility 0s linear 440ms; }
+  .featured-slide.is-active { transition: opacity 440ms var(--ease-out), visibility 0s; }
+}
+.featured-carousel .case-card-trigger { flex-direction: row; align-items: stretch; min-height: clamp(220px, 26vw, 320px); }
+.featured-carousel .case-media { flex: 0 0 50%; width: 50%; border-radius: 24px 0 0 24px; }
+.featured-carousel .case-body { flex: 1; justify-content: center; padding: clamp(20px, 3vw, 40px); gap: 18px; }
+.featured-carousel .case-title { font-size: clamp(22px, 2.4vw, 32px); }
+.featured-carousel .case-summary { -webkit-line-clamp: 3; }
+.featured-dots { display: flex; justify-content: center; align-items: center; gap: 4px; padding: 14px 0 0; }
+.featured-dot { position: relative; min-width: 28px; min-height: 32px; padding: 0; border: 0; background: transparent; }
+.featured-dot::before { content: ""; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); opacity: .35; transform: translate(-50%, -50%); transition: opacity 200ms ease, background-color 200ms ease, transform 200ms ease; }
+.featured-dot[aria-current="true"]::before { opacity: 1; background: var(--accent); transform: translate(-50%, -50%) scale(1.25); }
+.featured-dot:focus-visible { outline: 3px solid var(--accent); outline-offset: -6px; }
+/* Expanded slides fall back to the shared vertical card layout. */
+.featured-carousel .case-card-trigger.is-expanded { display: block; min-height: 0; }
+.featured-carousel .case-card-trigger.is-expanded .case-media { flex: none; width: 100%; border-radius: 24px 24px 0 0; }
+.featured-carousel .case-card-trigger.is-expanded .case-body { width: 100%; padding: 20px; gap: 16px; }
+.featured-carousel .case-card-trigger.is-expanded .case-title { font-size: 20px; }
+.featured-carousel .case-card-trigger.is-expanded .case-summary { -webkit-line-clamp: unset; }
+
 /* Site footer (user agreement entry). */
 .site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px; max-width: 1440px; margin: 0 auto; padding: 20px var(--page-pad) max(36px, env(safe-area-inset-bottom)); color: var(--muted); font-size: 14px; }
 .site-footer-sep { opacity: .6; }
 .site-footer a { color: var(--accent); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
+
+/* Narrow screens: the featured banner stacks (media above, copy below). */
+@media(max-width: 719px) {
+  .featured-carousel .case-card-trigger { flex-direction: column; min-height: 0; }
+  .featured-carousel .case-media { flex: none; width: 100%; border-radius: 24px 24px 0 0; }
+  .featured-carousel .case-body { width: 100%; padding: 20px; gap: 16px; }
+  .featured-carousel .case-title { font-size: clamp(22px, 5.6vw, 30px); }
+}

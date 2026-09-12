@@ -28,6 +28,16 @@ const state = {
   dialogTrigger: null,
 };
 
+const featured = {
+  index: 0,
+  timer: null,
+  paused: false,
+  slides: [],
+  dots: [],
+  status: null,
+  lastSwipe: 0,
+};
+
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const cardObserver = !reduceMotion.matches && "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => {
@@ -394,7 +404,10 @@ function bindCarouselControls() {
     resume();
   });
 
-  document.addEventListener("visibilitychange", scheduleCarousel);
+  document.addEventListener("visibilitychange", () => {
+    scheduleCarousel();
+    scheduleFeatured();
+  });
   reduceMotion.addEventListener?.("change", scheduleCarousel);
 }
 
@@ -507,6 +520,7 @@ function geometry(rect) {
 
 async function expandCard(card) {
   if (expandedCard) return;
+  pauseFeatured();
   const host = card.closest(".case-card");
   const from = card.getBoundingClientRect();
   const hiddenSiblings = [];
@@ -583,6 +597,7 @@ async function collapseCard() {
   document.body.classList.remove("dialog-open");
   expandedCard = null;
   card.focus({ preventScroll: true });
+  resumeFeatured();
 }
 
 window.addEventListener("resize", () => {
@@ -602,62 +617,192 @@ document.addEventListener("keydown", event => {
   }
 });
 
+// Builds one compact/expandable case card. Featured slides reuse the exact same
+// card so the expand/collapse animation is identical to the rest of the grid.
+function createCaseCard(item, index, options = {}) {
+  const isFeatured = Boolean(options.featured);
+  const fragment = caseTemplate.content.cloneNode(true);
+  const card = fragment.querySelector(".case-card");
+  const trigger = fragment.querySelector(".case-card-trigger");
+  const image = fragment.querySelector(".case-media img");
+  const title = fragment.querySelector(".case-title");
+  const platforms = fragment.querySelector(".case-platforms");
+
+  trigger.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，查看视频、简介和平台入口`);
+  trigger.setAttribute("aria-expanded", "false");
+  trigger.addEventListener("click", event => {
+    if (expandedCard || event.target.closest("button, a, iframe")) return;
+    // A horizontal swipe that changed slides should not also open the card.
+    if (isFeatured && Date.now() - featured.lastSwipe < 400) return;
+    expandCard(trigger);
+  });
+  trigger.addEventListener("keydown", event => {
+    if (event.target === trigger && !expandedCard && ["Enter", " "].includes(event.key)) {
+      event.preventDefault(); expandCard(trigger);
+    }
+  });
+  renderAccessItems(item, trigger.querySelector(".card-access"));
+  const summary = item.summary || "";
+  const summaryElement = fragment.querySelector(".case-summary");
+  summaryElement.textContent = summary;
+  summaryElement.hidden = !summary;
+  const details = item.details || "";
+  const detailSection = fragment.querySelector(".case-details");
+  detailSection.querySelector(".case-details-text").textContent = details;
+  detailSection.hidden = !details;
+  const tags = fragment.querySelector(".case-tags");
+  [...new Set(item.tags || [])].forEach(tag => {
+    const capsule = document.createElement("span");
+    capsule.className = "case-tag";
+    capsule.textContent = tag;
+    tags.append(capsule);
+  });
+  tags.hidden = !tags.children.length;
+  card.style.setProperty("--card-index", Math.min(index, 7));
+  // Cover images are optional; cards are video-first. Hide the media area
+  // entirely when there is neither a cover nor a video link.
+  const media = fragment.querySelector(".case-media");
+  if (item.cover) {
+    image.src = item.cover;
+    image.alt = item.coverAlt || `${item.name}案例封面`;
+  }
+  if (SiteMedia.videoSource(item.video)) renderAccessMedia(item, media);
+  else if (!item.cover) media.hidden = true;
+  title.textContent = item.name;
+  platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
+  item.platforms.forEach((platform) => platforms.append(createPlatformIcon(platform, "platform-icon--case")));
+  return card;
+}
+
+function setFeatured(index, announce = false) {
+  const slides = featured.slides;
+  if (!slides.length) return;
+  const total = slides.length;
+  featured.index = ((index % total) + total) % total;
+  slides.forEach((card, slideIndex) => {
+    const active = slideIndex === featured.index;
+    card.classList.toggle("is-active", active);
+    card.setAttribute("aria-hidden", active ? "false" : "true");
+    card.inert = !active;
+    card.querySelector(".case-card-trigger")?.setAttribute("tabindex", active ? "0" : "-1");
+  });
+  featured.dots.forEach((dot, dotIndex) => {
+    dot.setAttribute("aria-current", dotIndex === featured.index ? "true" : "false");
+  });
+  if (announce && featured.status) {
+    featured.status.textContent = `当前精选：第 ${featured.index + 1} 项，共 ${total} 项`;
+  }
+  scheduleFeatured();
+}
+
+function scheduleFeatured() {
+  window.clearTimeout(featured.timer);
+  if (featured.paused || featured.slides.length < 2 || document.hidden || expandedCard) return;
+  featured.timer = window.setTimeout(() => setFeatured(featured.index + 1), 6000);
+}
+
+function pauseFeatured() {
+  featured.paused = true;
+  window.clearTimeout(featured.timer);
+}
+
+function resumeFeatured() {
+  featured.paused = false;
+  scheduleFeatured();
+}
+
+function destroyFeatured() {
+  window.clearTimeout(featured.timer);
+  featured.index = 0;
+  featured.paused = false;
+  featured.slides = [];
+  featured.dots = [];
+  featured.status = null;
+}
+
+// The featured banner is the first tile of the waterfall: it spans every column
+// and cycles through all cards marked "featured" in data/content.json.
+function createFeaturedCarousel(items) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "featured-carousel";
+  wrapper.setAttribute("role", "listitem");
+  wrapper.setAttribute("aria-label", "卡片精选");
+
+  const viewport = document.createElement("div");
+  viewport.className = "featured-viewport";
+  const dots = document.createElement("div");
+  dots.className = "featured-dots";
+  dots.setAttribute("role", "group");
+  dots.setAttribute("aria-label", "选择精选卡片");
+  const status = document.createElement("p");
+  status.className = "sr-only";
+  status.setAttribute("aria-live", "polite");
+
+  featured.slides = [];
+  featured.dots = [];
+  featured.status = status;
+
+  items.forEach((item, index) => {
+    const card = createCaseCard(item, index, { featured: true });
+    card.classList.add("featured-slide");
+    card.removeAttribute("role");
+    viewport.append(card);
+    featured.slides.push(card);
+
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "featured-dot";
+    dot.setAttribute("aria-label", `显示精选：${item.name}`);
+    dot.addEventListener("click", () => setFeatured(index, true));
+    dots.append(dot);
+    featured.dots.push(dot);
+  });
+
+  wrapper.append(viewport, dots, status);
+  setFeatured(0, false);
+  return wrapper;
+}
+
+function bindFeaturedControls() {
+  if (!caseGrid) return;
+  let startX = null;
+  caseGrid.addEventListener("pointerdown", event => {
+    if (!event.isPrimary || expandedCard || !event.target.closest(".featured-carousel")) return;
+    startX = event.clientX;
+    pauseFeatured();
+  });
+  window.addEventListener("pointerup", event => {
+    if (startX === null) return;
+    const delta = event.clientX - startX;
+    startX = null;
+    if (Math.abs(delta) > 48) {
+      featured.lastSwipe = Date.now();
+      setFeatured(featured.index + (delta < 0 ? 1 : -1), true);
+    }
+    resumeFeatured();
+  });
+  window.addEventListener("pointercancel", () => {
+    if (startX === null) return;
+    startX = null;
+    resumeFeatured();
+  });
+}
+
 function renderCases() {
   if (!caseGrid || !caseTemplate || expandedCard) return;
   const items = getFilteredCases();
   cardObserver?.disconnect();
+  destroyFeatured();
   caseGrid.replaceChildren();
 
-  items.forEach((item, index) => {
-    const fragment = caseTemplate.content.cloneNode(true);
-    const card = fragment.querySelector(".case-card");
-    const trigger = fragment.querySelector(".case-card-trigger");
-    const image = fragment.querySelector(".case-media img");
-    const title = fragment.querySelector(".case-title");
-    const platforms = fragment.querySelector(".case-platforms");
+  const featuredItems = items.filter((item) => item.featured);
+  const regularItems = items.filter((item) => !item.featured);
 
-    const access = getAccess(item);
-    trigger.setAttribute("aria-label", `${item.name}，由 ${item.partnerName} 创作，查看视频、简介和平台入口`);
-    trigger.setAttribute("aria-expanded", "false");
-    trigger.addEventListener("click", event => {
-      if (!expandedCard && !event.target.closest("button, a, iframe")) expandCard(trigger);
-    });
-    trigger.addEventListener("keydown", event => {
-      if (event.target === trigger && !expandedCard && ["Enter", " "].includes(event.key)) {
-        event.preventDefault(); expandCard(trigger);
-      }
-    });
-    renderAccessItems(item, trigger.querySelector(".card-access"));
-    const summary = item.summary || "";
-    const summaryElement = fragment.querySelector(".case-summary");
-    summaryElement.textContent = summary;
-    summaryElement.hidden = !summary;
-    const details = item.details || "";
-    const detailSection = fragment.querySelector(".case-details");
-    detailSection.querySelector(".case-details-text").textContent = details;
-    detailSection.hidden = !details;
-    const tags = fragment.querySelector(".case-tags");
-    [...new Set(item.tags || [])].forEach(tag => {
-      const capsule = document.createElement("span");
-      capsule.className = "case-tag";
-      capsule.textContent = tag;
-      tags.append(capsule);
-    });
-    tags.hidden = !tags.children.length;
-    card.style.setProperty("--card-index", Math.min(index, 7));
-    // Cover images are optional; cards are video-first. Hide the media area
-    // entirely when there is neither a cover nor a video link.
-    const media = fragment.querySelector(".case-media");
-    if (item.cover) {
-      image.src = item.cover;
-      image.alt = item.coverAlt || `${item.name}案例封面`;
-    }
-    if (SiteMedia.videoSource(item.video)) renderAccessMedia(item, media);
-    else if (!item.cover) media.hidden = true;
-    title.textContent = item.name;
-    platforms.setAttribute("aria-label", `支持平台：${item.platforms.map(platformLabel).join("、")}`);
-    item.platforms.forEach((platform) => platforms.append(createPlatformIcon(platform, "platform-icon--case")));
-    caseGrid.append(fragment);
+  if (featuredItems.length) caseGrid.append(createFeaturedCarousel(featuredItems));
+
+  regularItems.forEach((item, index) => {
+    const card = createCaseCard(item, index);
+    caseGrid.append(card);
     if (cardObserver) cardObserver.observe(card);
     else card.dataset.visible = "true";
   });
@@ -732,6 +877,7 @@ async function initialize() {
   bindCollapsibleFilter(categoryTabs, categoryTabs, setCategoryExpanded);
   document.querySelector(".dialog-close")?.addEventListener("click", closeAccessDialog);
   bindCarouselControls();
+  bindFeaturedControls();
   bindCaseControls();
 
   bindAccessDialog();
