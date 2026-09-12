@@ -3,15 +3,15 @@
   "files": [
     {
       "name": "application-script.md",
-      "version": "2026.09.12.1",
+      "version": "2026.09.12.2",
       "minAppVersion": "1.0.0",
-      "sha256": "abb82ac6d730f86a0c1dd60888007219829d7ad16be1b32556b702679caae8fd"
+      "sha256": "df3d73c5d89eeb6348594cae1be2ed6c21ebb91464556d2a11e2bac769383f9c"
     },
     {
       "name": "resource-package.md",
-      "version": "2026.09.12.1",
+      "version": "2026.09.12.2",
       "minAppVersion": "1.0.0",
-      "sha256": "4cd59dac383d78b2ecc9e41c082412e712eecce388239a0c2fbcf0f164c3008e"
+      "sha256": "3930f0e8d66b217c55fdf6dab89e8d68b9e85a26fe6237761b14fd120e6858f6"
     }
   ]
 }

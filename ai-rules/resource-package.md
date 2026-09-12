@@ -45,77 +45,29 @@ qu.viewModel.<类型入口>(path) 返回属性句柄，不是值。path 是区�
 | --- | --- | --- |
 | system.time.epochMs | number | Unix 毫秒；订阅后每秒更新 |
 | system.appearance.colorMode | enumeration | light / dark |
-| system.appearance.language | string | 语言代码 |
-| system.appearance.region | string | 地区代码 |
+| system.appearance.language / region / timeZone | string | 语言代码 / 地区代码 / 时区 ID |
 | system.appearance.locale | string | 完整 Locale |
-| system.appearance.timeZone | string | 时区 ID |
-| system.appearance.is24HourClock | boolean | 是否 24 小时制 |
-| system.appearance.fontSizeScale | number | 字号缩放 |
-| system.appearance.fontWeightScale | number | 字重缩放 |
-| system.appearance.hasPointerDevice | boolean | 是否连接指针设备 |
-| system.appearance.mcc | string | 移动国家码，可为空 |
-| system.appearance.mnc | string | 移动网络码，可为空 |
+| system.appearance.is24HourClock / hasPointerDevice | boolean | 是否 24 小时制 / 是否连接指针设备 |
+| system.appearance.fontSizeScale / fontWeightScale | number | 字号缩放 / 字重缩放 |
+| system.appearance.mcc / mnc | string | 移动国家码 / 移动网络码，可为空 |
 | system.battery.level | number | 剩余电量 0–100 |
 | system.battery.isCharging | boolean | 是否充电 |
 | system.network.isConnected | boolean | 是否联网 |
 | system.network.type | enumeration | none / wifi / cellular / ethernet / other |
-| device.screen.width | number | 屏幕采集器发布的逻辑宽度，非某个 UI 控件宽度 |
-| device.screen.height | number | 屏幕采集器发布的逻辑高度，非某个 UI 控件高度 |
+| device.screen.width / height | number | 屏幕采集器发布的逻辑宽 / 高，非某个 UI 控件尺寸 |
 | device.screen.density | number | 像素密度系数 |
 | device.screen.orientation | enumeration | portrait / landscape（类型允许 unknown） |
-| device.motion.accelerationX | number | 归一化加速度 X，约 -1..1 |
-| device.motion.accelerationY | number | 归一化加速度 Y，约 -1..1 |
-| device.motion.accelerationZ | number | 归一化加速度 Z，约 -1..1 |
-| device.motion.rotationX | number | 归一化角速度 X，约 -1..1 |
-| device.motion.rotationY | number | 归一化角速度 Y，约 -1..1 |
-| device.motion.rotationZ | number | 归一化角速度 Z，约 -1..1 |
-| device.motion.pitch | number | 归一化俯仰，约 -1..1 |
-| device.motion.roll | number | 归一化横滚，约 -1..1 |
-| device.motion.yaw | number | 归一化偏航，约 -1..1 |
+| device.motion.accelerationX / Y / Z | number | 归一化加速度 X/Y/Z，约 -1..1 |
+| device.motion.rotationX / Y / Z | number | 归一化角速度 X/Y/Z，约 -1..1 |
+| device.motion.pitch / roll / yaw | number | 归一化俯仰 / 横滚 / 偏航，约 -1..1 |
 | device.ambientLight.normalized | number | 环境光 0..1，不是 lux |
 | device.proximity.isNear | boolean | 是否接近 |
 | device.proximity.normalized | number | 接近值 0..1 |
-| device.location.latitude | number | 纬度，度 |
-| device.location.longitude | number | 经度，度 |
-| device.location.altitude | number | 海拔，米 |
-| device.location.speed | number | 速度，米/秒 |
-| device.location.course | number | 方位角，度 |
-| device.location.horizontalAccuracy | number | 水平精度，米 |
-| system.deviceInfo.type | string | 设备类型 |
-| system.deviceInfo.manufacturer | string | 制造商 |
-| system.deviceInfo.brand | string | 设备品牌 |
-| system.deviceInfo.marketName | string | 市场名称 |
-| system.deviceInfo.productSeries | string | 产品系列 |
-| system.deviceInfo.productModel | string | 产品型号 |
-| system.deviceInfo.productModelAlias | string | 型号别名 |
-| system.deviceInfo.softwareModel | string | 软件型号 |
-| system.deviceInfo.hardwareModel | string | 硬件型号 |
-| system.deviceInfo.chipType | string | 芯片类型 |
-| system.deviceInfo.abiList | string | ABI 列表文本 |
-| system.deviceInfo.performanceClass | number | 系统性能分级枚举值 |
-| system.deviceInfo.displayVersion | string | 显示版本 |
-| system.deviceInfo.incrementalVersion | string | 增量版本 |
-| system.deviceInfo.osFullName | string | OS 完整版本 |
-| system.deviceInfo.osReleaseType | string | OS 发行类型 |
-| system.deviceInfo.securityPatchTag | string | 安全补丁版本 |
-| system.deviceInfo.osMajorVersion | number | OS 主版本 |
-| system.deviceInfo.osSeniorVersion | number | OS 次版本 |
-| system.deviceInfo.osFeatureVersion | number | OS 特性版本 |
-| system.deviceInfo.osBuildVersion | number | OS 构建版本 |
-| system.deviceInfo.sdkApiVersion | number | SDK API 主版本 |
-| system.deviceInfo.sdkMinorApiVersion | number | SDK API 次版本 |
-| system.deviceInfo.sdkPatchApiVersion | number | SDK API 补丁版本 |
-| system.deviceInfo.firstApiVersion | number | 首发 API 版本 |
-| system.deviceInfo.versionId | string | 系统版本 ID |
-| system.deviceInfo.buildType | string | 构建类型 |
-| system.deviceInfo.buildTime | string | 构建时间 |
-| system.deviceInfo.distributionOSName | string | 发行版名称 |
-| system.deviceInfo.distributionOSVersion | string | 发行版版本 |
-| system.deviceInfo.distributionOSApiVersion | number | 发行版 API 版本 |
-| system.deviceInfo.distributionOSApiName | string | 发行版 API 名称 |
-| system.deviceInfo.distributionOSReleaseType | string | 发行版类型 |
-| system.deviceInfo.bootCount | number | 启动次数 |
-| system.deviceInfo.deviceColor | string | 机身配色 |
+| device.location.latitude / longitude | number | 纬度 / 经度，度 |
+| device.location.altitude / speed | number | 海拔（米） / 速度（米/秒） |
+| device.location.course / horizontalAccuracy | number | 方位角（度） / 水平精度（米） |
+| system.deviceInfo.* | string | type, manufacturer, brand, marketName, productSeries, productModel, productModelAlias, softwareModel, hardwareModel, chipType, abiList, displayVersion, incrementalVersion, osFullName, osReleaseType, securityPatchTag, versionId, buildType, buildTime, distributionOSName, distributionOSVersion, distributionOSApiName, distributionOSReleaseType, bootCount, deviceColor |
+| system.deviceInfo.* | number | performanceClass, osMajorVersion, osSeniorVersion, osFeatureVersion, osBuildVersion, sdkApiVersion, sdkMinorApiVersion, sdkPatchApiVersion, firstApiVersion, distributionOSApiVersion |
 
 ## 宿主动作：日志与系统提醒
 
